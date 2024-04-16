@@ -1,0 +1,43 @@
+\documentclass[12pt,oneside,letterpaper]{memoir}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+% \usepackage{kpfonts}
+
+% \usepackage{hyperref}
+\usepackage{xcolor}
+% \usepackage{url}
+% \usepackage{xurl}
+% \usepackage{latexsym,amsmath}
+\usepackage{booktabs}
+% \usepackage{graphicx}
+% \usepackage[nameinlink]{cleveref}
+
+\usepackage{lipsum}
+
+
+%%% Formatting %%%
+
+\usepackage{libertine} % Font
+
+% Margins
+\setlrmarginsandblock{1.5in}{*}{*}
+\setulmarginsandblock{1.5in}{*}{1}
+
+% Headers/Footers
+\newcommand\draftdate{\color{gray}\emph{Draft, \today}}
+\makeoddfoot{ruled}{\draftdate}{}{\thepage}
+\makeoddhead{ruled}{}{}{\leftmark}
+\makeoddfoot{plain}{\draftdate}{\thepage}{}
+\pagestyle{ruled}
+
+\checkandfixthelayout
+
+%%% End Formatting %%%
+
+
+\newcounter{comment}
+\newcommand\bjb[1]{{\stepcounter{comment}\color{purple}[BJB\@: #1]}}
+\newcommand\drm[1]{{\stepcounter{comment}\color{orange}[DRM\@: #1]}}
+\newcommand\cmt[1]{{\stepcounter{comment}\color{gray}[#1]}}
