@@ -4,14 +4,8 @@ Specifically, we interpret the notion of the ``quality'' of an emergent language
 We measure this by using the emergent language as pretraining data for a downstream NLP tasks in human language---the better the downstream performance, the better the emergent language.
 We implement this benchmark as an easy-to-use Python package that only requires a text file of utterances from the emergent language to be evaluated.
 Finally, we empirically test the benchmark's validity using human, synthetic, and emergent language baselines.
+\unskip\footnote{Based on ``XferBench: a Data-Driven Benchmark for Emergent Language'' appearing in the \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} \citep{boldt2024xferbench}.}
 \end{abstract}
-
-\begin{figure*}
-  \centering
-  \inputsrc{figures/benchmark-chart}
-  \caption{Illustration of the architecture of XferBench.}
-  \unskip\label{fig:chart}
-\end{figure*}
 
 \section{Introduction}
 
@@ -20,6 +14,14 @@ Finally, we empirically test the benchmark's validity using human, synthetic, an
 Neural language models learn many things in pretraining, but research suggests \citep{artetxe-etal-2020-cross} that a substantial part of that knowledge is not simply knowledge of a particular language or domain, but rather knowledge of ``how to language.''
 We currently teach models to ``language'' using vast quantities of text dredged from the dark recesses of the Web---text that is full of bias, toxicity, and potential intellectual property violations.
 Ideally, we would be able to teach models to ``language'' without such compromises through the use of synthetic data, but mainstream approaches to synthesizing data produce outputs that do not have the same structural and social properties as human language.
+
+\begin{figure}[tb]
+  \centering
+  \inputsrc{figures/benchmark-chart}
+  \caption{Illustration of the architecture of XferBench.}
+  \unskip\label{fig:chart}
+\end{figure}
+
 
 Emergent communication (EC), also called emergent language (EL), is a potential solution to this problem \citep{yao2022linking,downey-etal-2023-learning,mu2023ec2}.
 Emergent languages are communication systems developed \textit{de novo} among multiple agents in a reinforcement learning simulation.
