@@ -1,1 +1,3 @@
 /output/
+.direnv/
+.envrc
