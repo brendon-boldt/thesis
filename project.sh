@@ -6,18 +6,13 @@ maintex=src/main.tex
 setopt globdots nullglob
 
 function watch {
-  mkdir -p output/
   while true; do
-      inotifywait -qqe modify -e move_self **/*.{tex,bib}
+      inotifywait -qqe modify -e move_self **/*.{tex,bib,dot}
+      sleep 0.1  # Prevents a race condition between how nvim saves files and Make
+      mkdir -p output/
       echo -n "Compiling...  "
-      export max_print_line=1048576
-      latexmk \
-          -f \
-          -pdf \
-          -interaction=nonstopmode \
-          -outdir=output/ \
-          -jobname=document \
-          $maintex >output/stdout
+      export max_print_line=19999
+      >output/stdout make
       echo Done. "($?)"
   done
 }

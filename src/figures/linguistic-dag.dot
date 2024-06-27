@@ -1,0 +1,23 @@
+digraph G {
+  rankdir=TD;
+  node [shape="box", fillcolor="#eeffff", style="filled"];
+
+  Word -> Morpheme;
+  Morpheme -> Semantics;
+  Pos -> Syntax;
+  Headedness -> Pos;
+  Morpheme -> Token;
+  Syntax -> Morpheme;
+  Lexdyn -> Word;
+  Socvar -> Morpheme;
+  Sentence -> Clause;
+  Recursivity -> Syntax;
+  Clause -> Syntax;
+  Opcl_class -> Pos;
+  Discourse -> Sentence;
+
+  Socvar [label="Social\nVariation"];
+  Opcl_class [label="Open/Closed\nClass"];
+  Lexdyn [label="Lexical\nDynamics"];
+  Pos [label="Part of\nSpeech"];
+}
