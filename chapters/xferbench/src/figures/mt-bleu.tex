@@ -1,0 +1,23 @@
+% Copied from Python
+\def\minMtFreeze{0.0005419284672212063} \def\maxMtFreeze{5.332872693239323} \def\minMtLL{0.3837410752007806} \def\maxMtLL{7.021856958069873} \def\minMtWmt{0.0} \def\maxMtWmt{13.323590858337544}
+
+\pgfplotstabletypeset[
+  col sep=tab,
+  columns={name,MtWmt,MtFreeze,MtLL},
+  columns/name/.style={
+    column name=Source,
+    column type=l,
+    string type,
+  },
+  columns/MtFreeze/.style={
+    /num grad={Frozen}{\minMtFreeze}{\maxMtFreeze},
+  },
+  columns/MtWmt/.style={
+    /num grad={Full}{\minMtWmt}{\maxMtWmt},
+  },
+  columns/MtLL/.style={
+    /num grad={Reduced}{\minMtLL}{\maxMtLL},
+  },
+  every head row/.style={before row=\toprule,after row=\midrule},
+  every last row/.style={after row=\bottomrule},
+]{chapters/xferbench/data/mt-bleu.tsv}

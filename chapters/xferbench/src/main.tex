@@ -1,0 +1,22 @@
+% \input{chapters/xferbench/src/preamble}
+
+% \newcommand\defaultinput\input
+% \renewcommand\input[1]{\input{chapter/xferbench/#1}}
+
+\def\inputprefix{chapters/xferbench/src/}
+\renewcommand\inputsrc[1]{\input{chapters/xferbench/src/#1}}
+
+%%% Abstract, Introduction, Related work %%%
+\inputsrc{intro}
+
+%%% The Benchmark, Methods %%%
+\inputsrc{methods}
+  
+%%% Experiments %%%
+\inputsrc{experiments}
+
+%%% Results, Discussion %%%
+\inputsrc{discussion}
+
+%%% Conclusion, Limitations, Appendices %%%
+\inputsrc{postamble}

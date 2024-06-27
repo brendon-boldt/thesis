@@ -1,0 +1,48 @@
+\def\datafile{chapters/xferbench/data/ce-means.tsv}
+
+\pgfplotstableread[col sep=tab]{\datafile}\mydata
+\pgfplotstablegetrowsof{\mydata}
+\edef\numberofrows{\pgfplotsretval}
+
+\newcommand{\myaddplot}[2]{%
+  \addplot [
+    fill=#2,
+    error bars/y dir=both,
+    error bars/y explicit,
+    discard if not={group}{#1},
+  ] table [
+    col sep=tab,
+    y=mean,
+    x=xpos,
+    y error plus=plus,
+    y error minus=minus,
+  ] {\datafile};
+}
+
+\begin{tikzpicture}
+\begin{axis}[
+  ybar,
+  enlarge x limits=0.1,
+  enlarge y limits=0.1,
+  height=2in,
+  xlabel={Language},
+  ylabel={Cross-Entropy},
+  xticklabels from table={\mydata}{name},
+  xtick={1,...,\numberofrows},
+  x tick label style={rotate=30,anchor=east},
+  /pgf/bar shift=0pt,
+  width=\linewidth,
+  legend style={at={(0.02, 0.95)}, anchor=north west, font=\small},
+]
+
+\myaddplot{human}{red!20}
+\addlegendentry{Human}
+\myaddplot{synth}{blue!20}
+\addlegendentry{Synthetic}
+\myaddplot{ec}{green!20}
+\addlegendentry{EC}
+\myaddplot{baseline}{black!20}
+\addlegendentry{Baseline}
+
+\end{axis}
+\end{tikzpicture}

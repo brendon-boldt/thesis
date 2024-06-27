@@ -1,0 +1,175 @@
+\section{XferBench}
+
+% In \Cref{sec:design}, we discuss the design goals and considerations of XferBench which motivate the concrete implementation of the benchmark.
+% \Cref{sec:methods} describes the procedure of XferBench.
+% Finally, \Cref{sec:implementation} contains an account of implementation details such as models, data, and other settings used in XferBench.
+
+\subsection{Design Goals}
+\unskip\label{sec:design}
+
+We frame the primary design goals of the benchmark as three desiderata:
+% Namely, the benchmark ideally:
+\begin{enumerate}[nosep]
+  \item[\textbf{D1}] Quantitatively capture a meaningful notion of the overall quality\footnotemark{} of an emergent language from a data-driven perspective.
+  \footnotetext{We are aiming for \emph{a} meaningful notion of overall quality: we are not claiming that this is the only meaningful notion nor that it is the best among all possible notions of ``quality''.}
+  \item[\textbf{D2}] Be applicable to as wide a variety of emergent languages as possible, not restricted to a specific game, environment, or agent architecture.
+  \item[\textbf{D3}] Be relevant and accessible to the broader EC/EL community, by being:
+    (a) easy to interpret,
+    (b) minimally biased with regards to language typology,
+    (c) runnable with minimal coding experience,
+    and (d) runnable on modest hardware.
+\end{enumerate}
+While there are other consideration in the benchmark, these form the bulk of the motivation.
+In the following paragraphs we expand upon the motivation for each design goal.
+
+\paragraph{D1: Quantifying quality}
+D1 is the core of what a benchmark seeks to do: to quantify a desirable property of a given system such that it can be compared directly to other systems (i.e., be an \emph{evaluation} metric).
+There are two distinct senses in which XferBench strives towards this goal.
+First, XferBench measures how good an emergent language is from a specifically machine learning perspective;
+  that is, it addresses the question, ``How useful would this emergent language be for practical machine learning tasks?''
+The second sense is more general: XferBench addresses the question, ``How similar is an emergent language to human language according to how deep neural networks process language?''
+That is, it uses data-driven techniques to quantify the similarity between emergent language and human language in some general sense.
+% ---here we assume that it is generally desirable for emergent languages to resemble human languages (from an NLP perspective).
+% We empirically test this design goals by looking at how it ranks languages with varying similarity to human language.
+
+\paragraph{D2: Wide applicability}
+D2 is intended to make XferBench practically applicable to a wide range of EC research.
+The field of EC has an especially diverse set of possible approaches, environments, agents, games, etc.
+Thus, it is especially salient that the benchmark be designed with interoperability in mind, having minimal assumptions as to the nature of the EC system being evaluated.
+
+The influence of this design goal is primarily seen through the use of a textual corpus as the sole input to the benchmark: the vast majority of EC systems generate utterances which can be represented as sequences of discrete tokens.
+\unskip\footnote{In the minority case, there are EC methods which use communication channels that are, for example, continuous \citep{Eloff2021TowardsLT} or even pictorial \citep{Mihai2021LearningTD}.}
+EC presents the opportunity for much richer representations of its language: leveraging the grounded semantics of the communication, incorporating non-verbal behavior, and even directly interacting with the agents themselves.
+Yet such richer representations also limit the range of EC systems to which XferBench could apply.
+Even if it is possible to define some universal EC interface that could allow for richer representations, the implementation cost for each and every EC system to be tested is significant compared to the ease of producing a corpus of utterances from the emergent language.
+
+\paragraph{D3: Easy-to-use}
+D3 is critical to the success of XferBench as a practical tool for diverse field of researchers---a benchmark is expressly \emph{for} the broader research community, and, as such, should be widely accessible.
+In particular, D3a demands that XferBench be conceptually simple with results that can easily be reported, compared, and incorporated into a research program.
+D3b is relevant to both aspects of D1.
+First, if XferBench is to gauge an EL's practical use in machine learning, it should seek to use a typologically diverse set of human languages in the downstream tasks.
+%and not focus only high-resource languages.
+  Second, since XferBench is trying to capture a notion of ``similarity to human language generally'', it is important to test this against a wide range of language typologies so as not to unnecessarily narrow the criteria for ``similar to human language''.
+D3c is particularly important for incorporating interdisciplinary researchers into the field of EC who might not have a background in computer programming.
+Finally, D3d ensures that XferBench is accessible not only to labs and researchers with fewer financial resources
+  but also makes it much easier to incorporate into the fast-paced research and development cycles prevalent in contemporary ML reserach.
+
+
+\subsection{Methods}
+\unskip\label{sec:methods}
+
+% The benchmark, at a basic level, takes in a corpus of utterances from an emergent language and produces a real number which quantifies the quality of the emergent language as pretraining data for human language-based downstream tasks.
+% The basic structure of the benchmark is as follows:
+% \begin{enumerate}
+%   \item Produce a corpus of utterances using the EC system that is being tested.
+%   \item Train a model using a self-supervised learning objective (e.g., language modeling).
+%   \item Fine tune that same model using a limited amount of human language data.
+%   \item Test the model on a human language-based downstream task.
+%   \item The downstream task's evaluation metric is the benchmark's score for the emergent language.
+% \end{enumerate}
+
+The following procedure describes the benchmark (illustrated in \Cref{fig:chart}):
+\begin{enumerate}[nosep]
+  \item Initialize a causal language model.
+  \item Train the model on the corpus of utterances from the EL being evaluated.
+  \item Re-initialize the input and output (i.e., language modelling head) embedding layers;
+    this is the \textit{base model}.
+  \item For each downstream human language:
+    \begin{enumerate}
+      \item Train the base model on the human language data.
+      \item Evaluate the cross-entropy on a held-out test set of the human language.
+    \end{enumerate}
+  \item Average the cross-entropies across the downstream human languages;
+    this is the corpus's score on the benchmark (lower is better).
+\end{enumerate}
+The structure of the benchmark is derived from the \emph{corpus transfer} method presented in \citet{yao2022linking}.
+
+\paragraph{Task}
+For XferBench's evaluation task, we choose causal language modeling for a few different reasons.
+In principle, language modeling is a component of a wide variety of NLP tasks, especially generative tasks;
+  the prevalence of language modeling is in line with the benchmark providing a very general notion of quality that will be familiar to anyone acquainted with NLP\@.
+On a practical level, language modeling is easy to acquire data for---especially helpful for evaluating against low-resource languages---and there are fewer hyperparameters and confounding variables compared to other downstream tasks like machine translation or question-answering.
+The main limitation from using language modeling is that it itself is not a widespread downstream task and so cannot guarantee direct correlation with metrics on more concrete downstream tasks (e.g., accuracy on a QA task).
+
+For the pretraining task we also use causal language modeling.
+Due to requiring a wide applicability across emergent languages (Design Goal 2), we select causal language modeling for our pretraining task since it requires only a corpus without any additional annotations or stipulations.
+
+
+\paragraph{Data}
+The data for the transfer learning targets (viz.\@ human languages) comes from Wikipedia dumps \citep{wikidump} (under the GFDL and CC-BY-SA 3.0 License) hosted by Hugging Face\footnotemark{}.
+\footnotetext{\scriptsize\url{https://huggingface.co/datasets/wikimedia/wikipedia/tree/97323c5edeffcf4bd6786b4ed0788c84abd24b03}}
+This dataset provides a diverse set of languages each with sufficient amounts of data.
+For our downstream human languages, we use the same $10$ languages presented in \citet{yao2022linking}, namely:
+  Basque,
+  Danish,
+  Finnish,
+  Hebrew,
+  Indonesian,
+  Japanese,
+  Kazakh,
+  Persian,
+  Romanian,
+  and Urdu.
+Having a variety of languages reduces the likelihood that XferBench will be biased toward specific typologies of human language (Design Goal 3b).
+
+We use $15$ and $2$ million tokens for the pretraining and fine tuning phases, respectively following \citet{yao2022linking}.
+Datasets are always repeated or truncated to fit the required size so that the number of training steps stays constant.
+
+\paragraph{Tokenization}
+For tokenization we use byte pair encoding (BPE) \citep{Gage1994ANA} with a vocabulary size of $30\,000$ for all human languages.
+Using BPE across all human languages is done primarily to simplify the implementation and keep tokenization methods consistent across all of the selected human languages.
+Emergent languages are generally considered to be pre-tokenized since most communication channels consist of one-hot vectors;
+  thus, no additional tokenization or preprocessing is applied.
+\unskip\footnote{%
+  Whether the tokens of an EL should be treated as words or subword units is an open question, although tokens as words is more common (but see \citet{ueda2023on} for tokens as subword units).
+  Practically speaking, many emergent languages are small enough that applying a $30\,000$-item BPE model would severely reduce the corpus size.
+}
+  
+\paragraph{Model}
+
+For our model, we use a small configuration of GPT-2 \citep{radford2019language}, similar to that used in \citet{yao2022linking}:
+  $6$ attention heads,
+  $6$ layers,
+  context length of $256$,
+  and hidden size of $768$
+  with the remainder of the model parameters being the same as the defaults in the Hugging Face Transformers implementation.
+  \unskip\footnote{\scriptsize\url{https://huggingface.co/docs/transformers/v4.36.1/en/model_doc/gpt2\#transformers.GPT2Config}}
+This yields $65$ million parameters in total.
+We kept the model on the smaller size to better suit it for the generally small amounts of data emergent languages corpora provide as well as to be more accessible (Design Goal 3d).
+Further details are listed in \Cref{sec:hparams-clm}.
+
+\paragraph{Metric}
+
+Given the use of language modeling for our evaluation task, we use token-level cross-entropy as the evaluation metric on the downstream task.
+This is a very common metric, making the outputs easy to interpret (Design Goal 3a).
+Although perplexity is more common as an evaluation of language models, the exponential nature of perplexity leads to more circuitous analyses and interpretation in our case, whereas cross-entropy is comparatively linear and additive (loosely speaking).
+\unskip\footnote{For example, it would make more sense to use logarithmic scales and geometric means to average and compare perplexities, but this would just be reverting back to cross-entropy!}
+For the final score of the benchmark, we take the arithmetic mean of the cross-entropy across the $10$ downstream human languages.
+That is, we define the benchmark's score for a given source language $s$ as as $h_s$:
+\begin{align}
+  h_{s} &= \mean_{t \in T}\left( h_{s,t}\right)
+  \label{eq:hs}
+\end{align}
+where $h_{s,t}$ is the test cross-entropy of a model trained on source language $s$ and finetuned and tested on target language $t$;
+  $T$ is the set of target languages.
+Since the score is based on cross-entropy, a lower score means better performance.
+
+
+\subsection{Implementation}
+\unskip\label{sec:implementation}
+
+XferBench is implemented as a small Python codebase which relies primarily on Hugging Face Transformers \citep{Wolf2019HuggingFacesTS} (Apache-2.0 license) and PyTorch \citep{pytorch} (BSD-3-Clause license) libraries.
+To run the benchmark, all that is required is to install the environment with either pip or conda, and run {\small\texttt{python -m xferbench path/to/corpus.jsonl}} (Design Goal 3c).
+The input corpus is simply formatted as a newline-separated list of integer arrays, specifically in the JSON Lines format (see \Cref{sec:input-example} for an example); a Hugging Face dataset (backed by Apache Arrow) can also be used for larger input corpora.
+The script executes all of the steps of the benchmark and yields a single floating point number which is that corpus's score on XferBench (the benchmark also saves the individual score across target languages for further analysis).
+Finer-grained functionalities are available and documented in the codebase.
+The benchmark takes about $5.5$ hours to run on a single NVIDIA GeForce RTX 2080 Ti:
+  $90$ minutes to train the base model and $30$ minutes for tuning and testing on each of the target languages (Design Goal 3d).
+Since the model is tuned independently on each target language, it is easy to parallelize this step and drastically shorten the wall-clock time of XferBench.
+
+The implementation is available at \url{https://github.com/brendon-boldt/xferbench} under the MIT license.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

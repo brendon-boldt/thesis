@@ -1,0 +1,20 @@
+\def\datapath{chapters/xferbench/data/clm-writing-system-type.tsv}
+
+% Auto-generated from Python Code
+\def\minval{-1.4613414181868514} \def\maxval{1.4665673232827234}
+
+{
+  \pgfplotstabletypeset[
+    col sep=tab,
+    columns={Source,Abjad,Alphabet,Mixed},
+    columns/Source/.style={
+      column type=l,
+      string type,
+    },
+    columns/Abjad/.style={/num grad={Abjad}{\maxval}{\minval}},
+    columns/Alphabet/.style={/num grad={Alphabet}{\maxval}{\minval}},
+    columns/Mixed/.style={/num grad={Mixed}{\maxval}{\minval}},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+  ]{\datapath}
+}

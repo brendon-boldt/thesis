@@ -1,0 +1,64 @@
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{latexsym,amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[nameinlink]{cleveref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usetikzlibrary{shapes,arrows,shadows.blur,calc,positioning,fit}
+
+\pgfplotsset{compat=1.18}
+
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\DeclareMathOperator*\mean{\text{mean}}
+\DeclareMathOperator*\stdev{\text{stdev}}
+
+\pgfplotsset{
+  discard if not/.style 2 args={
+    x filter/.code={
+      \edef\tempa{\thisrow{#1}}
+      \edef\tempb{#2}
+      \ifx\tempa\tempb
+      \else
+        \def\pgfmathresult{inf}
+      \fi
+    }
+  }
+}
+
+
+%%% End Commands %%%
+
+% From Siavoosh Payandeh Azad: https://www.siavoosh.com/blog/2019/01/05/latex-table-cell-coloring-based-on-values-in-the-cell/
+
+% \colorlet{BestColor}{blue!40}
+% \colorlet{WorstColor}{red!40}
+\definecolor{BestColor}{rgb}{0.5, 0.7, 1.0}
+\definecolor{WorstColor}{rgb}{1.0, 0.7, 0.5}
+
+\newcommand{\gradientcell}[3]{
+    % The values are calculated linearly between \minval and \maxval
+    % \pgfmathparse{int(round(100*(#1/(#3-#2))-(\minval*(100/(#3-#2)))))}
+    \pgfmathparse{int(round(100*(#3-#1)/(#2-#1)))))}
+      \xdef\tempa{\pgfmathresult}
+      % \cellcolor{blue!40!white!\tempa!red!40}
+      \cellcolor{BestColor!\tempa!WorstColor}
+      % \cellcolor{#5!\tempa!#4!#6} #1
+ }
+
+\tikzset{/num grad/.style n args={3}{
+  column name=#1,
+  column type=r, fixed, fixed zerofill, precision=2,
+  postproc cell content/.append style={
+    /pgfplots/table/@cell content/.add={\gradientcell{#2}{#3}{##1}}{},
+  },
+}}
+

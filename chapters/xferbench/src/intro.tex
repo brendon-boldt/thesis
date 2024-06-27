@@ -1,0 +1,86 @@
+\begin{abstract}
+In this chapter, we introduce a benchmark for evaluating the overall quality of emergent languages using data-driven methods.
+Specifically, we interpret the notion of the ``quality'' of an emergent language as its similarity to human language within a deep learning framework.
+We measure this by using the emergent language as pretraining data for a downstream NLP tasks in human language---the better the downstream performance, the better the emergent language.
+We implement this benchmark as an easy-to-use Python package that only requires a text file of utterances from the emergent language to be evaluated.
+Finally, we empirically test the benchmark's validity using human, synthetic, and emergent language baselines.
+\end{abstract}
+
+\begin{figure*}
+  \centering
+  \inputsrc{figures/benchmark-chart}
+  \caption{Illustration of the architecture of XferBench.}
+  \unskip\label{fig:chart}
+\end{figure*}
+
+\section{Introduction}
+
+% \drm{This chapter needs a stronger framing that will appeal to a broad readership. Most reviewers will not be very familiar with EC and it will not be immediately apparent to them why we would want to benchmark EC at all. You need to make the case that EC is something worth measuring, whether for engineering applications or scientific ones, and that existing metrics are not up to the task. You then need to argue that XferBench is fills the gap in a concrete way---that it measure the important (or an important) dimension of EC.}
+
+Neural language models learn many things in pretraining, but research suggests \citep{artetxe-etal-2020-cross} that a substantial part of that knowledge is not simply knowledge of a particular language or domain, but rather knowledge of ``how to language.''
+We currently teach models to ``language'' using vast quantities of text dredged from the dark recesses of the Web---text that is full of bias, toxicity, and potential intellectual property violations.
+Ideally, we would be able to teach models to ``language'' without such compromises through the use of synthetic data, but mainstream approaches to synthesizing data produce outputs that do not have the same structural and social properties as human language.
+
+Emergent communication (EC), also called emergent language (EL), is a potential solution to this problem \citep{yao2022linking,downey-etal-2023-learning,mu2023ec2}.
+Emergent languages are communication systems developed \textit{de novo} among multiple agents in a reinforcement learning simulation.
+Because the conditions under which they develop mirror, reductively, the conditions under which languages develop among humans, there is reason to believe that ELs will ultimately be more like human language than other sources of synthetic data.
+However, up to this point, there is no way of quantifying---in a holistic way---how much like human languages any particular EL really is, or to what extent it may provide useful pretraining signals.
+
+
+Research on deep learning-based emergent communication has seen the introduction of many metrics to measure various aspects of the language.
+These metrics quantify notions such as compositionality \citep{Brighton2006UnderstandingLE,Lazaridou2018EmergenceOL}, expressivity \citep{guo2023emergent}, ease-of-teaching \citep{li2019ease}, and zero-shot transfer \citep{Bullard2020ExploringZE}, to name a few.
+Despite this proliferation of metrics, emergent language largely lacks \emph{evaluation} metrics.
+An evaluation metric is specifically one that measures the \emph{overall quality of an emergent language} and not simply a particular property.
+Thus, we introduce XferBench, a data-driven benchmark for evaluating the overall quality of emergent languages using transfer learning with deep neural models.
+
+Evaluation metrics are critical in gauging progress in technical fields since they quantify otherwise vague notions of improvement over time.
+Benchmarks, in particular, pair evaluation metrics with specific data and evaluation procedures to compare various systems on common ground.
+Benchmarks and shared tasks have been critical to the development of NLP from the Penn Treebank \citep{Marcus1993BuildingAL} to the WMT datasets \citep{bojar2014wmt} to GLUE \citep{Wang2018GLUEAM}.
+
+In the field of emergent communication specifically,
+  \citet{yao2022linking} introduced the idea of using \emph{corpus transfer} as means of practically applying emergent communication to deep learning-based NLP via transfer learning.
+In corpus transfer, a language model is pretrained on a corpus of emergent language utterances before being tuned on real data for a human language-based downstream task.
+As a corollary, they suggest that the effectiveness of this transfer can serve as a means of evaluating the quality of the emergent in a more general sense.
+This is based on the intuition that the more similar two language are, the better transfer learning works from one to the other (observed in \citet{zoph-etal-2016-transfer}, for example).
+
+This chapter takes the transfer learning-as-an-evaluation metric idea from \citet{yao2022linking} and expands it into a full benchmark, XferBench, for emergent languages (illustrated in \Cref{fig:chart}).
+An evaluation metric for emergent languages in a benchmark format is the first of its kind.
+Additionally, XferBench is unique within emergent communication for being primarily data-driven instead of relying on particular handcrafted algorithms for quantifying a given phenomenon.
+This means that XferBench can be easily scaled up in the future as the field of emergent communication advances and requires expanded means of evaluating emergent languages.
+Finally, XferBench is distributed as a user-friendly Python package, allowing researchers from across the field of emergent communication to apply XferBench to their own work on emergent communication.
+
+% In a more direct way, the effectiveness of transfer learning with an emergent language points to how useful it could be to deep learning approaches to NLP\@.
+
+
+\paragraph{Contributions}
+This chapter makes the following contributions:
+(1) Introduces XferBench, a data-driven benchmark for evaluating the overall quality of an emergent language, the first of its kind in emergent communication.
+(2) Provides a analysis of the quality human, synthetic, and emergent language according to XferBench.
+(3) Provides an easy-to-use Python implementation of XferBench.
+
+\section{Related Work}
+
+% \drm{This section is actually really important for this chapter because there is no much existing work on metrics for Emergent Language, just nothing extrinsic (as far as I know).}
+
+\paragraph{Emergent Communication}
+This chapter is situated in the field of emergent communication (a.k.a.\@ emergent language) which is generally covered by the review \citet{Lazaridou2020EmergentMC}.
+The field centers around the invention of language by deep neural networks typically using multi-agent reinforcement learning techniques.
+The study of emergent communication is intended to (1) shed light on the origin and nature of the human language \citep{lacroix2019biology,MoulinFrier2020MultiAgentRL,Galke2022EmergentCF} and (2) provide an alternative approach to problems in NLP and multi-agent reinforcement learning which relies on constructing language from the ground up and not just pre-existing (human) languages alone \citep{li-etal-2020-emergent,yao2022linking,mu2023ec2,downey-etal-2023-learning}.
+
+\paragraph{Transfer Learning}
+Transfer learning for deep neural networks is a key component of XferBench and follows in general tradition of \citet{zoph-etal-2016-transfer}.
+% More specifically, the methods and motivations of transfer learning in this chapter largely come through \citet{Papadimitriou2020LearningMH} and \citet{yao2022linking} which both look apply transfer learning to modeling synthetic and emergent languages with deep neural networks.
+Specifically, this chapter draws heavily from \citet{yao2022linking} (see also \citet{Papadimitriou2020LearningMH,artetxe-etal-2020-cross}) which introduce the technique of \emph{corpus transfer} for emergent language, that is, pretraining a neural model on an emergent language corpus before tuning it on a downstream human language task.
+In particular, this chapter takes \citet{yao2022linking}'s idea of using corpus transfer as a metric and adapts it into a benchmark pipeline which can easily be applied to new emergent languages.
+
+\paragraph{Benchmarks}
+% The subject of this chapter is also related to \citet{Brighton2006UnderstandingLE,Lazaridou2018EmergenceOL,Korbak2020MeasuringNC} which also look at quantitative metrics for emergent language, but the key difference is that XferBench seeks to provide an \emph{evaluation} metric which seeks to quantify the overall quality of the emergent language, not just some aspect in general.
+Work such as \citet{guo2023emergent} and \citet{perkins2022icy} have looked at benchmarking particular aspects of emergent languages, but XferBench is the first of its kind in benchmarking the overall quality of an emergent language.
+\citet{yao2022linking} also explicitly provide a metric for emergent language quality, but this metric is restrictive in that it can only be applied to emergent languages derived from a model that takes images (that have captions available) as input; this conflicts with the design goals of XferBench discussed below.
+
+Outside of emergent communication, XferBench is more analogous to benchmarks for generative models (e.g., Fr\'echet Inception Distance \citep{heusel2017fid} for image generation) than more traditional NLP benchmarks like GLUE \citep{Wang2018GLUEAM} or SQuAD \citep{rajpurkar-etal-2016-squad}.
+This is because emergent communication is a generative enterprise, where one of the main goals is to create samples (emergent languages) which resemble a target distribution (human languages) either generally or in some particular respect.
+Furthermore, metrics like FID are primarily self-supervised, data-driven measures of similarity in the same vein as XferBench.
+This is in contrast to more traditional NLP benchmarks which combine data-driven methods with many human judgments (i.e., through labeled examples).
+% Finally, XferBench resembles generative metrics in its scope vis-\'a-vis the task:
+%   while a metric like FID can give a general sense of the quality of the model producing the data, the particular downstream application may have different requirements which the metric/benchmark only captures a small portion of.

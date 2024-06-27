@@ -1,0 +1,175 @@
+\section{Experiments}
+
+% We begin this section by describing the experimental procedures for the XferBench (causal language modeling) and machine translation experiments (\Cref{sec:exp-proc}).
+% This is followed by a description of the reference language (\Cref{sec:ref-langs}) and the emergent languages (\Cref{sec:em-langs}) we use for our experiments.
+% Finally, we discuss the hypotheses for the experiments in \Cref{sec:hypotheses}.
+
+
+\subsection{Procedures}
+\unskip\label{sec:exp-proc}
+
+\paragraph{XferBench}
+The causal language modeling experiment is simply running XferBench as described in \Cref{sec:methods} on the reference and emergent languages discussed in \Cref{sec:ref-langs,sec:em-langs}.
+
+\paragraph{Machine translation}
+The machine translation experiment is structured similarly to XferBench except with the downstream task being English-to-French translation (using the WMT 2014 dataset \citep{bojar2014wmt}).
+The primary purpose of this experiment is to determine how well XferBench correlates with a more concrete downstream task (especially one that incorporates language modeling).
+We choose this language pair in part to gauge the relative differences between the task languages and the baseline human languages (in contrast to XferBench which we want to be largely agnostic to human languages).
+Looking at our reference human languages, we have:
+  French, the target language itself;
+  Spanish, closely related to French;
+  Russian and Hindi, distantly related to French;
+  and Chinese, Korean and Arabic, not related to French.
+Instead of using a GPT-2--based model, we use a BART-based model since MT is a conditional generation task (see \Cref{sec:hparams-mt} for details).
+The pretraining dataset size is increased to $100$ million due to the increased difficulty of this task compared to language modeling.
+We evaluate the translation performance with chrF \citep{chrf} and BLEU \citep{bleu} using the default Hugging Face Evaluate metrics (derived from sacreBLEU \citep{post-2018-call}).
+Evaluation is performed with beam sizes of $1$, $3$, and $5$, and the resulting values are averaged.
+
+We present three settings for this experiment.
+The first is \emph{Full} which tunes on $50$ million source tokens at a higher learning  rate ($1\cdot10^{-4}$ for training and $2\cdot10^{-4}$ for the AdamW optimizer \citep{adam}), which we found empirically to lead to the best performance.
+The second is \emph{Frozen}, in which we use the same configuration as \emph{Full} but freeze all but the embedding layers before tuning the model for translation (as in \citet{Papadimitriou2020LearningMH,artetxe-etal-2020-cross}).
+Finally, we also present \emph{Reduced} which uses a smaller tuning dataset of $10$ million tokens and lower learning learning ($2\cdot10^{-5}$);
+  the lower rate helped the random baselines converge better as well as showed better distinction between languages.
+
+
+\subsection{Reference languages}
+\unskip\label{sec:ref-langs}
+
+The following reference languages serve as a way to contextualize the results of XferBench as well as to validate that it is capturing some notion of the quality of the emergent languages (cf. \Cref{sec:hypotheses}).
+
+\paragraph{Human languages}
+
+For our baseline line human languages, we selected French, Spanish, Russian, Chinese, Korean, Arabic, and Hindi.
+\unskip\footnote{The main reason for choosing the high-resource language is due to the higher data requirements of machine translation experiment discussed below.}
+Like the evaluation languages, the data is derived from Wikipedia articles (same source as the target languages).
+
+% \cmt{Maybe the following belongs in its own section somewhere on \emph{interpreting the benchmark and its baselines}.}
+
+
+\paragraph{Synthetic languages}
+
+For synthetic languages, we follow \citet{yao2022linking} and use ``Zipfian parentheses'' from \citet{Papadimitriou2020LearningMH}.
+This synthetic dataset---referred to as \emph{Paren, real}---is hierarchically balanced ``parentheses'' where each parenthesis is the token ID sampled from the unigram distribution of a human language (hence ``Zipfian'').
+This datasets mimics both the unigram distribution of a human language as well as the basic recursive hierarchical structure.
+This yields a reasonably strong yet simple baseline for synthetic data.
+
+We also test a fully synthetic dataset (\emph{Paren, synth}) which uses the same hierarchical parenthesis generation script from \citet{Papadimitriou2020LearningMH}, replacing the data-derived unigram distribution with Zipf--Mandelbrot distribution:
+\begin{align}
+  f(w_i) &= \frac{1}{{(i+\beta)}^\alpha}
+\end{align}
+where $f(w_i)$ is non-normalized probability weight of word $w$ with $1$-based index (rank) $i$, $\alpha=1$, $\beta=2.7$ \citep{mandelbrot1953informational,Piantadosi2014-ru}.
+
+
+\paragraph{Random baselines}
+
+We use two random baselines.
+The first is simply a uniform unigram distribution across the whole vocabulary with no additional structure (referred to as \emph{Random}).
+This baseline sheds light on whether the optimization itself, no matter training data, primes the network in some way for transfer learning.
+The second ``random'' baseline is no pretraining at all (\emph{No pretrain}); that is, a network which has been freshly initialized at the tuning stage.
+This baseline helps establish whether or not pretraining on other languages has any impact beyond tuning alone.
+
+
+\subsection{Emergent languages}
+\unskip\label{sec:em-langs}
+
+We present a summary of the key hyperparameters of emergent languages in \Cref{tab:ec-specs}.
+The emergent language corpora below come from reproductions from existing codebases with the exception of \citet{yao2022linking}, whose emergent language corpus is available for download.
+Emergent languages which have a corpus size smaller than the required size are simply repeated and shuffled as many times as necessary so that the model receives the same number of optimization steps.
+
+\begin{table}
+  \centering
+  \begin{tabular}{llrrr}
+    \toprule
+    Setting         & Observ. & $|V|$   & $|M|$   & $|C|$ \\
+    \midrule
+    Disc, small     & one-hot & $6$     & $11$    & $700$ \\
+    Disc, large     & one-hot & $100$   & $31$    & $100\,\text{M}$ \\
+    Recon, large    & one-hot & $100$   & $31$    & $31\,\text{M}$ \\
+    Mu+, CUB        & embed   & $20$    & $10$    & $1.3\,\text{M}$ \\
+    Mu+, SW         & embed   & $14$    & $7$     & $1.2\,\text{M}$ \\
+    Yao+            & embed   & $4028$  & $15$    & $43\,\text{M}$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{%
+    Summary of key hyperparameters in the tested emergent languages.
+    Observations are either one-hot vectors or embeddings.
+    $|V|$, $|M|$, and $|C|$ refer to the vocabulary, message, and corpus size respectively.
+  }
+  \unskip\label{tab:ec-specs}
+\end{table}
+
+
+\iffalse
+\begin{table}
+  \centering
+  \begin{tabular}{lrrrrr}
+    Name & Attr. & Val. & Dist. & Vocab & Max len. \\
+    \midrule
+    Small & $4$ & $4$ & $5$ & $6$ & $10$ \\
+    Large & $12$ & $8$ & $5$ & $100$ & $30$ \\
+  \end{tabular}
+  \caption{%
+    Configurations for emergent language corpora.
+    The headings are (respectively), the name we use for the configuration, the number of attributes an ``object'' has, number of values each attribute can take, number of distractors, vocabulary size, and maximum message length.
+  }
+  \unskip\label{tab:settings}
+\end{table}
+\fi
+
+
+\paragraph{Generic signalling game}
+The first set of emergent languages we test are generic versions of the of the signalling game (reference game) as implemented in EGG \citep{kharitonov-etal-2019-egg} (MIT license).
+These games use one-hot vectors to represent attribute--value observations, that is, observations are elements of the set $V^{|A|}$ where $V$ is the set of values and $|A|$ is the number of attributes.
+The signalling game is one of the simplest and most used games in emergent communication research.
+
+The first two language are \emph{Disc, small} and \emph{Disc, large} which are two configurations of the discrimination version of the signalling game.
+Here, the sender makes an observation and sends a message;
+  then, the receiver must select the corresponding observation from a small set of potential observations (like a multiple-choice question).
+The \emph{small} configuration consists of $4$ attributes and $4$ values with a small vocabulary size and medium message length;
+  this setting is intended to represent a toy environment that one might find in an emergent communication paper.
+The \emph{large} configuration consists of $12$ attributes and $8$ values with a larger vocabulary and longer message length.
+Both environments show $5$ distractor observations to the receiver (i.e., $6$-way multiple choice).
+Both settings converge to a success rate ${>}95\%$ compared to a random baseline of ${~}17\%$.
+
+The \emph{Recon, large} environment is based on the reconstruction version of the signalling game.
+In this version, the receiver does not make any observations and instead must recreate the sender's observation based on the message alone (similar to an autoencoder).
+The observation space has $8$ attributes and $8$ values with other settings identical to that of \emph{Disc, large}. 
+Since the reconstruction game considerably harder, the game does not converge but does reach an overall accuracy of $0.014\%$ and per-attribute accuracy of $24\%$ compared to a random baseline of $0.000006\%$ and $13\%$ random baseline, respectively.
+For details, see \Cref{sec:hparams-egg}.
+
+\paragraph{\citet{mu2021generalizations}}
+present the second pair of emergent languages which we test XferBench on (code under MIT license).
+The emergent communication game is also a discriminative signalling game but with (1) richer observations and (2) more abstract information needing to be communicated.
+In one setting, the observations are images from ShapeWorld \citep{Kuhnle2017ShapeWorldA} (\emph{Mu+, SW}), a synthetic data of various geometric shapes, and the other setting is CUB \citep{WahCUB_200_2011} (\emph{Mu+, CUB}) which contains labeled images of birds;
+  both settings encode features with a CNN which is the passed to the sender and receiver.
+In the basic discriminative game, the observation made by the sender is the exact same one seen by the receiver.
+\citet{mu2021generalizations} instead uses a ``concept game'' where the sender must communicate some abstract concept shared by a set of input images which the receiver will then have to a pick out from a different set of images, some sharing the same concept (e.g., isolating the concept of ``triangle'' or ``bird size'').
+The ShapeWorld and CUB games had test accuracies of $71\%$ and $66\%$ respectively compared to a random baseline of $50\%$, comparable to the reported values in the paper.
+All messages were taken from observations seen in training.
+
+% Both settings use a vocabulary size and message length closer to \emph{Disc., small}
+
+\paragraph{\citet{yao2022linking}} present a standard discrimination game which uses natural images (Conceptual Captions \citep{sharma-etal-2018-conceptual} (images only)) as inputs to the sender and receiver (code unlicensed but distributed on GitHub with paper).
+The accuracy for the particular emergent language corpus is not reported in the paper, but comparable experiments from the paper would suggest that it converged to an accuracy of ${>}90\%$ compared to a baseline of $0.4\%$ (i.e., $255$ distractors).
+
+\subsection{Hypotheses}
+\unskip\label{sec:hypotheses}
+
+The following hypotheses are directly relate to determining whether or not XferBench is quantifying some meaningful notion of the quality of a language (i.e., Design Goal 1).
+
+(H1) Human languages will perform best, followed by the synthetic and emergent languages, followed by the random baselines.
+
+(H2) Human languages will have similar performance on XferBench (also key for Design Goal 3b);
+  the intuition here is that human languages share deep structural similarities.
+  This hypothesis is supported, in part, by \citet{artetxe-etal-2020-cross}.
+  For the MT experiment, we expect to see the following order of performance based on language relatedness:
+    \{\emph{French}\},
+    \{\emph{Spanish}\},
+    \{\emph{Russian}, \emph{Hindi}\},
+    \{\emph{Chinese}, \emph{Korean}, \emph{Arabic}\}.
+
+(H3) Languages with a larger vocabulary, longer message length, and larger corpora will perform better.
+  In particular, we expect \emph{Disc, large} will perform better than \emph{Disc, small} since the former is a more ``complex'' version of the latter.
+  This hypothesis (for vocabulary size and message length) is supported by some experiments in \citet[app.\@ B.4]{yao2022linking}.
+
+(H4) XferBench will correlate well with scores on the machine translation task (i.e., cross-entropy will correlate negatively with chrF).

@@ -1,0 +1,24 @@
+\def\datapath{chapters/xferbench/data/clm-writing-system.tsv}
+
+% Auto-generated from Python Code
+\def\minval{-1.596999365469606} \def\maxval{1.9290681566044732}
+
+{
+  \pgfplotstabletypeset[
+    col sep=tab,
+    % columns={name,da,eu,fa,fi,he,id,ja,kk,ro,ur,mean},
+    columns={Source,Arabic,Cyrillic,Hebrew,Japanese,Latin},
+    columns/Source/.style={
+      column type=l,
+      string type,
+    },
+    % every cell/.style={/num grad={\scriptsize Danish}{\maxda}{\minda}},
+    columns/Arabic/.style={/num grad={Arabic}{\maxval}{\minval}},
+    columns/Cyrillic/.style={/num grad={Cyrillic}{\maxval}{\minval}},
+    columns/Hebrew/.style={/num grad={Hebrew}{\maxval}{\minval}},
+    columns/Japanese/.style={/num grad={Japanese}{\maxval}{\minval}},
+    columns/Latin/.style={/num grad={Latin}{\maxval}{\minval}},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+  ]{\datapath}
+}

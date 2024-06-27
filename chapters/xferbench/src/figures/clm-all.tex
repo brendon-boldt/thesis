@@ -1,0 +1,33 @@
+\pgfplotstableread[col sep=tab]{chapters/xferbench/data/clm.tsv}{\mytable}
+\pgfplotstablegetrowsof{\mytable}
+\pgfmathtruncatemacro\LastRowNo{\pgfplotsretval-1}
+
+% Auto-generated from Python Code
+\def\minda{4.888070106506348} \def\maxda{5.2285661697387695} \def\minfi{5.571471214294434} \def\maxfi{5.922538757324219} \def\minhe{5.425610065460205} \def\maxhe{5.7144880294799805} \def\minro{5.118478298187256} \def\maxro{5.449519157409668} \def\minfa{5.008924961090088} \def\maxfa{5.305185317993164} \def\mineu{6.005818843841553} \def\maxeu{6.167392253875732} \def\minja{5.180477142333984} \def\maxja{5.550778388977051} \def\minur{4.381984710693359} \def\maxur{4.718813419342041} \def\minkk{5.438832759857178} \def\maxkk{5.755498886108398} \def\minid{4.756775856018066} \def\maxid{5.218039512634277} \def\minmean{5.180562829971313} \def\maxmean{5.50308198928833}
+
+{
+  \footnotesize
+  \pgfplotstabletypeset[
+    col sep=tab,
+    columns={name,da,eu,fa,fi,he,id,ja,kk,ro,ur,mean},
+    columns/name/.style={
+      column name=Source,
+      column type=l,
+      string type,
+    },
+    % every cell/.style={/num grad={\scriptsize Danish}{\maxda}{\minda}},
+    columns/da/.style={/num grad={\scriptsize Danish}{\maxda}{\minda}},
+    columns/eu/.style={/num grad={\scriptsize Basque}{\maxeu}{\mineu}},
+    columns/fa/.style={/num grad={\scriptsize Persian}{\maxfa}{\minfa}},
+    columns/fi/.style={/num grad={\scriptsize Finnish}{\maxfi}{\minfi}},
+    columns/he/.style={/num grad={\scriptsize Hebrew}{\maxhe}{\minhe}},
+    columns/id/.style={/num grad={\scriptsize Indonesian}{\maxid}{\minid}},
+    columns/ja/.style={/num grad={\scriptsize Japanese}{\maxja}{\minja}},
+    columns/kk/.style={/num grad={\scriptsize Kazakh}{\maxkk}{\minkk}},
+    columns/ro/.style={/num grad={\scriptsize Romanian}{\maxro}{\minro}},
+    columns/ur/.style={/num grad={\scriptsize Urdu}{\maxur}{\minur}},
+    columns/mean/.style={/num grad={\scriptsize\textit{Mean}}{\maxmean}{\minmean}},
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+  ]{chapters/xferbench/data/clm.tsv}
+}

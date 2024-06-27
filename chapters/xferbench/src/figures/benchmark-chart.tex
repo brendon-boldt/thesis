@@ -1,0 +1,49 @@
+\tikzstyle{blockStyle}=[
+  draw=black!50,
+  fill=violet!20,
+  text width=1.9cm,
+  minimum width=2cm,
+  text centered,
+  blur shadow={shadow blur steps=5},
+  rounded corners,
+  font=\small,
+]
+\tikzstyle{labelStyle} = [
+  fill=black!1,
+  draw=black!50,
+  align=center,
+  font=\small,
+  text width=1.5cm,
+  text centered,
+  above,
+  rounded corners,
+]
+
+\begin{tikzpicture}[
+  node distance=10mm,
+]
+  \node (alpha) [blockStyle,fill=red!20] {Emergent language corpus};
+  \node (beta) [blockStyle,fill=yellow!20,right=of alpha] {Pretrain language model};
+  \node (gamma) [blockStyle,fill=green!20,right=of beta] {Tune on Human Language $1$};
+  \node (delta) [blockStyle,fill=blue!20,right=of gamma] {Cross-entropy on HL $1$};
+
+  \node (gamma2) [blockStyle,fill=green!20,node distance=2mm,below=of gamma] {Tune on HL $2$};
+  \node (gamma3) [node distance=-1mm,below=of gamma2] {\vdots};
+  \node (gamma4) [blockStyle,fill=green!20,node distance=0mm,below=of gamma3] {Tune on HL $n$};
+  \node (delta2) [blockStyle,fill=blue!20,right=of gamma2] {CE on HL $2$};
+  % \node (delta3) [node distance=0mm,below=of delta2] {\vdots};
+  \node (delta3) at (gamma3-|delta2) {\vdots};
+  \node (delta4) [blockStyle,fill=blue!20,right=of gamma4] {CE on HL $n$};
+  \node (epsilon) [blockStyle,fill=violet!20,right=of delta] {Final score (average)};
+
+  \draw [-stealth] (alpha) to (beta);
+  \draw [-stealth] (beta) to (gamma);
+  \draw [-stealth] (gamma) to (delta);
+  \draw [-stealth] (gamma2) to (delta2);
+  \draw [-stealth] (gamma4) to (delta4);
+  \draw [-stealth, rounded corners] (beta.south) to (beta|-gamma2) to (gamma2.west);
+  \draw [-stealth, rounded corners] (beta.south) to (beta|-gamma4) to (gamma4.west);
+  \draw [-stealth] (delta) to (epsilon);
+  \draw [-stealth, rounded corners] (delta2.east) to (epsilon|-delta2) to (epsilon.south);
+  \draw [-stealth, rounded corners] (delta4.east) to (epsilon|-delta4) to (epsilon.south);
+\end{tikzpicture}

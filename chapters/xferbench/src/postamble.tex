@@ -1,0 +1,20 @@
+\section{Conclusion}
+In this paper we have introduced XferBench, a first-of-its-kind benchmark for evaluating the quality of an emergent language corpus based on its transfer learning performance on human languages.
+This approach to evaluating emergent language scales with data and compute as opposed to requiring increasingly complex handcrafted rules to measure the desirable qualities of emergent language.
+We provide empirical results of XferBench across human, synthetic, and emergent languages and demonstrate that these results correlate with downstream performance on a machine translation task.
+XferBench is implemented as an easy-to-use Python package that will permit researchers in the field to easily apply XferBench to new emergent languages.
+
+
+
+\section{Limitations}
+The first limitation of XferBench is that it relies on a restricted interface with the emergent communication system.
+With emergent communication we have access not only to the grounding of all of the utterances of the emergent language but also full access to the agents themselves.
+Language is fundamentally a contextual phenomenon, so only a small part of it can be understood from looking at corpora in isolation.
+Thus, although XferBench is much more broadly applicable because of this restricted interface, it is also quite limited in what it can detect from a theoretical point of view.
+
+The other set of limitations we will discuss have to do with the model and data size.
+First, the model and data size ($60\,\text{M}$ parameters and $15\,\text{M}$ tokens) are quite small by contemporary standards, limiting the direct applicability of results from XferBench to relevant downstream tasks involving large language models, for example.
+On the other hand, scaling up the models, data, and methods of XferBench comes with its own difficulties.
+First, it would start to bias the benchmark towards high-resource languages, as only those could provide the necessary data to accommodate larger models.
+Second, it would make XferBench, which is already relatively slow as a metric ($6$ GPU-hours) even slower.
+This would decrease the speed of the iterative design process of emergent communication systems and, thus, the utility of the metric as a whole.

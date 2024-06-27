@@ -1,0 +1,33 @@
+% Copied from Python
+\def\minMtFreeze{3.0008366006472933} \def\maxMtFreeze{31.43874145449612} \def\minMtLL{17.302641642978895} \def\maxMtLL{37.24975237865812} \def\minMtWmt{1.808097831638931} \def\maxMtWmt{48.238421694703696}
+
+\pgfplotstabletypeset[
+  col sep=tab,
+  columns={name,MtWmt,MtFreeze,MtLL},
+  columns/name/.style={
+    column name=Source,
+    column type=l,
+    string type,
+  },
+  columns/MtFreeze/.style={
+    /num grad={Frozen}{\minMtFreeze}{\maxMtFreeze},
+    precision=1,
+  },
+  columns/MtWmt/.style={
+    /num grad={Full}{\minMtWmt}{\maxMtWmt},
+    precision=1,
+  },
+  columns/MtLL/.style={
+    /num grad={Reduced}{\minMtLL}{\maxMtLL},
+    precision=1,
+  },
+  every head row/.style={before row=\toprule,after row=\midrule},
+  every last row/.style={
+    after row={%
+      \midrule
+      % {\tiny Correlation with XferBench} & $-0.53$ & $-0.53$ & $-0.65$ \\
+      \begin{minipage}[c]{0.6in}\centering\small Correl.\@ with\\XferBench \end{minipage} & $-0.75$ & $-0.84$ & $-0.79$ \\
+      \bottomrule
+    }
+  },
+]{chapters/xferbench/data/mt-chrf.tsv}

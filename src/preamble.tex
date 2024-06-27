@@ -6,6 +6,7 @@
 % \usepackage{kpfonts}
 
 \usepackage{hyperref}
+\usepackage{natbib}
 \usepackage{xcolor}
 % \usepackage{url}
 % \usepackage{xurl}
@@ -15,6 +16,8 @@
 % \usepackage[nameinlink]{cleveref}
 
 \usepackage{lipsum}
+
+\input{chapters/xferbench/src/preamble}
 
 
 %%% Formatting %%%
@@ -41,3 +44,7 @@
 \newcommand\bjb[1]{{\stepcounter{comment}\color{purple}[BJB\@: #1]}}
 \newcommand\drm[1]{{\stepcounter{comment}\color{orange}[DRM\@: #1]}}
 \newcommand\cmt[1]{{\stepcounter{comment}\color{gray}[#1]}}
+
+\newcommand\note[1]{\color{gray}[\emph{#1}]}
+
+\newcommand\inputsrc[1]{\input{#1}}
