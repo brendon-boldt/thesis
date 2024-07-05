@@ -1,4 +1,118 @@
+\setcounter{chapter}{-1}
+%%%%%%%%%%%%%%%%%%
+\chapter{Proposal Summary}
+%%%%%%%%%%%%%%%%%%
+
+This chapter will not be part of the final thesis but serves as more of an executive summary of where I am in the thesis process.
+\Cref{tab:timeline} describe the notional timeline of my doctoral work.
+The following to sections briefly summarize the papers I have completed so far, and the papers that I plan to publish to complete my thesis.
+More substantial descriptions of the work are given in the body of thesis.
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{lll}
+  \toprule
+  2019 & August & Began research master's degree (CMU) \\
+  2021 & August & Completed masters, began PhD \\
+  2024 & August & Proposal \\
+  & July--September & XferBench eval (\Cref{ch:xferbench-analysis}) \\
+  & October--December & Rich corpora (\Cref{sec:rich-corpora}) \\
+  2025 & January--March & Linguistic universals (\Cref{ch:universals}) \\
+  & April--June & Meta-analysis (\Cref{ch:meta-analysis}) \\
+  & July & Defense \\
+  \bottomrule
+  \end{tabular}
+
+  \caption{Timeline}
+  \unskip\label{tab:timeline}
+\end{table}
+
+\section{Completed Work}
+% The following completed research papers will be incorporated into the thesis (either in part or their entirety).
+% Other work has be published and/or completed during the course of my master's and doctoral work but will not play major role in the thesis.
+
+
+\subsection{Recommendations for Systematic Research on Emergent Language}
+\noindent
+\citet{boldt2022recommendations} was rejected from ICML 2022; part of this work was expanded into ``A Review of the Applications of Deep Learning-Based Emergent Communication'' discussed below.
+This is a position paper which critiques and makes recommendations for emergent communication research from a meta-scientific angle.
+It begins by specifying the goals of emergent communication research (which would eventually become the TMLR paper).
+In light of these goals, which are split between ``engineering'' and ``scientific'' goals, the paper discusses core methodological elements of engineering and science.
+Finally, each of the core methodological elements is explicitly detailed in the context of emergent communication.
+In addition to the goals, the particular elements of engineering which are pursued in this thesis are evaluation metrics and standard datasets.
+
+\subsection{A Review of the Applications of Deep Learning-Based Emergent Communication}
+
+\noindent
+\citet{boldt2024review} was published in the \textit{Transactions of Machine Learning Research} (TMLR) in February 2024.
+This paper comprehensively reviews the applications and goal of emergent communication research drawing on both the literature and the author's (i.e., Brendon and David's) experience in the field.
+Each application, in addition to a description and review of the relevant literature, is a accompanied by a brief set of recommendations on the most fruitful next steps for that research direction.
+The set of applications themselves is divided into three categories:
+  (1) internal applications, which focus on improving the methods of emergent communication itself,
+  (2) task-driven applications, which look at engineering tasks focused on more effectively solving particular problems,
+  and (3) knowledge-driven applications, which aim at increasing scientific understanding of particular phenomena.
+
+\subsection{XferBench: a Data-Driven Benchmark for Emergent Language}
+\noindent
+\citet{boldt2024xferbench} was published in the \textit{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} (NAACL).
+This paper introduces a first-of-its-kind evaluation metric/benchmark for emergent languages.
+It addresses the question of the \emph{quality} of an emergent language by looking at its similarity to human language from a data-driven, machine learning perspective.
+Specifically, it quantifies ``similarity to human language''---and, therefore, overall quality---as how much pretraining on an emergent language corpus improves performance on modeling human language (although we also test machine translation).
+XferBench is published as an easy-to-use Python package, and since it only requires an unannotated corpus of utterances from the emergent language, it is intended to have widespread use in emergent communication research.
+
+
+\subsection{ELCC: the Emergent Language Corpus Collection}
+Under review at the \textit{2024 Conference on Neural Information Processing Systems Datasets and Benchmarks Track} (decision in September 2024).
+This paper introduces a collection of over $70$ emergent language corpora from across $8$ different systems in the literature.
+Each of these corpora is annotated with statistical analyses as well as metadata documenting the features of the system/environment it came from.
+Such a resource is intended to make studying emergent languages themselves far easier since it obviates the need run the systems oneself and enable comparative studies given the variety of emergent communication systems included.
+
+\subsection{Other Work}
+Some work completed during the course of master's and doctoral work will not factor heavily into the thesis.
+In ``Mathematically modelling the lexicon entropy of emergent language'' \citep{boldt2022mathematically}, we investigate using a formal model based on the Chinese restaurant process to make predictions of the entropy of lexica in emergent languages; this is intended to be a sort of exemplar of using formal models to make clear, determinate hypotheses regarding emergent communication experiments.
+In ``Shaped rewards bias emergent language'' \citep{boldt2022shaped}, we argue that reward shaping (a common feature of reinforcement learning experiments) has the potential to bias (i.e., predetermine) properties of the resulting emergent language.
+In ``Case study: deontological ethics in NLP'' \citep{prabhumoye-etal-2021-case}, we apply deontological approach to ethics to different real-world scenarios in natural language processing-based systems.
+
+
+
+\section{Proposed Work}
+This section will briefly described the proposed work for the completion of the doctoral thesis.
+Each of these papers is intended to a standard conference-length paper (i.e., 8--9 pages).
+
+\subsection{XferBench analysis}
+In this paper, which is currently in progress, we will run XferBench on all of the languages in ELCC in order to find correlations between XferBench performance and features of the corpora and emergent communication system they come from.
+For example, we hope to answer question such as ``Do more complex environments yield better emergent languages?'' or ``Is token entropy of an emergent language predictive of its score on XferBench?''
+These analyses will help to understand what XferBench is measuring and whether it is easily explainable by surface-level statistics of the corpus or whether some deeper structural characteristics might be required to understand XferBench's outputs.
+
+
+\subsection{Rich emergent language corpora}
+ELCC, the current collection of emergent language corpora, only includes the corpora themselves and aggregate statistics, but many interesting research directions require not only having access to the tokens of utterances themselves but also their context.
+For example, anything related to semantics is going to require some way to determine what an utterance means.
+Thus, we propose an extension to ELCC which takes the same set of corpora and includes information about the state of the environment before and after each utterance so as to supply grounding for each of the utterances.
+From here, it will be possible to explore a far greater range of phenomena with respect to the emergent language corpora in ELCC\@.
+
+\subsection{Detecting linguistic universals in emergent communication}
+This project will be the linguistic counterpart to XferBench (or at least the foundation thereof).
+Whereas XferBench looks at the question of emergent language quality and similarity to human language from a data-driven, machine learning perspective, this paper will explore an evaluation metric from similarity to human language which focuses on the encoding linguistic knowledge into a detection algorithm for human language universals in emergent language corpora.
+The main challenge of this paper is that many of what might be considered linguistic universals in human language already presuppose a large amount of structure within languages (e.g., morphemes), but it is has not be determined yet whether emergent languages possess anything like morphemes in human language.
+Thus, before we even begin to talk about matters of syntax, it is critical to establish what morphemes look like emergent language and how to find them.
+In light of this, I foresee this project focusing detecting the presence of morphemes (in some recognizable form) in emergent languages and potentially some very minimal notion of syntax built on top of any morphemes that may be present.
+
+
+\subsection{Meta\"analysis of linguistic and machine learning metrics}
+This paper is intended to be a sort of capstone of the thesis.
+In short, it will determine the relationship between data-driven and linguistics-driven evaluation metrics of human language?
+Is it the case that emergent languages which are better for pretraining neural models are also the ones that possess are more significant structural similarity to human languages (in linguistic terms)?
+If not, is there something about the metrics that is deficient, or is perhaps the case that the linguistic and data-driven dimensions are to some extent orthogonal?
+In addition to this questions, we will also explore what these metrics might tell us about creating the optimal emergent communication system that jointly maximizes all of the aforementioned metrics.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%
 
 Modern-day large language model-based AI systems are good a mimicking human language.
 Some might even say they are good at \emph{using} human language, but this either imprecise or inaccurate:
@@ -31,28 +145,6 @@ Nevertheless, there are many particular concerns and techniques that are unique 
 
 
 \section{Summary of Thesis}
-
-\begin{enumerate}
-  \item library and resources
-  \item deep learning-based evaluation
-  \item linguistics-based evaluation
-\end{enumerate}
-
-\begin{table}
-  \centering
-  \begin{tabular}{lll}
-  \toprule
-  2024 & August & Proposal \\
-  & August--September & XferBench eval (\Cref{ch:xferbench-analysis}) \\
-  & October--December & Rich corpora (\Cref{sec:rich-corpora}) \\
-  2025 & January--March & Linguistic universals (\Cref{ch:universals}) \\
-  & April--June & Meta-analysis (\Cref{ch:meta-analysis}) \\
-  & July & Defense \\
-  \bottomrule
-  \end{tabular}
-
-  \caption{Timeline}
-\end{table}
 
 %\lipsum[1-7]{}
 
