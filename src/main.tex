@@ -31,14 +31,15 @@ Finally, this thesis explores the relationship between the machine learning-base
 
 \input{src/introduction}
 
-\chapter{Building a Library of Emergent Languages \note{under}}
-%\lipsum[1-20]{}
+\chapter{Building a Library of Emergent Languages \note{under review}}
 
 \footnote{Based on ``ELCC: the Emergent Language Corpora Collection'' currently under review at the Datasets and Benchmarks Track of NeurIPS 2024 \cmt{cite}.}
 
 
 \chapter{Adding Semantics Annotations to Corpora \note{proposed}}
 \unskip\label{ch:rich-corpora}
+
+\input{chapters/elcc-plus/src/main}
 
 
 \chapter{Evaluation of Emergent Languages with Deep Transfer Learning}
@@ -59,29 +60,13 @@ Finally, this thesis explores the relationship between the machine learning-base
 \chapter{Detecting Structure Among Morphemes \note{proposed}}
 \unskip\label{ch:syntax}
 
-\section{Introduction}
-
-Syntax, constructions
-
-\paragraph{Related Work}
-
-\section{Methods}
-
-Types of structure
-\begin{itemize}
-  \item Absolute position of morphemes
-  \item Relative position of morphemes (to each other)
-  \item Collocation of morphemes
-  \item Exclusivity of morphemes and word classes
-\end{itemize}
-
+\input{chapters/syntax/src/main}
 
 
 \chapter{Conclusion}
 
 \bibliographystyle{plainnat}
 \bibliography{src/main,chapters/xferbench/src/main}
-% \bibliography{chapters/xferbench/src/main}
 
 \appendix
 

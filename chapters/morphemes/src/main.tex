@@ -60,14 +60,14 @@ The result of the algorithm is a list of pairs of units of form and meaning whic
 
 The overall task of the algorithm is to take a collection of concrete, intermingled form--meaning pairs (i.e., utterances in context) and to yield a collection of abstract, isolated (units) form--meaning pairs.
 \Cref{tab:seg-example} illustrates a trivial example of the high-level task of the inputs and outputs of this algorithm.
-In the context of emergent communication, the input of the algorithm is a corpus of pairs consisting of a message sent by the agents (form) with the accompanying state of the world contextualizing the message (meaning).
+In the context of emergent communication, the input of the algorithm is a corpus of pairs consisting of a utterance sent by the agents (form) with the accompanying state of the world contextualizing the utterance (meaning).
 Formally written, we have
 \begin{align}
-  \mathcal C &\equiv (M_i, S_i) \\
-  \text{where}\quad\quad i &\in \{1,\cdots,|\mathcal C|\}
+  \mathcal C &\equiv (U_i, S_i) \\
+  \text{where}\quad\quad i &\in \{1,\dots,|\mathcal C|\}
   ,
 \end{align}
-where $\mathcal C$ is an indexed family representing the corpus, $M$ is a message, and $S$ is the state of the world at the time of the corresponding message.
+where $\mathcal C$ is an indexed family representing the corpus, $U$ is an utterance, and $S$ is the state of the world at the time of the corresponding message.
 
 Formalizing the outputs, on the other hand, is more difficult since what counts as a ``unit of form'' and what counts as a ``unit of meaning'' is highly abstract.
 Regarding units of form, some considerations include whether segments must be continuous (cf.\@ transfixes), whether a unit of form can have multiple surface realizations (cf.\@ allomrophy), and whether higher order forms ought to be considered (cf.\@ constructions like ``the $x$-er, the $y$-er'').
