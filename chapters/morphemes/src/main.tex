@@ -177,16 +177,21 @@ In particular, we identify the following primary axes of variation to investigat
 
 \paragraph{Emergent language}
 
-We plan to use the following
-
-
+We select the following subset of languages from the ELCC++ corpus to test the algorithm on.
 \begin{itemize}
-  \item EGG, disc
-  \item EGG, recon
-  \item Mu \& Goodman
-  \item Unger and Bruni
-  \item Boldt and Mortensen
+  \item \emph{EGG, discrimination and reconstruction}:
+    This is environment is a simple signalling game including both varieties.
+    The semantics are very easy to extract from the world state since they are simply disentangled attribute--value vectors.
+  \item \emph{Mu \& Goodman}:
+    This system includes incorporates more complex observations (i.e., images) into the signalling game that still have relatively tractable semantics to abstract (i.e., the data is synthetic or annotated with individual characteristics).
+  \item \emph{Boldt \& Mortensen}:
+    This system is a simple embodied navigation environment comprising an agent navigating toward a goal in an obstacle-free continuous world.
+    The primary interest of this environment is that the semantics are continuous, presenting an additional challenge for designing a suitable set of meaning decision functions.
+  \item \emph{Unger \& Bruni}:
+    This system is a richer embodied navigation environment which also incorporates concepts like rooms which can be unlocked with a key object.
+    It presents a richer set of semantics, notable including things like different types of objects, actions, history, and spatial relationships.
 \end{itemize}
+\cmt{Add citations above.}
 
 
 \subsection{Analysis}
