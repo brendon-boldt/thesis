@@ -34,7 +34,7 @@
 \setulmarginsandblock{1in}{*}{1}
 
 % Headers/Footers
-\newcommand\draftdate{\color{gray}\emph{Draft, \today}}
+\newcommand\draftdate{\color{gray}\today{} (draft)}
 \makeoddfoot{ruled}{\draftdate}{}{\thepage}
 \makeoddhead{ruled}{}{}{\leftmark}
 \makeoddfoot{plain}{\draftdate}{\thepage}{}
@@ -50,6 +50,6 @@
 \newcommand\drm[1]{{\stepcounter{comment}\color{orange}[DRM\@: #1]}}
 \newcommand\cmt[1]{{\stepcounter{comment}\color{gray}[#1]}}
 
-\newcommand\note[1]{\color{gray}[\emph{#1}]}
+\newcommand\note[1]{\color{gray}[#1]}
 
 \newcommand\inputsrc[1]{\input{#1}}
