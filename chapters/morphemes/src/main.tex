@@ -1,0 +1,200 @@
+\section{Introduction}
+
+Morphemes are the atomic units of form and meaning in language and stand at a pivotal place in the linguistic hierarchy between purely formal and the semantically-focused.
+Yet despite the importance of morphemes, the literature of emergent communication has spent little time studying the nature of morphemes in emergent communication.
+And as a result, there is no clear answer to the question of what a morpheme is emergent communication and how to identify them.
+This is a significant lacuna as it precludes much of the potential study of syntax, pragmatics, and sociological aspects of emergent communication.
+
+To ameliorate this, this chapter presents an algorithm for identifying morphemes in emergent communication.
+Specifically, the algorithm starts with a corpus of utterances in context (i.e., the world state and history when utterance occurred) as well as set of potential forms and meanings that could comprise morphemes in that corpus.
+The result of the algorithm is a list of pairs of units of form and meaning which are strongly associated with each other (i.e., morphemes).
+
+
+
+\paragraph{Related Work}
+\cmt{Word order biases?}
+\cmt{Lipinski \& al.}
+\cmt{Havrylov}
+
+\section{Algorithm}
+
+\begin{table}
+  \centering
+  \hfill
+  \begin{subfigure}[t]{0.4\linewidth}
+    \centering
+    \begin{tabular}{lc}
+      \toprule
+      Utterance & State \\
+      \midrule
+      single left & $\leftarrow$ \\
+      single right & $\rightarrow$ \\
+      double left & $\Leftarrow$ \\
+      double right & $\Rightarrow$ \\
+      \bottomrule
+    \end{tabular}
+    \caption{Simple corpus of utterances paired with the corresponding world state (observation).}
+    \unskip\label{tab:seg-corp}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.4\linewidth}
+    \centering
+    \begin{tabular}{lc}
+      \toprule
+      Form & Meaning \\
+      \midrule
+      single & $-$ \\
+      double & $=$ \\
+      left & $\prec$ \\
+      right & $\succ$ \\
+      \bottomrule
+    \end{tabular}
+    \caption{Morphemes extracted for the corpus in \Cref{tab:seg-corp}.}
+    \unskip\label{tab:seg-morph}
+  \end{subfigure}
+  \hfill
+  \caption{Example of the inputs (\Cref{tab:seg-corp}) and outputs (\Cref{tab:seg-morph}) of morpheme segmentation algorithm.}
+  \unskip\label{tab:seg-example}
+\end{table}
+
+
+The overall task of the algorithm is to take a collection of concrete, intermingled form--meaning pairs (i.e., utterances in context) and to yield a collection of abstract, isolated (units) form--meaning pairs.
+\Cref{tab:seg-example} illustrates a trivial example of the high-level task of the inputs and outputs of this algorithm.
+In the context of emergent communication, the input of the algorithm is a corpus of pairs consisting of a message sent by the agents (form) with the accompanying state of the world contextualizing the message (meaning).
+Formally written, we have
+\begin{align}
+  \mathcal C &\equiv (M_i, S_i) \\
+  \text{where}\quad\quad i &\in \{1,\cdots,|\mathcal C|\}
+  ,
+\end{align}
+where $\mathcal C$ is an indexed family representing the corpus, $M$ is a message, and $S$ is the state of the world at the time of the corresponding message.
+
+Formalizing the outputs, on the other hand, is more difficult since what counts as a ``unit of form'' and what counts as a ``unit of meaning'' is highly abstract.
+Regarding units of form, some considerations include whether segments must be continuous (cf.\@ transfixes), whether a unit of form can have multiple surface realizations (cf.\@ allomrophy), and whether higher order forms ought to be considered (cf.\@ constructions like ``the $x$-er, the $y$-er'').
+Units of meaning are even more difficult because of levels of abstraction that are possible whether it be non-concrete things like ``justice'', nuanced function words like ``lest'', or discourse-level phenomena like new versus old information.
+
+In light of this, the algorithm we propose does not somehow automatically consider all possible forms and meanings, rather, it also takes as input candidates of units of form and meaning.
+Practically speaking, this means that whoever is using the algorithm also decides what kinds of form and meaning are of interest.
+Thus, these candidates of units of form meaning are expressed as decision functions over messages and world states, respectively,
+  where the functions return $1$ if the form or meaning is present in the input and $0$ otherwise.
+Formally we express the decision functions as
+\cmt{figure out what to call message}
+\begin{align}
+  F_j &: \mathcal U \rightarrow \{0,1\} \\
+  M_k &: \mathcal S \rightarrow \{0,1\}
+  ,
+\end{align}
+where
+  $F_j$ is the $j$th candidate form decision function,
+  $\mathcal U$ is the set of all utterances,
+  $M_k$ is the $k$th candidate meaning decision function,
+  and $\mathcal S$ is the set of all world states.
+% Furthermore, let $\mathcal F$ and $\mathcal M$ be set of all form and meaning decision functions, respectively where ``all'' means all function defined for a given domain, not every possible decision functions.
+
+With corpus of utterance--state pairs combined with lists of form and meaning decision functions, we can calculate the joint probabilities units of form and units of meaning in the corpus:
+\begin{equation}
+  p_{\mathcal C}(F_j, M_k) = \frac1{|\mathcal C|} \sum^{|\mathcal C|}_{i=1} F_j(U_i) \cdot M_k(S_i)
+  .
+  \label{eq:morph-joint}
+\end{equation}
+
+
+% The output, then will be sequences of tokens as the units of form and 
+
+% In the case of emergent communication, units of form correspond to segments of specific tokens which appear in the emergent language's utterances.
+
+\cmt{Address somewhere that this does not get us segmentation.  Maybe we don't even want segmentation?}
+
+Given joint probabilities, we can use normalized point-wise mutual information (NPMI) \cmt{cite, cite} to determine the degree of association between units of form and meaning.
+NPMI is an extension of point-wise mutual information which is constrained to the interval $[-1,1]$
+  with $-1$ meaning two events never co-occur, $0$ meaning two events are statistically independent, and $1$ meaning two events always co-occur.
+PMI is defined
+\begin{equation}
+  \text{PMI}(x;y) \equiv \log_2\frac{p(x,y)}{p(x)p(y)}
+    = h(x) + h(y) - h(x,y)
+\end{equation}
+where $h(x)=-\log_2 x$ is the information content (aka.\@ Shannon information, self-information, surprisal) of $x$.
+NPMI is in turn defined as
+\begin{equation}
+  \text{NPMI}(x;y) \equiv \frac{\text{PMI}(x;y)}{h(x,y)}
+    = \frac{h(x)+h(y)}{h(x,y)} - 1
+\end{equation}
+
+By applying NPMI to each potential unit of form--unit of meaning pair based on the join probability in \Cref{eq:morph-joint}, we have degree of association between all pairs.
+Given a threshold of association $t\in(0,1]$, then, we can generate our set of morphemes for a given corpus
+\begin{equation}
+  \left\{(F_j, M_k) \mid \text{NPMI}_{\mathcal C}(F_j; M_k) \ge t \right\}
+  .
+\end{equation}
+
+% In particular, the foundation of the algorithm is the point-wise mutual information (PMI) between form (i.e., token segments) and meaning (i.e., semantic content)
+% Standard PMI describes the degree of association between two events occurring together beyond random chance in information theoretic terms (i.e., in terms of entropy).
+% It is defined as,
+% \begin{equation}
+%   \text{PMI}(x;y) \equiv \log_2\frac{p(x,y)}{p(x)p(y)}.
+% \end{equation}
+% Normalized PMI constrains its output to the interval $[-1,1]$ with $-1$ meaning $x$ and $y$ never co-occur, $0$ meaning $x$ and $y$ are independent, and $1$ meaning $x$ and $y$ always co-occur.
+\cmt{\url{https://arxiv.org/abs/2406.07277}}
+\cmt{\url{https://svn.spraakdata.gu.se/repos/gerlof/pub/www/Docs/npmi-pfd.pdf}}
+
+
+% \subsection{Implementation}
+% \cmt{Discuss the implementation of the algorithm, specifically how things will be simplified.}
+
+
+\cmt{Think about how to handle the atomicity of morphemes.}
+\cmt{How does handle homonymy? Do we want something asymmetric?}
+
+\section{Experiments}
+
+\subsection{Data}
+
+We will perform two main sets of experiments.
+The first set is on synthetic data to demonstrate the behavior of the morpheme identification algorithm.
+The second set will pull languages from ELCC++ to demonstrate results on real emergent languages.
+
+\paragraph{Synthetic}
+
+The main goal with the synthetic datasets is to test the algorithm across different settings which vary along axes relevant to form, meaning, and their association.
+In particular, we identify the following primary axes of variation to investigate.
+\begin{itemize}
+  \item \emph{Form complexity}:
+    How complex is the form of the morphemes?
+    At the simplest level, morphemes would single tokens with no dependence on position in the utterance.
+    More complex forms could include multi-token morphemes, position dependent-morphemes, and mixtures thereof.
+  \item \emph{Meaning complexity}:
+    How complex are the meanings that are being extracted?
+    The simplest level would includes settings such as the signalling game where the observations are concatenations of atomic attributes.
+    More complex meanings could be derived from embodied environments with temporal and spatial extension resulting in multiple interrelated dimensions of meaning.
+  \item \emph{Compositionality}:
+    What is the nature of correspondence between form and meaning?
+    In fully compositional languages, the smallest units of meaning correspond directly with particular forms, yet in the cases of somewhat or non-compositional languages, it would be the case that the smallest units of meaning have no corresponding form and only larger, aggregate units of meaning have an associate form.
+  \item \emph{Synonymy and homography}:
+    To what extent the mapping between form and meaning non-bijective?
+    In a perfectly bijective mapping, every unit of form has one and one meaning and every meaning has only one form.
+    Synonymy refers to a meaning having multiple corresponding forms while homography refers to one form having multiple corresponding meanings.
+\end{itemize}
+
+\paragraph{Emergent language}
+
+We plan to use the following
+
+
+\begin{itemize}
+  \item EGG, disc
+  \item EGG, recon
+  \item Mu \& Goodman
+  \item Unger and Bruni
+  \item Boldt and Mortensen
+\end{itemize}
+
+
+\subsection{Analysis}
+
+In each of the synthetic settings, we know, by design what morphemes are present in the corpora.
+Thus, the analyses of synthetic datasets will determine to what degree the algorithms finding match the \emph{a prior} expectations of morphemes.
+Analysis of the results on emergent languages will focus on qualitative analysis as well as the degree to which the algorithm detects any morphemes smaller than entire utterances.
+For example, a holistic emergent language would have trivial morphemes that consist of entire utterances and concrete observations---essentially just the input corpus.
+Additionally, we will look at comparison with other semantics-focused metrics for emergent communication such as topographic similarity.
+
+\cmt{Are there any kind of aggregate metrics we can use?}
