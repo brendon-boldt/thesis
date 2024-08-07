@@ -1,6 +1,6 @@
 digraph G {
-  rankdir=TD;
-  node [shape="box", fillcolor="#eeffff", style="filled"];
+  rankdir=TD
+  node [shape="box", fillcolor="#eeffee", style="filled", fontname="sans-serif"];
 
   Word -> Morpheme;
   Morpheme -> Semantics;
@@ -15,6 +15,10 @@ digraph G {
   Clause -> Syntax;
   Opcl_class -> Pos;
   Discourse -> Sentence;
+
+
+  Semantics [fillcolor="#ddffff"];
+  Token [fillcolor="#ddffff"];
 
   Socvar [label="Social\nVariation"];
   Opcl_class [label="Open/Closed\nClass"];
