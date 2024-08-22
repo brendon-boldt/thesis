@@ -20,7 +20,7 @@ The algorithm takes the following as input,
 The output of the algorithm is a list of structural features which apply to certain classes of morphemes across the corpus, giving a primitive notion of the ``syntax'' of the emergent language described in the corpus.
 
 
-\paragraph{Morphemes}
+\subsection{Morphemes}
 It is assumed that each utterance in the corpus is a sequence of morphemes, notated as follows
 \begin{align}
   U &= (u_1, u_2, \dots, u_{|U|}) \\
@@ -35,41 +35,102 @@ Classes could also be based on the form of the morpheme like \emph{single-token}
 These classes will later be used to determine if certain patterns occur only at the level of individual morphemes or at the level of certain classes of morphemes.
 This morpheme classification mapping is written as
 \begin{align}
-  c &: \mathcal M \rightarrow \mathcal P(\mathcal C) \setminus \varnothing
+  C &: \mathcal M \rightarrow \mathcal P(\mathcal C) \setminus \varnothing
   ,
 \end{align}
 where $\mathcal P(\cdot)$ is the power set operator and $\mathcal C$ is the set of all classes so the co-domain of the function is all non-empty subsets of $\mathcal C$.
 If a given morpheme does not fall into any class \emph{a priori} it should be assigned to an \emph{unclassified} class, so as to simplify later steps in the algorithm.
 
+\cmt{Singleton set for each morpheme or only unidentified morphemes.}
 
-\paragraph{Structural feature functions}
+\subsection{Structural feature functions}
 
 The most important input to the algorithm is the set of \emph{structural feature functions} which detect the presence of certain structural features in a given utterance.
-
-Types of structure
-\begin{itemize}[nosep]
-  \item Absolute position of morphemes
-  \item Relative position of morphemes (to each other)
-  \item Collocation of morphemes
-  \item Exclusivity of morphemes and word classes
-\end{itemize}
+A feature function is specifically a boolean-valued logical formula which takes as arguments an utterance and a tuple of morpheme classes depending on the arity of the function.
+Thus, we write
 \begin{align}
-  F &: U \times \mathcal M^a \rightarrow \{0,1\}
+  F &: U \times \mathcal C^a \rightarrow \{0,1\}
+  ,
 \end{align}
+where $a$ is the arity of the function.
+
+Using this formalism, we can define a structural feature function which detects whether a morpheme class occurs at the beginning of an utterance as
 \begin{align}
-  \text{begin}^1 &\equiv [u_1 = m_1] \\
-  \textsc{AbsPos}^1(i) &\equiv [u_i = m_1] \\
-  \text{precede}^2 &\equiv [\exists i \, u_i = m_1 \wedge u_{i+1} = m_2] \\
-  \text{occur}^1 &\equiv [\exists i \,u_i = m_1] \\
-  \text{co-occur}^2 &\equiv [\exists i,j \, i \neq j \wedge u_i = m_1 \wedge u_j = m_2] \\
-  \text{order}^n &\equiv \left[\exists i \, \bigwedge_{j=1}^n u_{i+j-1} = m_{j} \right] \\
-  \textsc{Agree}^3 &\equiv [\text{co-occur}(m_1, m_2) \rightarrow \text{occur}(m_3)] \\
+  \textsc{Begin}(U, c_1) &\equiv c_1 \in C(u_1)
+  .
+\end{align}
+We can express the same function more succinctly with some abuse of notation:
+\begin{align}
+  \textsc{Begin}^1 &\equiv c_1(u_1)
+  ,
+\end{align}
+where $\textsc{Begin}^n$ would mean that the function has an arity of $n$ with the convention that the classes are named $c_1$, $c_2$, and so on until $c_n$
+  and $c_1(u_1)$ is true iff $u_1$ belongs to class $c_1$.
+For some feature functions, it is handy to generalize them by parameterizing the function itself.
+For example, if we want a function detecting the absolute position of a morpheme class, we would write
+\begin{align}
+  \textsc{AbsPos}^1(i) \equiv c_1(u_i)
 \end{align}
 
-We can illustrate the \textsc{Agree} rule with two simple example.
-In simple English sentences with only a subject and a verb, if we have ``he'' and ``run'', we know that the ``-s'' morpheme will also be present (so we have ``he runs'' and not ``he run'').
-Or in Latin adjectival phrases, if we have ``Caesar'' (a masculine title) and the root ``august-'' (i.e., meaning ``venerable''), we know that the ``-us'' ending will be present such that ``august-'' agrees with ``Caesar'', yielding ``Caesar agustus''.
-Now, the \textsc{Agree} rule does not take into account any positioning constraints for agreement markers.
+Finally, in some cases, it may be the case that structural feature of interest depends on a particular morpheme and not its class generally.
+In such cases, the feature function could take a morpheme $m$ instead of a morpheme class $c$ as an argument, and occurrences of $c(u)$ in the formula could be replaced with $m = u$ (where $u$ is morpheme from the utterance).
+
+To illustrate the use of this formalism of structural feature functions we will define a handful of common structural features from the syntax of human language.
+These functions will also be used in the experiments presented in \cmt{ref}.
+
+\paragraph{Absolute position}
+Defined above.
+
+\paragraph{Relative position}
+We define immediate precession of classes as
+\begin{align}
+  \textsc{Precede}^2 &\equiv \exists i \; c_1(u_i) \wedge c_2(u_{i+1})
+  .
+\end{align}
+More flexibly, if one classes occurs earlier in the sequence than another class (possibly non-immediately), we write
+\begin{align}
+  \textsc{Before}^2 &\equiv \exists i,j \; i<j \wedge c_1(u_i) \wedge c_2(u_{j})
+  .
+\end{align}
+Naturally, reversing the order arguments yields $\textsc{Succeed}^2$ and $\textsc{After}^2$.
+Finally, we could generalize relative positioning to any number of morpheme classes with
+\begin{align}
+  \textsc{Order}^n &\equiv \exists i \; \bigwedge_{j=1}^n c_j(u_{i+j-1})
+  ,
+\end{align}
+where $n$ is the number of morpheme classes in the specified ordering.
+
+\paragraph{Occurrence}
+More generally, we define occurrence of a morpheme class at any place in sequence with
+\begin{align}
+  \textsc{Occur}^1 &\equiv \exists i \; c_1(u_i)
+  .
+\end{align}
+For the co-occurrence of two morpheme classes, we write
+\begin{align}
+  \textsc{CoOccur}^2 &\equiv \exists i,j \; i \neq j \wedge c_1(u_i)\wedge c_2(u_j)
+  .
+\end{align}
+Note that we must exclude the possibility of the individual occurrences being the same morpheme in the utterance.
+The definition of the co-occurrence of an arbitrary number of morpheme classes is an exercise left to the reader.
+
+\paragraph{Agreement}
+Moving towards more sophisticated linguistic concepts, we define a very general notion of agreement as the presence of two morpheme classes implies the presence of a third (ignoring any sort of positioning requirements).
+\begin{align}
+  \textsc{Agree}^3 &\equiv \textsc{CoOccur}(c_1, c_2) \rightarrow \textsc{Occur}(c_3)
+  .
+\end{align}
+This rule ignores any position requirements, although these could be added using the definitions of relative positioning.
+We can illustrate this with a simple example from Latin.
+In a Latin noun phrase with an adjective describing that noun, the adjective will have a suffix making it agree with the noun in gender and case.
+For example, if we have the noun ``Caesar'', being described by the adjectival root ``august-'', this root will have an agreement suffix ``-us'' to properly form the phrase the ``Caesar augustus'' (meaning ``venerable Caesar'').
+We can see that this example obeys the rule $\textsc{Agree}^3(\text{noun}, \,\text{adjective root},\,\text{adjective suffix})$.
+
+
+% In simple English sentences with only a subject and a verb, if we have ``he'' and ``run'', we know that the ``-s'' morpheme will also be present (so we have ``he runs'' and not ``he run'').
+
+
+\subsection{Identifying common structures}
 
 \cmt{%
 We can run the above feature functions on the classes of the morphemes to essentially get the numerator of a probability metric, but what is the denominator?
