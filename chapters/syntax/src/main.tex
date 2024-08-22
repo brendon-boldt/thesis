@@ -1,15 +1,79 @@
 \section{Introduction}
 
-Syntax, constructions
+Our goal in this chapter is to introduce an algorithm which discover structural patterns among morphemes in emergent language corpora which been segmented into morphemes.
+This a step in the larger project of developing methods to identify the syntactic structure of emergent languages.
+
 
 \paragraph{Related Work}
+\phantom{}%
+\cmt{UGI}
+\cmt{Categorial grammar induction}
+\cmt{Word order biases}
+\cmt{Lipinski}
 
-\section{Methods}
+\section{Algorithm}
+
+The algorithm takes the following as input,
+  (1) a corpus of utterances where each component is a morpheme (see \cmt{above chapter}),
+  (2) a mapping from morphemes to morpheme classes,
+  (3) a set of structural feature functions.
+The output of the algorithm is a list of structural features which apply to certain classes of morphemes across the corpus, giving a primitive notion of the ``syntax'' of the emergent language described in the corpus.
+
+
+\paragraph{Morphemes}
+It is assumed that each utterance in the corpus is a sequence of morphemes, notated as follows
+\begin{align}
+  U &= (u_1, u_2, \dots, u_{|U|}) \\
+  \text{where}\quad u_i &\in \mathcal M
+  ,
+\end{align}
+where $\mathcal M$ is the set of morphemes.
+Additionally, each morpheme can belong to one or more ``classes'' corresponding the nature of the morpheme itself.
+Most commonly, classes would be derived from the semantic features of the morpheme;
+  for example, in a colored shape naming game, one morpheme class would be \emph{color} and another \emph{shape} (assuming the language fully compositional).
+Classes could also be based on the form of the morpheme like \emph{single-token} or \emph{double-token}.
+These classes will later be used to determine if certain patterns occur only at the level of individual morphemes or at the level of certain classes of morphemes.
+This morpheme classification mapping is written as
+\begin{align}
+  c &: \mathcal M \rightarrow \mathcal P(\mathcal C) \setminus \varnothing
+  ,
+\end{align}
+where $\mathcal P(\cdot)$ is the power set operator and $\mathcal C$ is the set of all classes so the co-domain of the function is all non-empty subsets of $\mathcal C$.
+If a given morpheme does not fall into any class \emph{a priori} it should be assigned to an \emph{unclassified} class, so as to simplify later steps in the algorithm.
+
+
+\paragraph{Structural feature functions}
+
+The most important input to the algorithm is the set of \emph{structural feature functions} which detect the presence of certain structural features in a given utterance.
 
 Types of structure
-\begin{itemize}
+\begin{itemize}[nosep]
   \item Absolute position of morphemes
   \item Relative position of morphemes (to each other)
   \item Collocation of morphemes
   \item Exclusivity of morphemes and word classes
 \end{itemize}
+\begin{align}
+  F &: U \times \mathcal M^a \rightarrow \{0,1\}
+\end{align}
+\begin{align}
+  \text{begin}^1 &\equiv [u_1 = m_1] \\
+  \textsc{AbsPos}^1(i) &\equiv [u_i = m_1] \\
+  \text{precede}^2 &\equiv [\exists i \, u_i = m_1 \wedge u_{i+1} = m_2] \\
+  \text{occur}^1 &\equiv [\exists i \,u_i = m_1] \\
+  \text{co-occur}^2 &\equiv [\exists i,j \, i \neq j \wedge u_i = m_1 \wedge u_j = m_2] \\
+  \text{order}^n &\equiv \left[\exists i \, \bigwedge_{j=1}^n u_{i+j-1} = m_{j} \right] \\
+  \textsc{Agree}^3 &\equiv [\text{co-occur}(m_1, m_2) \rightarrow \text{occur}(m_3)] \\
+\end{align}
+
+We can illustrate the \textsc{Agree} rule with two simple example.
+In simple English sentences with only a subject and a verb, if we have ``he'' and ``run'', we know that the ``-s'' morpheme will also be present (so we have ``he runs'' and not ``he run'').
+Or in Latin adjectival phrases, if we have ``Caesar'' (a masculine title) and the root ``august-'' (i.e., meaning ``venerable''), we know that the ``-us'' ending will be present such that ``august-'' agrees with ``Caesar'', yielding ``Caesar agustus''.
+Now, the \textsc{Agree} rule does not take into account any positioning constraints for agreement markers.
+
+\cmt{%
+We can run the above feature functions on the classes of the morphemes to essentially get the numerator of a probability metric, but what is the denominator?
+We know how often that given classes satisfy the relationships, but how often compared to what?  What makes the rate of co-occurrence significant or not?
+For sentence-level grammatical features, we might imagine this to be absolute (e.g., there is always a subject and a verb).
+For phrase level features, we may normalize by the rate of (co-)occurrence.
+\unskip}
