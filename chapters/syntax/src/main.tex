@@ -1,8 +1,12 @@
+\newcommand\tsc\textsc
+
 \section{Introduction}
 
 Our goal in this chapter is to introduce an algorithm which discover structural patterns among morphemes in emergent language corpora which been segmented into morphemes.
-This a step in the larger project of developing methods to identify the syntactic structure of emergent languages.
-
+This a step in the larger project of developing methods to identify the syntactic structure of emergent languages ultimately so as to compare emergent languages to human languages.
+This chapter makes minimal claims as to how similar the structural patterns it studies are to syntax in a fuller linguistic sense.
+We take this minimalist approach as the structural characteristics of emergent languages are largely unknown, so we make as few assumptions as possible as to how emergent languages are structured.
+\unskip\footnote{Comment to committee: I am on the fence as to whether to incorporate semantics into this chapter on structure. The primary way I would imagine doing this is by taking the structural feature functions and contextualizing in terms of certain meanings; that is, we ask how often a structural feature is present \emph{and} used to convey a certain meaning (which is a function of its parts).  I am leaning against this extension right now because I think this chapter has enough moving parts as it is, and I think it would be good to walk before running.}
 
 \paragraph{Related Work}
 \phantom{}%
@@ -61,16 +65,18 @@ Using this formalism, we can define a structural feature function which detects 
 \end{align}
 We can express the same function more succinctly with some abuse of notation:
 \begin{align}
-  \textsc{Begin}^1 &\equiv c_1(u_1)
+  \textsc{Begin}(c_1) \equiv \textsc{Begin}^1 &\equiv c_1(u_1)
   ,
 \end{align}
 where $\textsc{Begin}^n$ would mean that the function has an arity of $n$ with the convention that the classes are named $c_1$, $c_2$, and so on until $c_n$
   and $c_1(u_1)$ is true iff $u_1$ belongs to class $c_1$.
+Since all feature functions take a single utterance as input, the $U$ argument is implicit.
 For some feature functions, it is handy to generalize them by parameterizing the function itself.
 For example, if we want a function detecting the absolute position of a morpheme class, we would write
 \begin{align}
-  \textsc{AbsPos}^1(i) \equiv c_1(u_i)
+  \textsc{AbsPos}(i)^1 \equiv (\textsc{AbsPos}(i))(c_1) \equiv c_1(u_i)
 \end{align}
+Note that the higher-order parameters of the function precede the superscript to distinguish The position of arguments before the superscript i
 
 Finally, in some cases, it may be the case that structural feature of interest depends on a particular morpheme and not its class generally.
 In such cases, the feature function could take a morpheme $m$ instead of a morpheme class $c$ as an argument, and occurrences of $c(u)$ in the formula could be replaced with $m = u$ (where $u$ is morpheme from the utterance).
@@ -114,27 +120,102 @@ For the co-occurrence of two morpheme classes, we write
 Note that we must exclude the possibility of the individual occurrences being the same morpheme in the utterance.
 The definition of the co-occurrence of an arbitrary number of morpheme classes is an exercise left to the reader.
 
-\paragraph{Agreement}
-Moving towards more sophisticated linguistic concepts, we define a very general notion of agreement as the presence of two morpheme classes implies the presence of a third (ignoring any sort of positioning requirements).
+\paragraph{Linking}
+Moving in the direction of more sophisticated linguistic concepts, we introduce the $\tsc{Link}^3$ function which defines a notion of the presence of two morphemes requiring the presence of a third morpheme:
 \begin{align}
-  \textsc{Agree}^3 &\equiv \textsc{CoOccur}(c_1, c_2) \rightarrow \textsc{Occur}(c_3)
-  .
+  \textsc{Link}^3 &\equiv \textsc{CoOccur}(c_1, c_2) \rightarrow \textsc{Occur}(c_3) \\
+  \textsc{Link}^3 &\equiv \exists i,j,k \;
+    % i \neq j \wedge i \neq k \wedge j \neq k \wedge
+    \text{distinct}(i,j,k) \wedge
+    (c_1(u_i)\wedge c_2(u_j) \rightarrow c_3(u_k))
+  ,
 \end{align}
-This rule ignores any position requirements, although these could be added using the definitions of relative positioning.
-We can illustrate this with a simple example from Latin.
-In a Latin noun phrase with an adjective describing that noun, the adjective will have a suffix making it agree with the noun in gender and case.
-For example, if we have the noun ``Caesar'', being described by the adjectival root ``august-'', this root will have an agreement suffix ``-us'' to properly form the phrase the ``Caesar augustus'' (meaning ``venerable Caesar'').
-We can see that this example obeys the rule $\textsc{Agree}^3(\text{noun}, \,\text{adjective root},\,\text{adjective suffix})$.
-
+where $\text{distinct}(\cdot)$ denotes that no two argument are equal.
+Some examples of syntactic rules which are approximated by this definition include conjunctions in noun phrases in English (e.g., ``dog'' and ``cat'' occurring in a noun phrase requires something like ``and'' or ``or'' to join them)
+  or verb roots in Latin requiring a finite ending to agree with a noun as its subject (e.g., the verb root ``sta-'' (``to stand'') requires the ending ``-t'' to agree with ``canis''  (dog) in ``canis stat'' (the dog stands)).
 
 % In simple English sentences with only a subject and a verb, if we have ``he'' and ``run'', we know that the ``-s'' morpheme will also be present (so we have ``he runs'' and not ``he run'').
 
 
 \subsection{Identifying common structures}
 
-\cmt{%
-We can run the above feature functions on the classes of the morphemes to essentially get the numerator of a probability metric, but what is the denominator?
-We know how often that given classes satisfy the relationships, but how often compared to what?  What makes the rate of co-occurrence significant or not?
-For sentence-level grammatical features, we might imagine this to be absolute (e.g., there is always a subject and a verb).
-For phrase level features, we may normalize by the rate of (co-)occurrence.
-\unskip}
+While the above structural feature functions identify when a particular structure appears in a given utterance, the goal of the algorithm is to identify structures that characterize the emergent language as a whole (or at least the corpora).
+Thus, in this section, we define the part of the algorithm that is responsible for aggregating the results of individual utterances so as to determine what patterns are significant across the entire corpus.
+
+To start, we can see that when the above feature functions are run across a corpus of utterances, the result is essentially the numerator of a probability measure, that is, the total number of times the structure occurs.
+The second component is, of course, the denominator, which denotes the number of times an event could have occurred, that is, the number of times it occurs plus the number of times it could have occurred but did not.
+For each feature function, then, we need to describe some counterfactual notion of occurrence (i.e., ``could have occurred but did not'').
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+  \toprule
+  Feature & Denominator \\
+  \midrule
+  $\tsc{Occur}^1$ & $\tsc{True}^0$ \\
+  $\tsc{CoOccur}^2$ & $\tsc{Occur}(c_1) \vee \tsc{Occur}(c_2)$ \\
+  $\tsc{Begin}^1$ & $\tsc{True}^0$ \\
+  $\tsc{Begin}^1$ & $\tsc{Occur}(c_1)$ \\
+  $\tsc{AbsPos}(i)^1$ & $\tsc{Occur}(c_1)$ \\
+  $\tsc{Precede}^2$ & $\tsc{CoOccur}(c_1, c_2)$ \\
+  $\tsc{Before}^2$ & $\tsc{CoOccur}(c_1, c_2)$ \\
+  $\tsc{Order}^n$ & $\tsc{CoOccur}(c_1, c_2, \dots, c_n)$ \\
+  $\tsc{Link}^3$ & $\tsc{CoOccur}(c_1, c_2)$ \\
+  \bottomrule
+  \end{tabular}
+  \caption{Table of denominator functions for each structural feature function.}
+  \unskip\label{tab:sff-denominators}
+\end{table}
+
+We provide a list of these denominator functions for each structural feature function in \Cref{tab:sff-denominators}.
+For the most part, the denominator functions are straightforward:
+  for $\tsc{CoOccur}^2$, we compare this to how many times either one of the arguments occurs at all (e.g., adjectives generally co-occur with nouns in English)
+  and for functions like $\tsc{Precede}^2$, we compare it to how many times the argument co-occur in any order (e.g., if an adjective modifies a noun in English, it precedes it).
+Less intuitive cases include the following:
+  $\tsc{Occur}^1$ is paired with the trivial function $\tsc{True}^0$ which effectively divides the numerator by the total number of utterances.
+  $\tsc{Begin}^1$ can have two different interpretations based on the denominator used: this morpheme class begins every sentence (denominator of $\tsc{True}^0$ versus this morpheme is always at the beginning when it is present (denominator of $\tsc{Occur}^1$).
+    This distinction could potentially be made with other feature functions.
+  Finally, $\tsc{Link}^3$ derives its denominator from the antecedent of the implication to ignore trivial satisfaction of the implication (i.e., $\text{False} \rightarrow q \Leftrightarrow \text{True}$).
+
+Thus, we can define the probability of a structural feature function $f$ holding for classes $c_1, \dots, c_n$ as
+\begin{align}
+  p_f(c_1, \dots, c_n) &\equiv \frac{\sum_{U\in\mathcal U} f(U, c_1, \dots, c_n)}{\sum_{U\in\mathcal U} d(U, c_1, \dots, c_n)}
+  ,
+\end{align}
+where
+  $\mathcal U$ is a collection of utterances (i.e., the corpus)
+  and $d$ is the denominator function corresponding to $f$.
+Finally, if a rule holds with a probability above a threshold $t$, we consider to hold for the corpus generally.
+We, then, define the set of rules which characterize the corpus to be
+\begin{align}
+  \left\{
+    f(c_1, \dots, c_n) \; \middle| \;
+    p_f(c_1, \dots, c_n) \wedge f \in \mathcal F \wedge c_1, \dots, c_n \in \mathcal C
+  \right\}
+  ,
+\end{align}
+where $\mathcal F$ is the set of all structural feature functions and $\mathcal C$ is the set of all morpheme classes.
+
+
+\section{Experiments}
+
+\subsection{Data}
+The experiments proposed for this chapter largely mirror those in \Cref{ch:morphemes}.
+Namely, the morpheme structure algorithm will be run across a handful of synthetic languages as well as a handful of real emergent corpora in order to illustrate results on real data.
+The synthetic data will be generated via rule-based methods such as probabilistic context-free grammars (PCFGs) in order to establish an \emph{a prior} set of patterns to compare the results against.
+The emergent language corpora will be derived from the results of algorithm from \Cref{ch:morphemes} which are, in turn, derived from ELCC Plus (\Cref{ch:rich-corpora}).
+
+\subsection{Analysis}
+
+The analysis of the results on the synthetic data will focus primarily on whether or not the algorithm's results match the \emph{a prior} expectations of the given how the data was generated.
+That is, we expect the algorithm to recover the rules present in the grammar (or at least the simpler ones) while not identifying spurious rules.
+Furthermore, these analyses will also look at to what degree the algorithm is sensitive to noise; for example, if random, unclassified morphemes are added to the grammar's outputs, we will determine to what degree the algorithm's outputs are degraded.
+
+Regarding the analyses on emergent language corpora:
+  whereas the morpheme detection involves emergent communication system-specific elements (i.e., defining what a ``meaning'' is and to what classes it belongs), the morpheme structure detection is agnostic to environment as it deals only with morphemes and morpheme classes in the general case.
+Thus, the analysis in this chapter will focus less on the application of the algorithm to different environments and more on the particular patterns seen in the results.
+The primary questions to be addressed on this front are
+  (1) whether structural patterns are detected at all,
+  (2) whether these patterns match any \emph{a priori} expectations,
+  and (3) whether and how these patterns vary between different systems.
