@@ -92,23 +92,24 @@ For example, anything related to semantics is going to require some way to deter
 Thus, we propose an extension to ELCC which takes the same set of corpora and includes information about the state of the environment before and after each utterance so as to supply grounding for each of the utterances.
 From here, it will be possible to explore a far greater range of phenomena with respect to the emergent language corpora in ELCC\@.
 
-\subsection{Detecting linguistic universals in emergent communication}
-\cmt{Edit as needed.}
-This project will be the linguistic counterpart to XferBench (or at least the foundation thereof).
-Whereas XferBench looks at the question of emergent language quality and similarity to human language from a data-driven, machine learning perspective, this paper will explore an evaluation metric from similarity to human language which focuses on the encoding linguistic knowledge into a detection algorithm for human language universals in emergent language corpora.
-The main challenge of this paper is that many of what might be considered linguistic universals in human language already presuppose a large amount of structure within languages (e.g., morphemes), but it is has not be determined yet whether emergent languages possess anything like morphemes in human language.
-Thus, before we even begin to talk about matters of syntax, it is critical to establish what morphemes look like emergent language and how to find them.
-In light of this, I foresee this project focusing detecting the presence of morphemes (in some recognizable form) in emergent languages and potentially some very minimal notion of syntax built on top of any morphemes that may be present.
+\subsection{Automatically detecting morphemes in emergent language corpora}
+While the original plan was to create a linguistic counterpart to XferBench, that is, some benchmark-like metric which measured the presence of human language-like linguistic structures in emergent communication, I rolled back my ambition considerably as there are not yet methods for detecting structure in emergent communication generally.
+Thus, this project will make an important step in the direction of such a metric by introducing and testing an algorithm to detect and segment emergent communication utterances into morphemes: particular meanings paired with an atomic form.
+Detecting morphemes is critical in building up to ``higher-level'' linguistic concepts like syntax and discourse, yet there are no existing methods determining what the meaningful units of an emergent communication utterance are in a general, system-agnostic way (e.g., is each token its own morpheme are they sub-morpheme units?).
+This work will leverage the rich emergent language corpora discussed above as it is necessary to pair the utterances (form) with the accompanying context (meaning) in order to uncover morphemes (or at least an analogous structure).
+Being able to turn emergent languages represented as strings of raw tokens into strings of morphemes will enable more principled research on linguistic structures which presuppose the existence and identification of morphemes (e.g., syntax).
+
+\cmt{Add comment motivating morpheme detection by talking about double articulation and how parsing over characters would be absurd; you need a lex step first.}
 
 
-\subsection{Meta\"analysis of linguistic and machine learning metrics}
-\cmt{Edit as needed.}
-This paper is intended to be a sort of capstone of the thesis.
-In short, it will determine the relationship between data-driven and linguistics-driven evaluation metrics of human language?
-Is it the case that emergent languages which are better for pretraining neural models are also the ones that possess are more significant structural similarity to human languages (in linguistic terms)?
-If not, is there something about the metrics that is deficient, or is perhaps the case that the linguistic and data-driven dimensions are to some extent orthogonal?
-In addition to this questions, we will also explore what these metrics might tell us about creating the optimal emergent communication system that jointly maximizes all of the aforementioned metrics.
+\subsection{Automatically detecting morpheme structure}
+Building on the above chapter detecting morphemes, this chapter will use a somewhat similar approach to detect structural features in emergent language corpora.
+Namely, the strings of morphemes from the previous method are first mapped to classes (determined, mostly, by the semantics of the morphemes) which are then run through decision functions which detect structural features (i.e., one morpheme class succeeding another).
+These structural features are then generalized into patterns (I would hesitate to call them ``rules'') using a statistical measure.
+The algorithm, then, yields a list of the most frequent morpheme patterns found in the emergent language corpus.
+This chapter stops short of claiming that what is being detected is ``syntax'' in any linguistically robust sense and instead focuses on a more minimalist notion of structure which can later be incorporated into more broad-reaching account of syntax (outside the scope of this thesis, though).
 
+\cmt{Allude to recursive application of the algorithm in the chapter, although finding constituents or heads might be beyond the pay grade (still good for future work and contextualization, though).}
 
 
 
