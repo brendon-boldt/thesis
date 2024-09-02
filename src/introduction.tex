@@ -120,12 +120,12 @@ This chapter stops short of claiming that what is being detected is ``syntax'' i
 Modern-day large language model-based AI systems are good a mimicking human language.
 Some might even say they are good at \emph{using} human language, but this is either imprecise or inaccurate:
   LLMs' production of text is based the statistical likelihood of meaningless (so far as they are concerned) tokens, fine-tuned to humans' preferences.
-This is contrast to humans' use---and event more so their acquisition---of language which is laden with meaning derived from the rich internal, physical, and social context which permeates language use.
+This is in contrast to humans' use---and event more so their acquisition---of language which is laden with meaning derived from the rich internal, physical, and social context which permeates language use.
 The end result is that LLMs' approximation of human language fails at a number of tasks, but, more significantly, falls short in providing insights into the nature of human language itself.
 \cmt{Mention the data problem for LLMs.}
 
 \emph{Emergent communication} (also known as \emph{emergent language}) is an alternative paradigm to developing language-capable models that does not does not train on human language data but rather invents a communication system \emph{de novo}.
-In it most basic form, emergent communication comprises neural network-based agents which are trained to cooperatively complete some task in a virtual environment.
+In its most basic form, emergent communication comprises a simulation using neural network-based agents which are trained to cooperatively complete some task in a virtual environment.
 These agents are equipped with a communication channel of discrete tokens with no \emph{a priori} meaning---the meaning of communication is established through the optimization process encouraging communication which is advantageous to completing the task.
 % The communication protocol, then, is the ``emergent language'' since the meaningful system of communication as arisen organically from the environment and task.
 
@@ -136,19 +136,40 @@ Furthermore, certain practical tasks might lie beyond the reach of the mimicry a
 Here is the problem: the field of emergent communication has not yet solved any problems either in the area of scientific understanding nor in practical applications.
 Furthermore, it has not even shown measurable progress towards these goals either.
 This thesis, then, endeavors to establish principles and practices in emergent communication that permit and encourage measurable progress in the development of emergent languages specifically with the aim of helping emergent communication research achieve its potential in solving practical applications and improving scientific understanding.
+\cmt{After this general description of the thesis give another, be more specific with a sentence.}
 
 \section{Background}
 
-Emergent communication (also known as ``emergent language'') is the area of research which studies systems of communication between virtual agents that has emerged \emph{de novo} from interactions and optimizations (in the machine learning sense) in simulated environments.
-Interest in this field from a deep learning perspective---which this thesis focuses on, although not exclusively---appeared in 2016 and 2017 with \cmt{papers}, and has maintained a niche though consistent following since that time.
+The field of deep learning-based emergent communication has its genesis in 2016 and 2017 with papers including \cmt{cite}.
+These were the first paper to combine combine deep learning, and specifically deep reinforcement learning, to developing discrete token-based communication systems from scratch.
+While prior work applied mathematical models \cmt{cite} and classical machine learning methods \cmt{werner dyer}, the introduction of deep learning opened up the possibility of a far more robust notion of the results of the simulations being \emph{emergent}.
+That is, with mathematical models the range of results is tightly constrained by the design of the model and ``emergent'' phenomena are either relatively simple or encoded into the model itself.\footnote{Although Conway's Game of Life is notable exception to this.}
+Deep reinforcement learning, on the other hand, has demonstrated vivid example of complex behaviors emerging in environments with simple rules such as DeepMind's AlphaZero \cmt{cite} or OpenAI's multi-agent hide-and-seek \cmt{cite}.
 
-Going backwards in time, there are papers addressing emergent communication predating deep learning methods \cmt{examples}.
-More importantly, this field is strongly rooted (conceptually, though often not methodologically) in research on the origin and evolution of language in humans \cmt{citations}.
+The prototypical emergent communication experiment consists two or more deep neural network-based agents situated in some kind of environment or game where they must cooperate in order to succeed.
+The agents are equipped with a communication channel consisting of discrete tokens with no \emph{a priori} meaning; it is only through the reinforcement learning-based optimization that messages passed between agents begin to take on meaning.
+The resulting behavior, most especially the communication protocol, is the typically the object analysis, addressing question such as:
+  Did an effective communication protocol emerge at all?
+  What structural features characterize it?
+  Do these features align at all to human language?
+  What can we infer about language formation more generally from the above?
 
-This thesis is primarily concerned with the scope of deep learning-based emergent communication.
-These related fields are critical resources in developing the ideas presented hear and we hope, also, that this work will be helpful to these fields.
-Nevertheless, there are many particular concerns and techniques that are unique to the deep learning-based approaches, and these are the concerns and techniques that I will primarily address.
+In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication (jointly and separately).
+The signalling game was introduced in the context of game theory by David Lewis \cmt{cite}.
+The signalling game is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
+It consists of only two agents: a sender and a receiver.
+The sender makes on observation (e.g., a red square) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was a red square, not a blue circle).
+\cmt{See such and such research for examples of these themes.}
+The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
+On the other hand, holistic communication sometimes emerges where a unique word refers to red square, bearing no relation to the word(s) for red circle.
+Compositional communication, generally, is seen as more desirable both for practical reasons (more efficient encoding of information) as well as for its resemblance to how humans tend to encode meaning in language.
 
+Other environments do appear in the literature such as navigation tasks or dialogue-based games.
+\cmt{citations}
+In addition to compositionality, other phenomena have been the subject of investigation such as pragmatics, transfer learning, and the information theoretic properties of emergent language.
+\cmt{citations}
+While there are too many papers to summarize comprehensively here, I estimate that there are on the order of $200$ papers directly related to emergent communication.\footnote{Figure based on finding ${~}150$ papers during a comprehensive literature review in 2023.}
+For a general review of the emergent communication literature, I recommend \cmt{Lazaridou \& Baroni}.
 
 
 \section{Motivation}
