@@ -159,11 +159,40 @@ In practice, much of the literature has focused on the signalling game and the e
 The signalling game was introduced in the context of game theory by David Lewis \cmt{cite}.
 The signalling game is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
 It consists of only two agents: a sender and a receiver.
-The sender makes on observation (e.g., a red square) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was a red square, not a blue circle).
+The sender makes on observation (e.g., an orange circle) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was an orange circle, not a blue circle).
+A visualization of the signalling game is provided in \Cref{fig:signaling-game}.
 \cmt{See such and such research for examples of these themes.}
 The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
 On the other hand, holistic communication sometimes emerges where a unique word refers to red square, bearing no relation to the word(s) for red circle.
 Compositional communication, generally, is seen as more desirable both for practical reasons (more efficient encoding of information) as well as for its resemblance to how humans tend to encode meaning in language.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{0.53\textwidth}
+    \centering
+    \setlength\fboxsep{0pt}
+    \input{src/figures/robot}
+    \vspace{1cm}
+    \caption{%
+      $T_1$: The sender (left) observes an object.
+      $T_2$: The sender passes a message to the receiver (right).
+      $T_3$: The receiver chooses from a handful of candidate objects.
+    }
+    \unskip\label{fig:boxface}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \input{src/figures/signaling-chart}
+    \caption{Illustration of the technical architecture of the signaling game.}
+    \unskip\label{fig:signaling-chart}
+  \end{subfigure}
+  \caption{%
+    An illustration of the discrimination variant of the signaling game, one of the simplest and most common environments in emergent communication research.
+  }
+  \unksip\label{fig:signaling-game}
+\end{figure}
+
 
 Other environments do appear in the literature such as navigation tasks or dialogue-based games.
 \cmt{citations}
@@ -239,7 +268,7 @@ The transfer learning-based approach captures notion of how ``good'' an emergent
 This is meant in two ways:
   First, the emergent languages are analyzed according to the methods of machine learning, discovering regularly occurring patterns with data-driven methods and a low inductive bias.
   Second, transfer learning method closely mirrors many of the practical applications of emergent communication which consist of using emergent language data is pretraining or evaluation data for natural language processing models.
-\cmt{What more?}
+While it is not as simple to establish a ranking of ``better'' and ``worse'' with the largely open ended task of designing an emergent communication environment, XferBench still provides a useful notion of what directions are having a tangible effect on the complexity of the emergent languages those environments develop.
 
 
 \subsection{Detecting linguistic structures}
