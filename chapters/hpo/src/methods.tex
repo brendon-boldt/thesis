@@ -1,0 +1,74 @@
+\section{Methods}
+\unskip\label{hpo:sec:methods}
+\subsection{Objective: XferBench}
+
+The ultimate objective that we are optimizing for is transfer learning performance on downstream human language tasks.
+This objective is quantified by XferBench \citep[MIT license]{boldt-mortensen-2024-xferbench}, which measures how much pretraining on an emergent language corpus decreases cross-entropy on a limited-data, downstream language modelling task on human languages (illustrated in the gray box of \Cref{hpo:fig:xb}).
+Since the output of XferBench is mean cross-entropy across human languages, a lower score better.
+XferBench takes as input a corpus of $15$ million tokens, which is used for the pretraining stage and finetunes on $2$ million tokens of the (human) evaluation language.
+The language model used for XferBench is based on GPT-2 \citep{radford2019language} and has ${\sim}60$ million parameters.
+Since XferBench has a long runtime, we use a modified version only during hyperparameter search termed \emph{XferBench-da} which only evaluates on one human language (viz.\@ Danish) which we found to have high correlation ($R^2>0.95$) with the complete XferBench; see \Cref{hpo:sec:eval-corr} for details.
+
+\subsection{Environment: signalling game}
+The environment we use in our experiments is the signalling game.
+In particular we use the discrimination variant of the signalling game based on the implementation in EGG \citep[\url{https://github.com/facebookresearch/EGG}, MIT license]{egg}.
+The discrimination variant of the signalling game consists of two agents, a sender and a receiver interacting for a single round.
+In a given round, the sender observes an input, sends a message  to the receiver, and the receiver selects an observation out of a number of candidates based on the message.
+Of the candidate observations, one is correct (i.e., the same as the sender's input), and the rest are ``distractors''.
+In the implementation used in this paper:
+\begin{itemize}[nosep]
+  \item Observations are concatenations of a fixed number of one-hot vectors.
+  \item Messages are sequences of integers represented by one-hot vectors.
+  \item Agents are feed-forward neural networks with one hidden layer and GRU-based RNNs to generate/read the message.
+  \item The sender--receiver system is trained end-to-end with backpropagation using a Gumbel-Softmax layer \citep{maddison2017the,jang2017categorical} to generate the message.
+\end{itemize}
+
+Overall, this emergent communication system is about as ``vanilla''  as is studied in the literature.
+This is advantageous for a number of reasons:
+\begin{itemize}[nosep]
+  \item The environment is fast to run, requiring $10$ to $120$ minutes depending on the hyperparameters.
+  \item It has a (comparatively) limited number of hyperparameters making hyperparameter search more tractable and reducing potential confounding variables.
+  \item It serves as ``lower bound'' for optimizing emergent communication environments since we can determine the maximum performance possible in a system with minimal complexity.
+  \item The training is stable, converging to a high success rate for most hyperparameter combinations.
+\end{itemize}
+
+The data is generated for the input corpus to XferBench by sampling from the dataset and feeding these observations into the sender which generates the message.
+
+
+\subsection{Variables: hyperparameters}
+The hyperparameters are the independent variable of the primary experiments presented in this paper;
+  that is, the hyperparameters will be varied in order to optimize the system for the objective function.
+Some hyperparameters manipulated in this study are unique to the signalling game (e.g., how many attributes and values in the signalling game observations) while others come from deep learning-based architectures more generally (e.g., learning rate, neural network architecture).
+
+We primarily investigate the following hyperparameters:
+\begin{description}[nosep]
+  \item[Learning rate] Multiplication factor for the weight updates for parameters in the neural network.
+  \item[Embedding size] Size of embedding layer in both the sender and the receiver networks; these are independent layers, but their sizes are varied in unison for hyperparameter search.
+  \item[Hidden size] The size of hidden layer in both the sender and the receiver networks; values are varied in unison.
+  \item[\textit{n} attributes] Number of one-hot vectors in each observation.
+  \item[\textit{n} values] Size of one-hot vectors in observations.
+  \item[\textit{n} distractors] Number of incorrect observations shown to the receiver (in addition to the correct one).
+  \item[\textit{n} epochs] Number of training examples seen.
+    \unskip\footnote{Since the data is procedurally generated, a new dataset of $1024$ observations is sampled for each epoch.}
+  \item[Temperature] Temperature of the Gumbel-Softmax layer which the sender uses to generate messages during training.
+  \item[Vocabulary size] Dimension of the one hot vectors which comprise the message.
+  \item[Message length] Number of one-hot vectors in a message.\footnote{Technically, the implementation allows for variable length messages, but optimization led to all messages always being the max length.}
+\end{description}
+Other hyperparameters that were either not discussed or not investigated are documented in \Cref{hpo:sec:not-discussed}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\inputHpo{src/figures/hpo-details}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Optimization: hyperparameter search}
+Finally, we discuss the method used for optimizing the hyperparameters of the emergent communication system (the parameters system itself are optimized with backpropagation, as mentioned above).
+The simplest of all hyperparameter search methods is grid search, where each element of the Cartesian product of every set of hyperparameter values is evaluated.
+Even using a modest $3$ values per aforementioned hyperparameter would require $3^{10}\approx60\,000$ trials, taking $5$ GPU-years (at $1$ hour per trial).
+Thus, we employ Bayesian parameter optimization to more efficiently select hyperparameter combinations to evaluate; this additionally allows us to specify a range of hyperparameter values instead of individual values.
+This process is illustrated in \Cref{hpo:fig:xb}.
+
+We specifically use a Tree-structured Parzen Estimator (TPE) \citep{bergstra2011tpe} as implemented in Optuna \citep[MIT license]{optuna}.
+At a basic level, TPE works by partitioning hyperparameter combinations into a ``good'' set and a ``bad'' set based on the objective function value and selects the next combination of hyperparameters by maximizing the probability of the hyperparameters being in the good set divided by the probability of them being in the bad set.
+These probability estimates use multivariate kernel density estimators and permit discrete, categorical, and conditional hyperparameter values.
+After running the environment with the hyperparameters and the objective function on the result, the sampler's probability estimates are updated in accordance with the objective function's value.
+For a more detailed explanation, see \citet{watanabe2023tpe-tutorial}.

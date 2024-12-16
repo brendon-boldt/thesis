@@ -7,7 +7,7 @@
 
 \usepackage{hyperref}
 \usepackage{natbib}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 % \usepackage{url}
 % \usepackage{xurl}
 % \usepackage{latexsym,amsmath}
@@ -16,7 +16,7 @@
 % \usepackage[nameinlink]{cleveref}
 \usepackage{dingbat}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,shadows,shadows.blur,calc,fit,positioning,mindmap,patterns,scopes}
+\usetikzlibrary{shapes,arrows,shadows,shadows.blur,calc,fit,positioning,mindmap,patterns,scopes,backgrounds}
 \usepackage{xurl}            % simple URL typesetting
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
@@ -42,6 +42,7 @@
 
 %%% Formatting %%%
 
+\usepackage{inconsolata}
 % \usepackage{libertine} % Font
 % \usepackage[bitstream-charter]{mathdesign}
 % \usepackage{XCharter} % Needed to fix issues with mathdesign
@@ -73,3 +74,13 @@
 \newcommand\note[1]{\color{gray}[#1]}
 
 \newcommand\inputsrc[1]{\input{#1}}
+
+%%% Matplotlib block %%%
+\def\mathdefault#1{#1}
+\everymath=\expandafter{\the\everymath\displaystyle}
+
+\ifdefined\pdftexversion\else  % non-pdftex case.
+  \usepackage{fontspec}
+\fi
+\makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
+%%% end block %%%

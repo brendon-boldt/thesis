@@ -1,0 +1,50 @@
+\tikzstyle{blockStyle}=[
+  draw=black!50,
+  fill=violet!20,
+  text width=3.1cm,
+  % minimum width=3cm,
+  text centered,
+  blur shadow={shadow blur steps=5},
+  rounded corners,
+  font=\small,
+]
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+\begin{tikzpicture}[
+  node distance=5mm,
+]
+
+  \begin{scope}[local bounding box=bb]
+    \node (beta) [blockStyle,fill=violet!20] {Pretrain\\language model};
+    \node (gamma) [blockStyle,fill=violet!20,left=of beta] {Tune on\\human language};
+    \node (delta) [blockStyle,fill=violet!20,left=of gamma] {Cross-entropy on HL};
+    \node (title) at ($(beta)!0.5!(delta)$) [yshift=8mm] {Evaluate objective (XferBench)};
+    \draw [-stealth] (beta) to (gamma);
+    \draw [-stealth] (gamma) to (delta);
+  \end{scope}
+
+  \node (sample) [blockStyle,fill=gray!20,above=of delta,yshift=11mm,fill=yellow!20] {Sample HPs};
+  \node (spec) [blockStyle,fill=gray!20, left=of sample,fill=red!20] {Specify HP ranges};
+  \node (run) [blockStyle,fill=gray!20,right=of sample,fill=green!20] {Run environment with HPs};
+  \node (collect) [blockStyle,fill=gray!20,right=of run,fill=blue!20] {Collect EL corpus};
+  \draw [-stealth] (spec) to (sample);
+  \draw [-stealth] (sample) to (run);
+  \draw [-stealth] (run) to (collect);
+  \draw [-stealth] (collect) to (beta);
+  \draw [-stealth] (delta) to (sample);
+  \node (update) at ($(delta)!.65!(sample)$) [
+    font=\small,
+    fill=white,
+    text width=2.5cm,
+    draw=black,
+    text centered,
+  ] {\footnotesize Update sampler};
+
+  \begin{pgfonlayer}{background}
+    \node [fill=black!10,fit=(bb),rounded corners,inner sep=1mm] {};
+  \end{pgfonlayer}
+
+
+\end{tikzpicture}

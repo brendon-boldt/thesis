@@ -1,0 +1,69 @@
+% TL;DR: We generate the most human language-like emergent language as measured by transfer learning performance.
+\begin{abstract}
+In this paper, we design a signalling game-based emergent communication environment to generate state-of-the-art emergent languages in terms of similarity to human language.
+This is done with hyperparameter optimization, using XferBench as the objective function.
+XferBench quantifies the statistical similarity of emergent language to human language by measuring its suitability for deep transfer learning to human language.
+Additionally, we demonstrate the predictive power of entropy on the transfer learning performance of an emergent language as well as validate previous results on the entropy-minimization properties of emergent communication systems.
+Finally, we report generalizations regarding what hyperparameters produce more realistic emergent languages, that is, ones which transfer better to human language.
+\end{abstract}
+
+\section{Introduction}
+
+
+Emergent language has tremendous potential to generate realistic human language data for deep learning methods without the need to collect data directly (or indirectly) from humans \citep{boldt2024review}.
+This stems from the fact that emergent language aims to replicate the communicative pressures that drive the development of human language and are hypothesized to explain various patterns observed in linguistics \citep{sep-linguistics}.
+Yet little work has been done to date designing emergent communication systems to generate languages with high statistical similarity to human languages.
+Such languages could better serve as synthetic human language data for pretraining and evaluating NLP models.
+Thus, in this paper, we generate emergent languages with a signalling game that have a high degree of similarity to human languages, demonstrating state-of-the-art performance on emergent-to-human language deep transfer learning.
+Specifically, we use Bayesian hyperparameter search to optimize a signalling game on the XferBench benchmark \citep{boldt-mortensen-2024-xferbench}.
+
+\begin{figure}
+  \centering
+  \inputHpo{assets/ent-vs-xb.pgf}
+  % \caption{Scatter plots of entropy versus XferBench score.  \emph{TPE} points are from Search 4, and \emph{Random} points are from Search 5r.}
+  \caption{Hyperparameter search shows that emergent and human languages tend towards the Pareto frontier of minimizing entropy and minimizing XferBench score (lower is better) while non-emergent synthetic languages less reliably follow this trend.  Dashed gray line represents a lower bound on entropy versus XferBench score.}
+  \unskip\label{hpo:fig:ent-xb}
+\end{figure}
+
+First and foremost, this moves the field of emergent language measurably closer to the goal of providing realistic, fully synthetic data for NLP.\spacefactor\sfcode`.{}
+On a methodological level, hyperparameters in emergent communication research are often selected arbitrarily or based on convenience.
+Instead, hyperparameters ought to be selected, we suggest, such that they maximize emergent language's similarity to human language.
+For example, vocabulary sizes in emergent languages are often very small (only one of eight emergent language environments surveyed in \citet{elcc} exceeds a vocabulary size of $70$) while our research suggests that the optimal vocabulary size is in the $1$k to $10$k range.
+Increasing vocabulary sizes, then, not only improves transfer learning performance but also makes it possible for emergent languages to replicate the long-tailed, Zipfian word distribution that is characteristic of human language \citep{zipf1949least,piantadosi2014zipf}, for example.
+
+Our experiments also confirm a significant relationship between transfer learning performance and corpus entropy.
+Not only does it appear that the entropy of a corpus determines a lower bound on XferBench score (lower is better) but that emergent languages minimize entropy with respect to a given XferBench score in a way that procedurally generated (i.e., non-emergent, synthetic) languages do not (see \Cref{hpo:fig:ent-xb}).
+Such minimization is, significantly, an \emph{emergent} phenomenon as neither entropy nor transfer learning performance are directly involved in the optimization of the emergent communication system (and neither entropy nor XferBench incorporate each other).
+This observation is significant in two regards:
+  First, it suggests that transfer learning and, consequently, statistical similarity to human language can be (partially) explained with information theory.
+  Second, it aligns closely with prior work that finds that emergent communication minimizes entropy with respect to task success within the environment \citep{kharitonov2020entmin,chaabouni2022emergent}.
+
+We discuss related work in \Cref{hpo:sec:related-work}.
+Methods are discussed in \Cref{hpo:sec:methods}, and the experiments are presented in \Cref{hpo:sec:experiments}.
+An analysis of the results is performed in \Cref{hpo:sec:analysis} with discussion and conclusion in \Cref{hpo:sec:discussion,hpo:sec:conclusion}.
+
+\paragraph{Contributions}
+
+We (1) introduce emergent communication environments which produce the most human language-like emergent languages to date, as shown by state-of-the-art performance on a deep transfer learning task using the XferBench benchmark;
+(2) provide concrete recommendations on better hyperparameter settings for emergent language, making them more statistically similar to human language; and
+(3) provide evidence that entropy minimization is a general property of emergent communication systems, showing that it is minimized with respect to transfer learning performance.
+
+
+\section{Related Work}
+\unskip\label{hpo:sec:related-work}
+For a general overview of deep learning-based emergent communication research, see \citet{lazaridou2020emergentmultiagentcommunicationdeep}.
+This paper shares the goal of producing emergent language corpora that are suitable for transfer learning to human languages with \citet{yao2022linking}, which also introduces the \emph{corpus transfer} method for applying emergent communication techniques to pretraining deep learning models used in this paper.
+\citet{boldt2023mathmodel}, similarly to this paper, investigate the effect of hyperparameters on emergent communication, although their study focuses primarily on the effects of individual hyperparameters on entropy instead optimizing an entire system for an evaluation metric.
+Finally, this paper scales up emergent communication game hyperparameters in a way that overlaps with \citet{chaabouni2022emergent}, although the latter focuses on addressing the practical challenges of scaling up certain facets of the signalling game (e.g., number of agents) rather than directly optimizing a particular objective.
+
+The task of generating emergent languages for pretraining NLP models falls within the broad category data augmentation with synthetic data  but differs from most other approaches due emergent language's unique nature as an \emph{emergent} phenomenon.
+First, emergent language differs from procedurally generating data from rules because emergent techniques preclude stipulating the exact process for generating the data; expert knowledge is incorporated into designing the system which generates the data, not generating the data itself.
+On the other hand, emergent language differs from using pretrained language models to generate synthetic data since emergent communication is derived from scratch, again precluding any (pre)training on human language data.
+
+\begin{figure*}
+  \centering
+  \inputHpo{src/figures/xb-chart}
+  \caption{Illustration of hyperparameter optimization with XferBench (adapted from \citet{boldt-mortensen-2024-xferbench} (CC BY 4.0 License)).}
+  \unskip\label{hpo:fig:xb}
+\end{figure*}
+

@@ -1,0 +1,89 @@
+\section{Experiments}
+\unskip\label{hpo:sec:experiments}
+The code to run the experiments and analyses is publicly available at [supplementary material for review] under the MIT license.
+
+\subsection{Hyperparameter searches}
+In this paper, we present four main searches (Searches 1--4, parameters given in \Cref{tab:hp-search}) with two additional searches (Searches 5r and 6e) for use in later analyses (\Cref{hpo:sec:analysis}).
+The following is a summary of the hyperparameter searches:
+\smallskip
+\begin{description}[nosep,leftmargin=0.2in]
+  \item[Search 1] Large number of hyperparameters varied with a wide range; used small version of XferBench-da ($1$M train tokens for $1$ epoch, $200$k test tokens for $2$ epochs).
+  \item[Search 2] Same number of hyperparameters varied with smaller or larger ranges depending on results of Search 1; used medium version of XferBench-da ($4$M train tokens for $2$ epochs, $1$M test tokens for $3$ epochs)
+  \item[Search 3] Same parameters as Search 2 while allowing number of epochs to go higher and using the full version of XferBench-da ($15$M train tokens for $5$ epochs, $2$M test tokens for $10$ epochs).
+  \item[Search 4] Reduces ranges or fixes parameters from Search 3 to maximize exploitation of good parameters; 4* in \Cref{tab:hp-search} is the best-performing trial from Search 4.
+  \item[Search 5r] Most parameters varied with wide ranges except using \emph{random sampling} to remove sampling bias; similar to Search 1 with narrower ranges on learning rate. Discussed in \Cref{hpo:sec:ent-xb}.
+  \item[Search 6e] Optimized for maximizing entropy after a number of previous searches (not discussed in the paper); similar to Search 4 in this regard. Discussed in \Cref{hpo:sec:ent-xb}.
+\end{description}
+The parameters of Searches 1--4 are given in \Cref{tab:hp-search} (for complete table, see \Cref{tab:hp-search-all}).
+The implementation defaults for other hyperparameters were used unless otherwise specified.
+Optuna's default parameters for TPE were used across all experiments.
+
+The signalling game takes $5$ to $40$ minutes to run (depending primarily on the number of epochs, and, to a lesser extent, the message length), and the full version of XferBench-da takes approximately $40$ minutes to run.
+Thus, the average trial (for the latter searches) takes approximately $[0.75,1.5]$ hours.
+Parallelization was used to run multiple trials within a search at a time.
+See \Cref{hpo:sec:resources} for a discussion of computing resources used.
+
+
+\paragraph{Search design}
+For each iteration of the primary searches (i.e., 1--4), we changed the search parameters based on their correlation with the objective function.
+We observed four main univariate patterns\footnotemark{}, illustrated in \Cref{hpo:fig:hpo-slice}.
+\footnotetext{While we did look for multivariate effects (i.e., hyperparameters that are \emph{not} independent), we did not observe any notable trends.}
+For parameters with a clear trend toward the center (\Cref{hpo:fig:hpo-slice}a), we narrowed the range to encourage exploiting good values.
+Some parameters trended to one side of the range (\Cref{hpo:fig:hpo-slice}b), which indicated needing to extend the range.
+Parameters with weak to no trend (Figures~\ref{hpo:fig:hpo-slice}c and \ref{hpo:fig:hpo-slice}d) were left unchanged for the initial searches and given an arbitrary value for the final search to reduce additional noise.
+Full hyperparameter plots given in \Cref{hpo:sec:hp-scatter}.
+
+Searches 1 and 2 used a reduced version of XferBench to execute more trials quickly and prune the less promising hyperparameter ranges; nevertheless, caution was exercised in pruning since scaling up XferBench could change optimal hyperparameter values.
+The irregular number of trials per search were due to executing as many trials as possible within a certain time (rather than aiming for a particular number of trials).
+
+
+\subsection{Languages evaluated}
+
+% For our primary evaluation of the success of hyperparameter search in finding the best emergent languages for transfer learning, we select from three categories of languages: human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC \citep[\smallish\url{https://huggingface.co/datasets/bboldt/elcc}, CC BY 4.0]{elcc}.
+We select three categories of languages to evaluate with XferBench:
+  human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC \citep[\smallish\url{https://huggingface.co/datasets/bboldt/elcc}, CC BY 4.0]{elcc}.
+The primary goal is for the search-derived languages to outperform all existing emergent languages and get as close to human language performance as possible.
+For the human languages, we use a subset of the baselines provided in \citet{boldt-mortensen-2024-xferbench}.
+In particular, we use Mandarin and Hindi because they were the best- and worst-performing human languages, respectively, and French and Arabic to round out the language families represented.
+
+For the search-derived languages, we selected the three best languages from the final primary run of hyperparameter search (Search 4) and evaluate them on the full set of evaluation languages in XferBench.
+We additionally include the three highest entropy languages from the entropy-maximizing search (Search 6e, discussed further in \Cref{hpo:sec:ent-xb}).
+
+Finally, for the emergent language-based points of comparison, we select three of the best performing languages from ELCC\@.
+Most notably, this includes Yao+ (\texttt{\smallish corpus-transfer-\allowbreak yao-et-al/\mbox{coco\_2014}} \citep{yao2022linking}) which performed far better than all other emergent languages on XferBench.
+Mu+ (\texttt{\smallish generalizations-\allowbreak mu-goodman/\allowbreak cub-reference} \citep{mu2021emergent}) and Chaabouni+ (\texttt{\smallish ec-at-scale/imagenet-10x10} \citep{chaabouni2022emergent}) were also included as more typical high-performing emergent languages on XferBench.
+
+
+\subsection{Results}
+\begin{figure}
+  \centering
+  % \includegraphics[width=0.9\linewidth]{example-image-duck}
+  \inputHpo{assets/xb-bar.pgf}
+  % Languages
+  % - XB human languages
+  % - ELCC top 3
+  % - HPO top 3
+  \caption{Bar chart of XferBench scores on emergent and human languages.  XB 1--3 are emergent language corpora derived from Search 4 and Entropy 1--3 from Search 6e.}
+  \unskip\label{hpo:fig:bar}
+\end{figure}
+
+\Cref{hpo:fig:bar} shows $3$ randomly seeded runs of the full XferBench score for each corpus.
+For the emergent languages from hyperparameter search, the models restored from checkpoints saved during the search, but the corpora were generated independently of the search.
+First, we see that the emergent languages from the XferBench-based search (XB 1--3) outperform all other emergent languages and even the Hindi corpus.
+While it is indeed significant that these emergent languages outperform a human language corpus, this corpus is also an outlier, and the emergent languages are still relatively far from matching the performance of the rest of the human language corpora.
+Nevertheless, these figures show that the XB 1--3 languages achieve state-of-the-art levels of similarity to human language.
+The corpora from the entropy-based search (Entropy 1--3) perform well, comparably to Yao+, but significantly worse than the XferBench-search languages.
+
+% Mandarin      5.850
+% Arabic        5.869
+% French        5.893
+% Hindi         5.958
+% XB 1          5.940
+% XB 2          5.938
+% XB 3          5.945
+% Entropy 1     5.974
+% Entropy 2     5.980
+% Entropy 3     5.975
+% Yao+          5.971
+% Mu+           6.021
+% Chaabouni+    6.033

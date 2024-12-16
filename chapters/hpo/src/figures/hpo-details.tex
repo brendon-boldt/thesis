@@ -1,0 +1,34 @@
+\begin{table*}
+  % \newcommand\dit\textquotedbl
+  \newcommand\dit{---}
+  \centering
+  \footnotesize
+  \setlength\tabcolsep{0.27em}
+  \begin{tabular}{lrrrrrrrrrrr}
+    \toprule
+    \# & $|\text{Trials}|$ & $|\text{Attrs.}|$ & $|\text{Vals.}|$ & $|\text{Distrs.}|$ & Temp. & $|\text{Embed.}|$ & $|\text{Hidden}|$ & LR & $|\text{Vocab}|$ & Length & $|\text{Epochs}|$ \\
+    \midrule
+    1  & $578$ & $[3,7]$  &  $[3,7]$ & $[1,127]$ & $[0.1, 10]$ & $[8,128]$  & $[8,128]$  & $[500\text{\textmu},50\text{m}]$ & $[10,20\text{k}]$  & $[1,40]$ & $500$             \\
+    2  & $171$ & $[5,10]$ & $[5,10]$ & \dit{}    &  $[0.5, 4]$ & $[64,512]$ & $[64,512]$ & $[500\text{\textmu},5\text{m}]$  & $[300,30\text{k}]$ & \dit{}   & \dit{}            \\
+    3  & $140$ & \dit{}   & \dit{}   & \dit{}    & \dit{}      & \dit{}     & \dit{}     & \dit{}                           & \dit{}             & \dit{}   & $[500,5\text{k}]$ \\
+    4  & $282$ & $[6,20]$ &    $6$   & $23$      & $2$         & $128$      & $256$      & $[1\text{m},3\text{m}]$          & $[500,30\text{k}]$ & \dit{}   & \dit{}            \\
+    4* &   $1$ & $11$     &    $6$   & $23$      & $2$         & $128$      & $256$      & $1.79\text{m}$                           & $9721$            & $16$     & $1715$            \\
+    \bottomrule
+  \end{tabular}
+  \caption{All hyperparameters were treated as log-scale hyperparameters. $|{\cdot}|$ refers to cardinality. ``\dit{}'' means unchanged from the previous run. \textmu, m, and k refer to the SI prefixes micro ($\times10^{-6}$), milli ($\times10^{-3}$), and kilo ($\times10^{3}$), respectively.}
+  \unskip\label{tab:hp-search}
+\end{table*}
+
+\begin{figure*}
+  \centering
+  \inputHpo{assets/hpo-slice.pgf}
+  \caption{Examples of different hyperparameter--objective relations observed in the various searches and hyperparameters.
+    From left-to-right, we have:
+      (a) a clear best value,
+      (b) a clear trend outside the provided range,
+      (c) a weak trend toward a particular value,
+      and (d) no definite trend.
+    The $y$-axis based on different ``sizes'' of XferBench-da normalized to similar scales.}
+  \unskip\label{hpo:fig:hpo-slice}
+\end{figure*}
+

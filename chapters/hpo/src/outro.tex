@@ -1,0 +1,51 @@
+\section{Discussion}
+\unskip\label{hpo:sec:discussion}
+
+
+\paragraph{Similarity to human language}
+The primary motivation for optimizing emergent communication systems on XferBench is to create more human language-like emergent languages.
+In this way, this environment and the recommended hyperparameters provide a better baseline environment for future emergent communication research to work from.
+This similarity to human language is critical for nearly every application of emergent communication research, not only related to machine learning and NLP but also areas with more linguistic focus \citep{boldt2024review}.
+Although XferBench quantifies a decidedly more deep learning, data-driven notion of similarity, this account is complimentary with more explicitly linguistic notions of similarity to human language.
+
+For example, linguistic phenomena such as parts of speech fundamentally concern whole classes of words behaving predictably in a variety of environments.
+Thus, trivially small languages are not suitable for addressing such phenomena as there are not classes of words and no variety to generalize over.
+Even something as fundamental as the Zipfian distribution of words in human language presupposes a large vocabulary size \citep{zipf1949least,piantadosi2014zipf}.
+Furthermore, smaller-scale emergent languages are a greater risk for overfitting since the capacity of a neural network quickly enters the overparameterization regime when the language has as small vocabulary, message length, etc. \citep{gupta-etal-2020-compositionality}.
+
+
+\paragraph{Emergent properties}
+The relationship between entropy, task success, and XferBench score demonstrated in the hyperparameter searches emphasizes the presence of \emph{truly emergent} properties and processes in emergent communication:
+Neither entropy nor transfer learning performance are directly optimized for (cf.\@ task success).
+% What is notable, though, about entropy minimization with respect to XferBench is that it is a \emph{full emergent} phenomenon, as neither entropy nor transfer learning performance are directly optimized for (cf.\@ task success).
+Just as Pareto efficient entropy has been found for task success in emergent languages \citep{kharitonov2020entmin}, we find some degree of Pareto efficiency with entropy and XferBench performance (and to a limited degree with task success and XferBench).
+What this shows is that the communicative pressures and information theoretic considerations are a key ingredient in emergent language's similarity to human language.
+Thus, task success and entropy serve as additional ways to reason about emergent language and how to apply it to human language.
+Nevertheless, the limited correlation we find among these properties also tells us that emergent language is not trivially explained by these factors either.
+
+
+\paragraph{Future work}
+On the front of creating more human language-like emergent languages, a next step is to introduce new variations of the signalling game, entirely new environments, or more sophisticated neural architectures and optimize them on a metric like XferBench in order to progress towards the long-term goal of producing realistic emergent languages for transfer learning.
+Because this paper has wrung as much performance as is possible from the basic signalling game environment, there can be greater certainty that innovations producing higher-performing languages are actually causing the improvement.
+Otherwise, more trivial factors like better learning rate tuning could become confounding variables.
+
+As far as investigating the entropy minimization pressure in emergent languages, further theoretical work needs to build models and generate testable hypotheses; theoretical models are the key to scientific explanation beyond merely showing the existence of correlations.
+Nevertheless, this paper has shown that hyperparameter turning can be an effective tool for producing a large variety of emergent language that preclude hyperparameters being confounding variables.
+Such methods of generating datasets will be invaluable in empirically testing theoretical models of emergent language.
+
+\section{Conclusion}
+\unskip\label{hpo:sec:conclusion}
+In this paper we have used hyperparameter search to generate the most human language-like emergent language to date, as quantified by XferBench.
+Not only does this represent a step forward for using emergent languages as realistic synthetic data for transfer learning but also provides insight into how hyperparameters can be better addressed in future emergent communication research.
+Finally, the hyperparameter search reveals further importance of the role of entropy in emergent language.
+High entropy appears to be a necessary condition for good transfer learning performance while at the same time, emergent language appears to minimize entropy for a given level of transfer learning performance.
+Furthermore, this entropy minimization is not replicated in synthetic languages suggesting that emergent language is more than just ``synthetic languages with extra steps''.
+
+
+\section*{Limitations}
+In terms of finding the most human language-like emergent language, this study is limited in terms of the simplicity of the environment.
+A single round signalling game with a fixed sender and receiver and uniform, synthetic observations is a no-frills environment which, while good for stability and simplicity, is limited in the richness of information to be communicated, and as a result, the languages it can produce.
+
+Regrading the investigation of the link between entropy and XferBench score and task success, we were not able to build any theoretical models to scientifically test particular hypotheses about the relationships between the variables; instead, we are only able to offer empirical evidence that there are trends warranting further investigation.
+Finally, the recommendations we can given regarding the hyperparameters of emergent communication systems are limited because hyperparameter search is relatively ``messy''; it is geared toward maximizing performance more than uncovering generalizable trends.
+Additionally, we perform our experiments with a signalling game which provides only limited evidence for the behavior of emergent communication systems with different tasks.

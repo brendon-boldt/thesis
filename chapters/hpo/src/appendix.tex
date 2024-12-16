@@ -1,0 +1,249 @@
+\section{Correlation of Evaluation Languages}
+\unskip\label{hpo:sec:eval-corr}
+
+\begin{table}
+  \centering
+  \inputHpo{assets/xb-target-corr}
+  \caption{$R^2$ values for individual target XferBench languages predicting the full XferBench score.  \emph{Human} and \emph{Emergent} refer to the $R^2$ value considering only the human or emergent languages, respectively.}
+  \unskip\label{tab:target-corr}
+\end{table}
+One of XferBench's chief weaknesses is its long runtime, taking $2$ to $6$ hours depending on the GPU used.
+Approximately $30\%$ of that time is spent on the initial pretraining with the emergent language corpus, with the other $70\%$ spent on finetuning and testing on the $10$ downstream languages.
+We observe from the XferBench scores on the emergent languages of ELCC and the human language baselines of \citet{boldt-mortensen-2024-xferbench} that $9$ out of the $10$ evaluation languages are highly correlated with each other, that is, the XferBench score on one language is highly predictive of the overall XferBench score.
+In particular, test cross-entropy on Danish (da) alone can predict ${>}95\%$ of the variation of the overall XferBench score (i.e., the linear regression has an $R^2>0.95$).
+For this reason, in the hyperparameter optimization trials, we compute XferBench-da (XferBench evaluated on Danish only) which is around $3{\times}$ faster than the full XferBench; the final evaluation nevertheless uses the full set of evaluation language for XferBench.
+
+In \Cref{tab:target-corr}, we show the $R^2$ values derived from training a linear model on just one of the target language's XferBench scores to predict the overall XferBench score.
+The emergent languages are all of the corpora from ELCC \citep{elcc}, and the human language corpora are the baselines from the original XferBench paper \citep{boldt-mortensen-2024-xferbench}.
+$R^2$ value corresponds to the percent of the variance in the full XferBench score explained by just the score (i.e., cross-entropy) on that particular target language.
+We find, strikingly enough, that all of the target languages, with the exception of Basque, are highly correlated, having $R^2$ values above $0.95$ all languages, and greater than $0.80$ even when considering human languages alone.
+Danish, of all of the languages, has the highest $R^2$ value (${>}0.99$), which is the reason we select it as the sole target for a more time-efficient variant of XferBench (which we term XferBench-da).
+
+
+\section{Hyperparameters Not Discussed}
+\unskip\label{hpo:sec:not-discussed}
+In this section we briefly discuss hyperparameters that were tried but not not documented in the paper or that were not investigated at all.
+We selected a batch size of $32$ based on comparing the compute efficiency of different sizes.
+Larger batch sizes could process more data faster but would not update the parameters often enough.
+On the other hand, smaller batch sizes would not process enough data to maximize the utility of each update.
+Mixed precision training was tested but not found to improve runtime.
+% distribution: SearchCat = "cat", ("Uniform",)
+For learning rate scheduling, we found cosine annealing to be slightly more effective than no learning, but further schedules were not investigated.
+Weight decay was investigated in earlier experiment but found not to have a noticeable effect.
+
+The implementation of the signalling game we used could also be optimized using REINFORCE to handle the discrete message, but we only tested with a Gumbel-Softmax layer as it is faster and more stable to optimize with.
+We did not vary the neural architecture beyond altering the number of units in the hidden and embedding layers; for example, we did not add additional layers, try different RNN cells (e.g., LSTM), or use transformers.
+
+
+\section{Full Table of Hyperparameters}
+\unskip\label{hpo:sec:all-hparams}
+
+In \Cref{tab:hp-search-all}, we show all of the hyperparameters selected for the searches and trials referenced in the paper.
+
+\begin{table*}
+  % \newcommand\dit\textquotedbl
+  \newcommand\dit{---}
+  \centering
+  \footnotesize
+  \setlength\tabcolsep{0.2em}
+  \begin{tabular}{lrrrrrrrrrrr}
+    \toprule
+    \# & $|\text{Trials}|$ & $|\text{Attrs.}|$ & $|\text{Vals.}|$ & $|\text{Distrs.}|$ & Temp. & $|\text{Embed.}|$ & $|\text{Hidden}|$ & LR & $|\text{Vocab}|$ & Length & $|\text{Epochs}|$ \\
+    \midrule
+    1    & $578$ & $[3,7]$  &  $[3,7]$ & $[1,127]$  & $[0.1, 10]$ & $[8,128]$  & $[8,128]$  & $[500\text{\textmu},50\text{m}]$ & $[10,20\text{k}]$  & $[1,40]$ & $500$             \\
+    2    & $171$ & $[5,10]$ & $[5,10]$ & \dit{}     &  $[0.5, 4]$ & $[64,512]$ & $[64,512]$ & $[500\text{\textmu},5\text{m}]$  & $[300,30\text{k}]$ & \dit{}   & \dit{}            \\
+    3    & $140$ & \dit{}   &   \dit{} & \dit{}     & \dit{}      & \dit{}     & \dit{}     & \dit{}                           & \dit{}             & \dit{}   & $[500,5\text{k}]$ \\
+    4    & $282$ & $[6,20]$ &      $6$ & $23$       & $2$         & $128$      & $256$      & $[1\text{m},3\text{m}]$          & $[500,30\text{k}]$ & \dit{}   & \dit{}            \\
+    4.1  & $1$   & $11$     &      $6$ & \dit{}     & \dit{}      & \dit{}     & \dit{}     & $1.79\text{m}$                   & $9721$             & $16$     & $1715$            \\
+    4.2  & $1$   & $12$     &      $6$ & \dit{}     & \dit{}      & \dit{}     & \dit{}     & $1.86\text{m}$                   & $12496$            & $22$     & $1593$            \\
+    4.3  & $1$   & $13$     &      $6$ & \dit{}     & \dit{}      & \dit{}     & \dit{}     & $1.74\text{m}$                   & $8096$             & $18$     & $1511$            \\
+    5r   & $411$ & $[4,20]$ & $[3,10]$ & $[1,127]$  & $[0.1,10]$  & $[8,512]$  & $[8,512]$  & $[500\text{\textmu},10\text{m}]$ & $[2,30\text{k}]$   & $[1,40]$ & $[10,3\text{k}]$  \\
+    6e   & $109$ & $10$     &     $10$ & $[63,511]$ & $2$         & $32$       & $32$       & $2.7\text{m}$                    & $25\text{k}$       & $15$     & $5\text{k}$       \\
+    6e.1 & $1$   & \dit{}   &   \dit{} & $228$      & \dit{}      & \dit{}     & \dit{}     & \dit{}                           & \dit{}             & \dit{}   & \dit{}            \\
+    6e.2 & $1$   & \dit{}   &   \dit{} & $372$      & \dit{}      & \dit{}     & \dit{}     & \dit{}                           & \dit{}             & \dit{}   & \dit{}            \\
+    6e.2 & $1$   & \dit{}   &   \dit{} & $165$      & \dit{}      & \dit{}     & \dit{}     & \dit{}                           & \dit{}             & \dit{}   & \dit{}            \\
+    \bottomrule
+  \end{tabular}
+  \caption{All hyperparameters were treated as log-scale hyperparameters. $|{\cdot}|$ refers to cardinality. ``\dit{}'' means unchanged from the previous run. \textmu, m, and k refer to the SI prefixes micro ($\times10^{-6}$), milli ($\times10^{-3}$), and kilo ($\times10^{3}$), respectively.  4.1 is the best-performing trial of Search 4 (and likewise for 4.2, 6e.1, etc.).}
+  \unskip\label{tab:hp-search-all}
+\end{table*}
+
+\section{Computing Resources Used}
+\unskip\label{hpo:sec:resources}
+Experiments were performed across about $20$--$30$ NVIDIA A6000 (or equivalent) GPUs (one trial per GPU) on an institutional cluster.
+We estimate approximately $5500$ GPU-hours were used for all experiments directly related to this paper, including those not documented or directly referenced.
+The primary searches for the best-performing emergent languages on XferBench (Searches 1--4) took about $1300$ GPU-hours.
+
+
+\section{Synthetic Languages}
+\unskip\label{hpo:sec:synth}
+\subsection{Definitions}
+We use four probabilistic synthetic languages which span a large portion of the Chomsky hierarchy ranging from trivial to beyond context-free.
+All synthetic languages contain a unique begin- and end-of-sentence token in each utterance.
+
+\paragraph{Zipf-Mandelbrot Distribution}
+The basis for our synthetic languages will be a Zipf--Mandelbrot distribution, a generalization of Zipf's law, where the unnormalized probability weight of the word $w_i$ is
+\begin{equation}
+  f(w_i) = \frac1{(i+\beta)^\alpha}
+  ,
+\end{equation}
+where
+  $i$ is the $1$-based index of the word,
+  $\alpha$ controls the weight of the tail,
+  and $\beta$ shifts where the distribution starts (roughly speaking).
+Empirically, $\alpha=1$ and $\beta=2.7$ have been found to be good approximations for human language and will be the default parameters of the distribution unless otherwise specified \citep{piantadosi2014zipf}.
+
+
+
+\paragraph{Bag of Words}
+The simplest synthetic language we introduce is a bag-of-words language where each token in a sentence is sampled independently from the Zipf-Mandelbrot distribution.
+The length of the sentence is independent of the sampling method, so in interest of simplicity, we sample from a discrete uniform distribution.
+
+
+
+\paragraph{Regular}
+The simplest non-trivial language we introduce is a regular language which partitions the tokens uniformly at random into $k$ different sets ($s_1,\dots,s_k$), keeping their initial Zipf--Mandelbrot-derived weight.
+Each sentence starts with a token sampled from $s_1$; each subsequent token is sampled from the next class ($s_i+1$) with probability $c$ or sampled from the same class ($s_i$).
+After $s_k$, the sentence terminates.
+Thus, the language is defined by the regular expression
+\begin{equation}
+  s_1^+
+  s_2^+
+  \dots
+  s_k^+
+  ,
+\end{equation}
+where
+  $a^+=aa^*$,
+  $s_i$ represents any token in the set $s_i$,
+  and appropriate BoS and EoS tokens are added.
+
+
+\paragraph{Dyck-$\textit{n}$}
+Dyck-$n$ can be thought of as ``balanced nested delimiters'' (where the delimiters are the same token) \citep{schutzenberger1963}.
+Each token in the sentence is generated as follows:
+  With probability $p$, a new token is sampled from the Zipf--Mandelbrot distribution and pushed onto a stack (the ``opening delimiter''), and with probability $1-p$, the token on top of the stack is popped off.
+A sentence always begins with an ``open'' token and ends when the stack is empty.
+An example of such a sentence is $(3, 1, 1, 2, 1, 1, 2, 3)$ which could be illustrated as ``\{()[()]\}''.
+% \cmt{Technically this is a subset of Dyck-$n$ because we terminate after the opening delimiter is closed, so we never generate, say, ``()()''.}
+
+
+\paragraph{Shuffle Dyck-$\textit{n}$}
+Finally, we use Shuffle Dyck-$n$ as our last language which lies beyond context-free in the Chomsky hierarchy \citet{suzgun-etal-2019-lstm}.
+Technically speaking, this language should be called Shuffle of $n$ Distinct Dyck-$1$ Languages since it is the result of randomly interleaving multiple Dyck-$1$ languages with distinct tokens.
+To generate a sentence in Shuffle Dyck-$n$, we first follow the same procedure as for Dyck-$n$ but keep the individual tokens separate.
+We then interleave the separate strings by appending to the sentence uniformly at random from one of the individual strings until they are empty.
+% To generate a sentence in Shuffle Dyck-$n$, $n$ Dyck-$1$ languages are generated and for each token (with the same hyperparameter $p$ described above), and 
+For example, if Dyck-$n$ generated ``\{([()])[]\}'', the separated strings would ``\{\}'', ``(())'', and ``[][]'', which could then be interleaved into ``\{[\}(()])''.
+
+
+\subsection{Hyperparameters}
+
+Each variation of the synthetic language maintains the default values while varying a single hyperparameter.
+We vary the common hyperparameters as follows:
+\begin{description}
+  \item[Vocabulary size]
+    takes the values $10$, $100$, $1$k, $5$k, $10$k, $30$k (default: $30$k).  A vocab size of $10$ is incompatible with the Regular language and was skipped.
+  \item[Zipf--Mandelbrot $\alpha$]
+    takes the values $0$, $0.25$, $0.5$, $1$, $2$, and $4$ (default: $1$).
+  \item[\textit{n} tokens]
+    (in the whole corpus) takes the values $1$k, $10$k, $100$k, $1$M, $5$M, and $15$M (default: $15$M); this hyperparameter was not varied for the Unigram language.
+\end{description}
+
+The Unigram language has an additional hyperparameter stop probability which takes the values $0.05$, $0.1$, and $0.2$ (default: $0.1$).
+The Regular language has two additional hyperparameters: repeat probability ($c$) which takes the values $0.2$, $0.4$, $0.5$, and $0.6$ (default: $0.4$), and $n$ classes which takes the values $5$, $10$, $20$, and $40$ (default: $10$).
+The Dyck and Shuffle Dyck languages take the additional hyperparameter open probability with values: $0.2$, $0.3$, $0.4$, $0.5$, and $0.6$ (default: $0.5$); Shuffle Dyck is not generated with the value $0.6$ due to implementation constraints.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iffalse
+def dyck(
+    open_prob: float = 0.4,
+    n_tokens: int = 20_000_000,
+    vocab_size: int = 30_000 - 10,
+    zm_alpha: float = 1,
+    zm_beta: float = 2.7,
+def shuffle_dyck(
+    open_prob: float = 0.4,
+    n_tokens: int = 20_000_000,
+    vocab_size: int = 30_000 - 10,
+    # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4176592/
+    zm_alpha: float = 1,
+    zm_beta: float = 2.7,
+def concat(
+    repeat_prob: float = 0.5,
+    n_classes: int = 10,
+    n_tokens: int = 20_000_000,
+    vocab_size: int = 30_000 - 10,
+    # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4176592/
+    zm_alpha: float = 1,
+    zm_beta: float = 2.7,
+def unigram(
+    stop_prob: float = 0.1,
+    n_tokens: int = 20_000_000,
+    vocab_size: int = 30_000 - 10,
+    zm_alpha: float = 1,
+    zm_beta: float = 2.7,
+
+dyck
+    # n_tokens (5): 1k, 10k, 100k, 1m, 5m, (15M)
+    # vocab_size (5): 10, 100, 1k, 5k, 10k, (30k)
+    # open_prob (5): 0.2, 0.3, (0.4), 0.45, 0.5, 0.6
+    # zm_alpha (5): 0, 0.25, 0.5, (1), 2, 4
+      if which == "shuffle-dyck" and open_prob > 0.5:
+
+def sweep_concat() -> Iterator:
+    # n_tokens (5): 1k, 10k, 100k, 1m, 5m, (15M)
+    # vocab_size (5): 10, 100, 1k, 5k, 10k, (30k)
+      not 10
+    # zm_alpha (5): 0, 0.25, 0.5, (1), 2, 4
+    # n_classes (5): 5, 10, 20, 40
+    # repeat_prob (5): 0.2, (0.4), 0.5,  0.6
+
+def sweep_unigram() -> Iterator:
+    for vocab_size in [100, 1000, 5000, 10000]:
+    for stop_prob in [0.05, 0.2]:
+    for zm_alpha in [0, 0.25, 0.5, 2, 4]:
+  \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Task Success and Entropy}
+\unskip\label{hpo:sec:ent-vs-acc}
+\begin{figure}
+  \centering
+  \inputHpo{assets/ent-vs-acc.pgf}
+  \caption{Entropy versus accuracy for Search 5r.}
+  \unskip\label{hpo:fig:ent-vs-acc}
+\end{figure}
+
+Previous work \citep{kharitonov2020entmin,chaabouni2021color} has analyzed entropy minimization with respect to the amount of information or, roughly speaking, task success.
+We performed a brief analysis the relationship between entropy and accuracy (task success) shown in \Cref{hpo:fig:ent-vs-acc}.
+While we do find significant correlation (Pearson's $r=0.57$ for Search 5r), we would not characterize it as any strict sort of entropy minimization.
+That is, we observe many emergent languages which are from the Pareto frontier of high accuracy and low entropy.
+Hyperparameter search demonstrates itself to be a powerful tool for investigating such correlations since it is able to generate a wide variety of emergent languages with minimal additional work from the researchers.
+Nevertheless, more investigation would have to be done on this front to conclusively support or reject prior claims of entropy minimization.
+
+
+
+
+\section{Hyperparameter Scatter Plots}
+\unskip\label{hpo:sec:hp-scatter}
+
+\Cref{hpo:fig:slice-0,hpo:fig:slice-1,hpo:fig:slice-2,hpo:fig:slice-3} show the univariate scatter plots for hyperparameter Searches 1--4.
+The $y$-axis is XferBench-da score (or some smaller variation thereof, for Searches 1 and 2), and the $x$-axis is one of the hyperparameters varied for that search.
+Note that other variables are \emph{not} held constant while one is varied; instead all hyperparameters are varied for each trial.
+
+\newcommand\slicefig[2]{%
+\begin{figure*}
+  \centering
+  \includegraphics{chapters/hpo/assets/slices-#1.pdf}
+  \caption{#2}
+  \unskip\label{hpo:fig:slice-#1}
+\end{figure*}
+}
+\slicefig{0}{Objective values for Search 1 by individual hyperparameter.}
+\slicefig{1}{Objective values for Search 2 by individual hyperparameter.}
+\slicefig{2}{Objective values for Search 3 by individual hyperparameter.}
+\slicefig{3}{Objective values for Search 4 by individual hyperparameter.}
+
