@@ -1,0 +1,107 @@
+\section{Design}
+\unskip\label{elcc:sec:design}
+
+\subsection{Format}
+\unskip\label{elcc:sec:format}
+
+\theLib{} is a collection of ECSs, each of which has one or more associated \emph{variants} which correspond to runs of the system with different hyperparameter settings (e.g., different random seed, message length, dataset).
+Each variant has metadata along with the corpus generated from its settings.
+Each ECS has its own metadata as well and code to generate the corpus and metadata of each variant.
+The file structure of \theLib{} is illustrated in \Cref{elcc:fig:structure}.
+
+\begin{figure}
+  \centering
+  \fontsize{8pt}{8pt}\selectfont
+  \fbox{\begin{minipage}{0.85\linewidth}
+    \texttt{systems/}\dotfill top-level directory
+    \\\null\quad\texttt{ecs-1/}\dotfill  directory for a particular ECS
+    \\\null\quad\quad\texttt{metadta.yml}\dotfill metadata about the ECS
+    \\\null\quad\quad\texttt{code/}\dotfill directory containing files to produce the data
+    \\\null\quad\quad\texttt{data/}\dotfill directory containing corpus and metadata files
+    \\\null\quad\quad\quad\texttt{hparams-1/}\dotfill directory for run with specific hyperparameters
+    \\\null\quad\quad\quad\quad\texttt{corpus.jsonl}\dotfill corpus data
+    \\\null\quad\quad\quad\quad\texttt{metadata.json}\dotfill metadata specific for corpus (e.g., metrics)
+    \\\null\quad\quad\quad\texttt{hparams-2/}\dotfill \emph{as above}
+    \\\null\quad\quad\quad\texttt{hparams-n/}\dotfill \emph{as above}
+    \\\null\quad\texttt{ecs-2/}\dotfill \emph{as above}
+    \\\null\quad\texttt{ecs-n/}\dotfill \emph{as above}
+  \end{minipage}}
+  \caption{The file structure of \theLib{}.}
+  \unskip\label{elcc:fig:structure}
+\end{figure}
+
+
+\paragraph{ECS metadata}
+Environment metadata provides a basic snapshot of a given system and where it falls in the taxonomy of ECSs.
+As the collection grows, this structure makes it easier to ascertain the contents of the collection and easily find the most relevant corpora for a given purpose.
+This metadata will also serve as the foundation for future analyses of the corpora by looking at how the characteristics of an ECS relate to the properties of its output.
+These metadata include:
+\begin{itemize}
+  \item Source information including the original repository and paper of the ECS\@.
+  \item High-level taxonomic information like game type and subtype.
+  \item Characteristics of observation; including natural versus synthetic data, continuous versus discrete observations.
+  \item Characteristics of the agents; including population size, presence of multiple utterances per episode, presence of agents that send \emph{and} receive messages.
+  \item Free-form information specifying the particular variants of the ECS and general notes about the ELCC entry.
+\end{itemize}
+A complete description is given in \Cref{elcc:sec:md-spec}.
+These metadata are stored as YAML files in each ECS directory.
+A Python script is provided to validate these entries against a schema.
+See \Cref{elcc:sec:ecs-md} for an example of such a metadata file.
+
+\paragraph{Corpus}
+Each \emph{corpus} comprises a list of \emph{lines} each of which is, itself, an array of \emph{tokens} represented as integers.
+Each line corresponds to a single episode or round in the particular ECS.
+In the case of multi-step or multi-agent systems, this might comprise multiple individual utterances which are then concatenated together to form the line (no separation tokens are added).
+Each corpus is generated from a single run of the ECS; that is, they are never aggregated from distinct runs of the ECS\@.
+
+Concretely, a \emph{corpus} is formatted as a JSON lines (JSONL) file where each \emph{line} is a JSON array of integer \emph{tokens} (see \Cref{elcc:fig:quale} for an example of the format).
+There are a few advantages of JSONL:
+  (1) it is a human-readable format,
+  (2) it is JSON-based, meaning it is standardized and has wide support across programming languages,
+  and (3) it is line-based, meaning it is easy to process with command line tools.\footnote{E.g., Creating a $100$-line random sample of a dataset could be done with \texttt{\small shuf dataset.jsonl | head -n 100 > sample.jsonl}}
+Corpora are also available as single JSON objects (i.e., and array of arrays), accessible via the Croissant ecosystem \citep{croissant}.
+
+
+\paragraph{Corpus analysis}
+For each corpus in \theLib{} we run a suite of analyses to produce a quantitative snapshot.
+This suite metrics is intended not only to paint a robust a picture of the corpus but also to serve as jumping-off point for future analyses on the corpora.
+Specifically, we apply the following to each corpus:
+  token count,
+  unique tokens,
+  line count,
+  unique lines,
+  tokens per line,
+  tokens per line stand deviation,
+  $1$-gram entropy,
+  normalized $1$-gram entropy,
+  entropy per line,
+  $2$-gram entropy,
+  $2$-gram conditional entropy,
+  EoS token present,
+  and EoS padding.
+\emph{Normalized $1$-gram entropy} is computed as \emph{$1$-gram entropy} divided by the maximum entropy given the number of unique tokens in that corpus.
+
+We consider an EoS (end-of-sentence) token to be present when:
+  (1) every line ends with token consistent across the entire corpora,
+  and (2) the first occurrence of this token in a line is only ever followed by more of the same token.
+For example, \texttt{\small0} could be an EoS token in the corpus \texttt{\small[[1,2,0],[1,0,0]]} but not \texttt{\small[[1,2,0],[0,1,0]]}.
+EoS padding is defined as a corpus having an EoS token, all lines being the same length, and the EoS token occurs more than once in a line at least once in the corpus.
+
+Additionally, each corpus also has a small amount of metadata copied directly from the output of the ECS\@; for example, this might include the success rate in a signalling game environment.
+We do not standardize this because it can vary widely from ECS to ECS, though it can still be useful for comparison to other results among variants within an ECS\@.
+
+\paragraph{Reproducibility}
+\theLib{} is designed with reproducibility in mind.
+With each ECS, code is included to reproduce the corpora and analysis metadata.
+Not only does this make \theLib{} reproducible, but it sometimes helps the reproducibility of the underlying implementation insofar as it fixes bugs, specifies Python environments, and provides examples of how to run an experiment with a certain set of hyperparameters.
+Nevertheless, in this code, we have tried to keep as close to the original implementations as possible.
+When the underlying implementation supports it, we set the random seed (or keep the default) for the sake of consistency, although many systems do not provide a way to easily set this.
+
+% The web interface (discussed below) will additionally be made available on the World Wide Web.
+% \cmt{Remove if not present.}
+
+% \paragraph{Web interface}
+% In order to make \theLib{} more user-friendly, we develop a simple web interface (i.e., website) for interacting with the data in the collection.
+% This includes displaying entries in a tabular format with the accompanying metadata so that it is possible to search, sort, and filter the entries.
+% Selecting the individual entries shows the user details about the entry, an in-browser sample of the emergent language, and the ability to download the particular entry.
+% \cmt{Remove if not present.}

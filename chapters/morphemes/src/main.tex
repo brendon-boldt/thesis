@@ -93,12 +93,10 @@ where
 % Furthermore, let $\mathcal F$ and $\mathcal M$ be set of all form and meaning decision functions, respectively where ``all'' means all function defined for a given domain, not every possible decision functions.
 
 With corpus of utterance--state pairs combined with lists of form and meaning decision functions, we can calculate the joint probabilities units of form and units of meaning in the corpus:
-\begin{equation}
+\begin{equation} \label{eq:morph-joint}
   p_{\mathcal C}(F_j, M_k) = \frac1{|\mathcal C|} \sum^{|\mathcal C|}_{i=1} F_j(U_i) \cdot M_k(S_i)
   .
-  \label{eq:morph-joint}
 \end{equation}
-
 
 % The output, then will be sequences of tokens as the units of form and 
 

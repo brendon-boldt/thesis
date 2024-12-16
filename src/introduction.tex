@@ -15,7 +15,7 @@ More substantial descriptions of the work are given in the body of thesis.
   \toprule
   2019 & August & Began research master's degree (CMU) \\
   2021 & August & Completed masters, began PhD \\
-  2024 & July--September & XferBench eval (\Cref{ch:xferbench-analysis}) \\
+  2024 & July--September & XferBench eval (\Cref{ch:hpo}) \\
   & September & Proposal \\
   & October--December & Rich corpora (\Cref{ch:rich-corpora}) \\
   2025 & January--March & Morphemes (\Cref{ch:morphemes}) \\
@@ -240,7 +240,7 @@ Finally, from a practical standpoint, the engineering approach proved more tract
 
 This thesis has three main parts:
 The first comprises \Cref{ch:elcc,ch:rich-corpora}, which introduce a large collection of emergent language corpora and corresponding semantic annotations.
-Second, \Cref{ch:xferbench,ch:xferbench-analysis} introduce and showcase XferBench, a deep transfer learning-based evaluation metric for emergent language corpora.
+Second, \Cref{ch:xferbench,ch:hpo} introduce and showcase XferBench, a deep transfer learning-based evaluation metric for emergent language corpora.
 Lastly, \Cref{ch:morphemes,ch:syntax} introduce methods for detecting linguistic structures in emergent language corpora.
 Each of these parts largely stands on its own for the purposes of readability as well as their contributions.
 Nevertheless, the entire thesis is intended to provide a coherent, multi-pronged approach to the problem of a lack of measurability of progress.
@@ -259,7 +259,7 @@ Thus, the collection of emergent language corpora forms the foundation for the r
 
 \subsection{Transfer learning-based evaluation}
 
-\Cref{ch:xferbench,ch:xferbench-analysis} introduce XferBench, an evaluation metric for emergent language corpora based on deep transfer learning.
+\Cref{ch:xferbench,ch:hpo} introduce XferBench, an evaluation metric for emergent language corpora based on deep transfer learning.
 The intuition behind XferBench is that when a model is pretrained on emergent language data, its downstream performance on human language-based natural language processing tasks (e.g., language modelling, machine translation) is correlated with its similarity to human language, as far as a deep neural network is concerned.
 XferBench is packaged as a benchmark: standardized data and settings with a clean, easy-to-use implementation to permit widespread.
 

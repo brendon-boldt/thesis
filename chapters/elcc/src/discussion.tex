@@ -1,0 +1,68 @@
+\section{Discussion}
+\unskip\label{elcc:sec:discussion}
+
+
+\paragraph{Work enabled by \theLib{}}
+In the typical emergent communication paper, only a small amount of time and page count is allocated to analysis with the lion's share being taken up by designing the ECS, implementing it, and running experiments.
+Even if one reuses an existing implementation, a significant portion of work still goes towards designing and running the experiments, and the analysis is still limited to that single system.
+While this kind of research is valid and important, it should not be the only paradigm possible within emergent communication research.
+To this end, \theLib{} enables research which focus primarily on developing more in-depth analyses across a diverse collection of systems.
+Furthermore, removing the necessity of implementing and/or running experiments allows researchers without machine learning backgrounds to contribute to emergent communication research from more linguistic angles that otherwise would not be possible.
+
+In particular, \theLib{} enables work that focuses on the lexical properties of emergent communication, looking at the statical properties and patterns of the surface forms of a given language (e.g., Zipf's law \citep{zipf}).
+\citet{ueda2023on} is a prime example of this; this paper investigates whether or not emergent languages obey Harris' Articulation Schema (HAS) by relating conditional entropy to the presence of word boundaries \citep{harris,Tanaka-Ishii2021}.
+The paper finds mixed evidence for HAS in emergent languages but only evaluated a handful of settings in a single ECS\@, yet it could be the case that only systems with certain features generate languages described by HAS\@.
+The variety of systems provided by \theLib{} could, then, provide more definitive empirical evidence in support or against the presence of HAS in emergent languages.
+Additionally, \theLib{} can similarly extend the range of emergent languages evaluated in the context of machine learning, such as \citet{yao2022linking,xferbench} which look at emergent language's suitability for deep transfer learning to downstream NLP tasks or \citet{van-der-wal-etal-2020-grammar} which analyzes emergent languages with unsupervised grammar induction.
+
+\paragraph{ECS implementations and reproducibility}
+In the process of compiling \theLib{}, we observed a handful of trends in the implementations of emergent communication systems.
+A significant proportion of papers do not publish the implementations of experiments, severely limiting the ease of reproducing the results or including such work in a project such as \theLib{}, considering that a large amount of the work in creating an ECS is not in the design but in the details of implementation.
+Even when a free and open source implementation is available, many projects suffer from underspecified Python dependencies (i.e., no indication of versions) which can be difficult to reproduce if the project is older than a few years.
+Furthermore, some projects also fail to specify the particular hyperparameter settings or commands to run the experiments presented in the paper; while these can often be recovered with some investigation, this and the above issue prove to be obstacles which could easily be avoided.
+For an exemplar of a well-documented, easy-to-run implementation of an ECS and its experiments, see \citet{mu2021generalizations} at \url{https://github.com/jayelm/emergent-generalization/} which not only provides dependencies with version and documentation how to download the data but also a complete shell script which executes the commands to reproduce the experiments.
+
+
+\paragraph{Future of \theLib{}}
+While \theLib{} is a complete resource as presented in this paper, \theLib{} is intended to be an ongoing project which incorporates further ECSs, analyses, and taxonomic features as the body of emergent communication literature and free and open source implementations continues to grow.
+This approach involves the community not only publishing well-documented implementation of their ECSs but also directly contributing to \theLib{} in the spirit of scientific collaboration and free and open source software.
+\theLib{}, then, is intended to become a hub for a variety of stakeholders in the emergent communication research community, namely a place for:
+  ECS developers to contribute and publicize their work,
+  EC researchers to stay up-to-date on new ECSs,
+  and EC-adjacent researchers to find emergent languages which they can analyze or otherwise use for their own research.
+
+
+\paragraph{Limitations}
+Emergent communication research is primarily basic research on machine generated data; thus, ELCC has few, if any, direct societal impacts.
+From a research point of view:
+  while \theLib{} attempts to provide a representative sample of the ECSs present in the literature, it is not comprehensive collection of all of the open source implementations let alone all ECSs in the literature.
+This limitation is especially salient in the case of foundational works in EC which have no open source implementations (e.g., \citet{mordatch2018grounded}).
+Thus, the contents of ELCC could potentially result in an over-reliance on the particular systems included resulting in an unfamiliarity with the data and limiting research on those currently not included in ELCC\@.
+Including the data-generating code and metadata describing the systems in ELCC has partially addressed this issue, and future work adding more open source implementations and reimplementing seminal papers could continue to ameliorate this limitation.
+
+Beyond the variety of systems, in its design \theLib{} only provides unannotated corpora without any reference to the semantics of the communication, which limits the range of analyses that can be performed.
+For example, measures of compositionality, such as topographic similarity \citep{brighton2006UnderstandingLE,lazaridou2018emergencelinguisticcommunicationreferential}, are precluded because they fundamentally a relationship between surface forms and their semantics.
+In terms of compute resources, we estimate that on the order of 150 GPU-hours (NVIDIA A6000 or equivalent) on an institutional cluster were used in the development of \theLib{}, and additional 1000 GPU-hours were used to generate the results of XferBench on ELCC\@.
+This research could be difficult to reproduce without access to institutional resources.
+
+
+% This includes adding new ECSs, metrics, and metadata as well as building tooling around \theLib{} to analyze emergent languages.
+% Tooling built around the collection's interface would benefit from directly applying to new ECSs with minimal effort as they are added to \theLib{}.
+% 
+% \cmt{Discuss why this will hopefully surpass EGG.}
+
+
+% \paragraph{Illusion of diversity}
+% \cmt{Even though there is a diversity of ECSs, it remains to be seen if there is truly a diversity of language resulting from these.}
+% \cmt{For example, we in RLupus we have [password signalling] which suggests that there is a degenerate strategy to winning.}
+% \cmt{Mention the degnerate strategy to winning a contrast game (bouchacourt).}
+% \cmt{It is actually another task to determine to what degree the language is genuinely capturing.}
+
+
+\section{Conclusion}
+\unskip\label{elcc:sec:conclusion}
+
+In this paper, we have introduced \theLib{}, a collection of emergent language corpora annotated with taxonomic metadata and suite of descriptive metrics derived from free and open source implementations of emergent communication systems introduced in the literature.
+\theLib{} also provides code for running these implementations, in turn, making those implementations more reproducible.
+This collection is the first of its kind in providing easy access to a variety of emergent language corpora.
+Thus, it enables new kinds of research on emergent communication which involve a wide range of emergent communication, focusing directly on the analysis of the emergent languages themselves.

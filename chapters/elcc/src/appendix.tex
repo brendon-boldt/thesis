@@ -1,0 +1,90 @@
+\section{ECS-Level Metadata Specification}
+\unskip\label{elcc:sec:md-spec}
+
+\begin{description}[itemindent=-0.2in]
+    \item[source] The URL for the repository implementing the ECS\@.
+    \item[upstream\_source] The URL of the original repo if \textbf{source} is a fork.
+    \item[paper] The URL of the paper documenting the ECS (if any).
+    \item[game\_type] The high level category of the game implemented in the ECS\@; currently one of \emph{signalling}, \emph{conversation}, or \emph{navigation}.
+    \item[game\_subtype] A finer-grained categorization of the game, if applicable.
+    \item[observation\_type] The type of observation that the agents make; currently either \emph{vector} or \emph{image} (i.e., an image embedding).
+    \item[observation\_continuous] Whether or not the observation is continuous as opposed to discrete (e.g., image embeddings versus concatenated one-hot vectors).
+    \item[data\_source] Whether the data being communicated about is from a natural source (e.g., pictures), is synthetic, or comes from another source (e.g., in a social deduction game).
+    \item[variants] A dictionary where each entry corresponds to one of the variants of the particular ECS\@.
+      Each entry in the dictionary contains any relevant hyperparameters that distinguish it from the other variants.
+    \item[seeding\_available] Whether or not the ECS implements seeding the random elements of the system.
+    \item[multi\_step] Whether or not the ECS has multiple steps per episode.
+    \item[symmetric\_agents] Whether or not agents both send and receive messages.
+    \item[multi\_utterance] Whether or not multiple utterances are included per line in the dataset.
+    \item[more\_than\_2\_agents] Whether or not the ECS has a population of ${>}2$ agents.
+\end{description}
+\section{ECS-Level Metadata Example}
+\unskip\label{elcc:sec:ecs-md}
+See \Cref{elcc:fig:ecs-md}.
+\begin{figure}
+\footnotesize
+\centering
+  \begin{minipage}{0.95\linewidth}
+  %source: https://github.com/brendon-boldt/emergent_communication_at_scale
+\begin{Verbatim}[frame=single]
+origin:
+  upstream_source:
+    https://github.com/google-deepmind/emergent_communication...
+  paper: https://openreview.net/forum?id=AUGBfDIV9rL
+system:
+  game_type: signalling
+  data_source: natural
+  game_subtype: discrimination
+  observation_type: image
+  observation_continuous: true
+  seeding_available: true
+  multi_step: false
+  more_than_2_agents: true
+  multi_utterance: false
+  symmetric_agents: false
+  variants:
+    imagenet-1x10:
+      n_receivers: 10
+      n_senders: 1
+    imagenet-10x10:
+      n_receivers: 10
+      n_senders: 10
+    imagenet-5x5:
+      n_receivers: 5
+      n_senders: 5
+    imagenet-1x1:
+      n_receivers: 1
+      n_senders: 1
+    imagenet-10x1:
+      n_receivers: 1
+      n_senders: 10
+\end{Verbatim}
+  \end{minipage}
+  \caption{Example of an ECS metadata file in the YAML format.}
+  \unskip\label{elcc:fig:ecs-md}
+\end{figure}
+
+\section{Papers based on the signalling game}
+\unskip\label{elcc:sec:sg-list}
+\citet{2106.02668, 2203.13176, 2203.13344, 2204.12982, 2112.14518, 2111.06464, 2109.06232, 2108.01828, 2106.04258, 2103.08067, 2103.04180, 2101.10253, 2012.10776, 2012.02875, 2011.00890, 2010.01878, 2008.09866, 2008.09860, 2005.00110, 2004.09124, 2004.03868, 2004.03420, 2002.01365, 2002.01335, 2002.01093, 2001.08618, 2001.03361, 1911.05546, 1911.01892, 1910.05291, 1909.11060, 1906.02403, 1905.13687, 1905.12561, 1812.01431, 1808.10696, 1804.03984, 1705.11192, 1612.07182, 2302.08913, 2211.02412, 2209.15342, 2207.07025}
+
+
+\section{Per system analysis}
+\unskip\label{elcc:sec:big-tables}
+
+See \Cref{tab:big-1,tab:big-2,tab:big-3,tab:big-4}.
+
+\newcommand\bigtable[1]{%
+  \begin{table}
+    \tiny
+    \centering
+    \inputelcc{src/figure/big-table-#1}
+    \medskip
+    \caption{}
+    \unskip\label{tab:big-#1}
+  \end{table}
+}
+\bigtable{1}
+\bigtable{2}
+\bigtable{3}
+\bigtable{4}

@@ -35,7 +35,8 @@ Finally, this thesis explores the relationship between the machine learning-base
 \chapter{Building a Library of Emergent Languages \note{under review}}
 \unskip\label{ch:elcc}
 
-\footnote{Based on ``ELCC: the Emergent Language Corpora Collection'' currently under review at the Datasets and Benchmarks Track of NeurIPS 2024 \cmt{cite}.}
+
+\input{chapters/elcc/src/main}
 
 
 \chapter{Adding Semantic Annotations to Corpora \note{proposed}}
@@ -50,9 +51,8 @@ Finally, this thesis explores the relationship between the machine learning-base
 
 \input{chapters/xferbench/src/main}
 
-\chapter{Ranking Emergent Languages with Transfer Learning \note{in progress}}
-\unskip\label{ch:xferbench-analysis}
-
+\chapter{Searching for the Most Human-like Emergent Language \note{under review}}
+\unskip\label{ch:hpo}
 
 
 \chapter{Discovering Morphemes in Rich Corpora \note{proposed}}
@@ -70,12 +70,15 @@ Finally, this thesis explores the relationship between the machine learning-base
 \unskip\label{ch:conclusion}
 
 \bibliographystyle{plainnat}
-\bibliography{src/main,chapters/xferbench/src/main}
+\bibliography{src/main,chapters/xferbench/src/main,chapters/elcc/src/main,chapters/elcc/src/sg-arxiv}
 
 \appendix
 
 \chapter{Appendix: XferBench}
 \input{chapters/xferbench/src/appendix}
+
+\chapter{Appendix: ELCC}
+\input{chapters/elcc/src/appendix}
 
  \typeout{INFO: \arabic{comment} comments.}
 \end{document}
