@@ -63,10 +63,17 @@ XferBench is published as an easy-to-use Python package, and since it only requi
 
 
 \subsection{ELCC: the Emergent Language Corpus Collection}
-Under review at the \textit{2024 Conference on Neural Information Processing Systems Datasets and Benchmarks Track} (decision in September 2024).
+Under review at the \textit{2025 International Conference on Learning Representations} (ICLR; decision in January 2025).
 This paper introduces a collection of over $70$ emergent language corpora from across $8$ different systems in the literature.
 Each of these corpora is annotated with statistical analyses as well as metadata documenting the features of the system/environment it came from.
-Such a resource is intended to make studying emergent languages themselves far easier since it obviates the need run the systems oneself and enable comparative studies given the variety of emergent communication systems included.
+Such a resource is intended to make studying emergent languages themselves far easier since it obviates the need run the systems oneself and enables comparative studies given the variety of emergent communication systems included.
+
+\subsection{Searching for the Most Human-like Emergent Language}
+Under review in the December 2024 cycle of the \emph{Association for Computational Linguistics (ACL) Rolling Review}.
+This paper uses Bayesian hyperparameter search on a signalling game-based emergent communication environment to generate languages which perform well on XferBench (i.e., transfer well to human language modelling).
+The experiments result in state-of-the-art emergent languages for transfer learning even surpassing one of the anomalously low human language baselines.
+This process also yields concrete recommendations on what hyperparameter settings lead to emergent languages more statistically similar to human languages.
+Finally, this experiments reveal that there is a significant correlation between emergent language entropy and its performance on XferBench, suggesting that entropy is ``minimized'' with respect to transfer learning performance.
 
 \subsection{Other Work}
 Some work completed during the course of master's and doctoral work will not factor heavily into the thesis.
@@ -80,11 +87,6 @@ In ``Case study: deontological ethics in NLP'' \citep{prabhumoye-etal-2021-case}
 This section will briefly described the proposed work for the completion of the doctoral thesis.
 Each of these papers is intended to a standard conference-length paper (i.e., 8--9 pages).
 
-\subsection{XferBench analysis}
-In this paper, which is currently in progress, we will run XferBench on all of the languages in ELCC in order to find correlations between XferBench performance and features of the corpora and emergent communication system they come from.
-For example, we hope to answer question such as ``Do more complex environments yield better emergent languages?'' or ``Is token entropy of an emergent language predictive of its score on XferBench?''
-These analyses will help to understand what XferBench is measuring and whether it is easily explainable by surface-level statistics of the corpus or whether some deeper structural characteristics might be required to understand XferBench's outputs.
-
 
 \subsection{Rich emergent language corpora}
 ELCC, the current collection of emergent language corpora, only includes the corpora themselves and aggregate statistics, but many interesting research directions require not only having access to the tokens of utterances themselves but also their context.
@@ -95,21 +97,19 @@ From here, it will be possible to explore a far greater range of phenomena with 
 \subsection{Automatically detecting morphemes in emergent language corpora}
 While the original plan was to create a linguistic counterpart to XferBench, that is, some benchmark-like metric which measured the presence of human language-like linguistic structures in emergent communication, I rolled back my ambition considerably as there are not yet methods for detecting structure in emergent communication generally.
 Thus, this project will make an important step in the direction of such a metric by introducing and testing an algorithm to detect and segment emergent communication utterances into morphemes: particular meanings paired with an atomic form.
-Detecting morphemes is critical in building up to ``higher-level'' linguistic concepts like syntax and discourse, yet there are no existing methods determining what the meaningful units of an emergent communication utterance are in a general, system-agnostic way (e.g., is each token its own morpheme are they sub-morpheme units?).
+Understanding (and identifying) morphemes in emergent language is critical to understanding many (if not the majority of) linguistic phenomena from morphology to syntax to discourse; double articulation a fundamental feature of human language.
+Yet there are no existing methods determining what the meaningful units of an emergent communication utterance are in a general, system-agnostic way (e.g., is each token its own morpheme are they sub-morpheme units?).
 This work will leverage the rich emergent language corpora discussed above as it is necessary to pair the utterances (form) with the accompanying context (meaning) in order to uncover morphemes (or at least an analogous structure).
 Being able to turn emergent languages represented as strings of raw tokens into strings of morphemes will enable more principled research on linguistic structures which presuppose the existence and identification of morphemes (e.g., syntax).
-
-\cmt{Add comment motivating morpheme detection by talking about double articulation and how parsing over characters would be absurd; you need a lex step first.}
 
 
 \subsection{Automatically detecting morpheme structure}
 Building on the above chapter detecting morphemes, this chapter will use a somewhat similar approach to detect structural features in emergent language corpora.
-Namely, the strings of morphemes from the previous method are first mapped to classes (determined, mostly, by the semantics of the morphemes) which are then run through decision functions which detect structural features (i.e., one morpheme class succeeding another).
-These structural features are then generalized into patterns (I would hesitate to call them ``rules'') using a statistical measure.
-The algorithm, then, yields a list of the most frequent morpheme patterns found in the emergent language corpus.
-This chapter stops short of claiming that what is being detected is ``syntax'' in any linguistically robust sense and instead focuses on a more minimalist notion of structure which can later be incorporated into more broad-reaching account of syntax (outside the scope of this thesis, though).
-
-\cmt{Allude to recursive application of the algorithm in the chapter, although finding constituents or heads might be beyond the pay grade (still good for future work and contextualization, though).}
+Namely, the strings of morphemes from the previous method are first mapped to classes (determined, mostly, by the semantics of the morphemes) which are then run through decision functions which detect structural features (e.g., one morpheme class succeeding another).
+These structural features are then generalized into patterns using a statistical measure (e.g., mutual information).
+The algorithm, then, yields a list of significant morpheme patterns found in the emergent language corpus.
+This chapter stops short of claiming that what is being detected is ``syntax'' in any linguistically robust sense and instead focuses on a more minimalist notion of structure.
+Down the road, and beyond the scope of this thesis, this method could be incorporated into a broader account of syntax.
 
 
 
@@ -122,7 +122,6 @@ Some might even say they are good at \emph{using} human language, but this is ei
   LLMs' production of text is based the statistical likelihood of meaningless (so far as they are concerned) tokens, fine-tuned to humans' preferences.
 This is in contrast to humans' use---and event more so their acquisition---of language which is laden with meaning derived from the rich internal, physical, and social context which permeates language use.
 The end result is that LLMs' approximation of human language fails at a number of tasks, but, more significantly, falls short in providing insights into the nature of human language itself.
-\cmt{Mention the data problem for LLMs.}
 
 \emph{Emergent communication} (also known as \emph{emergent language}) is an alternative paradigm to developing language-capable models that does not does not train on human language data but rather invents a communication system \emph{de novo}.
 In its most basic form, emergent communication comprises a simulation using neural network-based agents which are trained to cooperatively complete some task in a virtual environment.
@@ -132,11 +131,15 @@ These agents are equipped with a communication channel of discrete tokens with n
 Emergent communication differs from the more ``traditional'' approach to language that LLMs use in that it does not try mimic human language but instead tries to rederive language from similar function pressures which are hypothesized to have guided human language's own evolution.
 Since the process language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to yield significant gains the scientific understanding of human language.
 Furthermore, certain practical tasks might lie beyond the reach of the mimicry approach LLMs employ due to surface-level operations; these problems, too, can be addressed by emergent communication which models not only the surface features of language but also its semantics and social context.
+Finally, generating language data through emergent communication avoids many of the ethical issues that crop up with LLMs dependence on human language data from amplifying toxicity from the Web to freely (ab)using copyrighted and personal content \citep{weidinger2021ethicalsocialrisksharm,carlini2021extractingtrainingdatalarge}.
 
 Here is the problem: the field of emergent communication has not yet solved any problems either in the area of scientific understanding nor in practical applications.
 Furthermore, it has not even shown measurable progress towards these goals either.
-This thesis, then, endeavors to establish principles and practices in emergent communication that permit and encourage measurable progress in the development of emergent languages specifically with the aim of helping emergent communication research achieve its potential in solving practical applications and improving scientific understanding.
-\cmt{After this general description of the thesis give another, be more specific with a sentence.}
+This thesis, then, establishes methods in emergent communication that enable measurable progress in emergent language research so as to move the field towards solving practical applications and improving scientific understanding.
+It does this by first introducing emergent language data resources which permit empirical evaluation across a variety of emergent languages.
+These resources are then used to develop
+  (1) a deep transfer learning-based evaluation metric for emergent communication to measure the practical applicability of emergent language
+  and (2) algorithms for characterizing the morphology of emergent languages as a foundation for further linguistic analysis.
 
 \section{Background}
 
@@ -155,15 +158,14 @@ The resulting behavior, most especially the communication protocol, is the typic
   What structural features characterize it?
   Do these features align at all to human language?
   What can we infer about language formation more generally from the above?
-\cmt{Mention somewhere that the message is generated by a deep neural network.}
 
-In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication (jointly and separately).
+In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication (jointly and separately)
+  \citep{havrylov2017sequence,mordatch2018grounded,chaabouni2022emergent}.
 The signalling game was introduced in the context of game theory by David Lewis \citep{lewis1970ConventionAP}.
 The signalling game is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
 It consists of only two agents: a sender and a receiver.
 The sender makes on observation (e.g., an orange circle) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was an orange circle, not a blue circle).
 A visualization of the signalling game is provided in \Cref{fig:signaling-game}.
-\cmt{See such and such research for examples of these themes.}
 The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
 On the other hand, holistic communication sometimes emerges where a unique word refers to red square, bearing no relation to the word(s) for red circle.
 Compositional communication, generally, is seen as more desirable both for practical reasons (more efficient encoding of information) as well as for its resemblance to how humans tend to encode meaning in language.
@@ -196,10 +198,10 @@ Compositional communication, generally, is seen as more desirable both for pract
 \end{figure}
 
 
-Other environments do appear in the literature such as navigation tasks or dialogue-based games.
-\cmt{citations}
-In addition to compositionality, other phenomena have been the subject of investigation such as pragmatics, transfer learning, and the information theoretic properties of emergent language.
-\cmt{citations}
+Other environments do appear in the literature such as navigation tasks or dialogue-based games
+  \citep{unger2020GeneralizingEC,brandizzi2022rlupus}.
+In addition to compositionality, other phenomena have been the subject of investigation such as pragmatics, transfer learning, and the information theoretic properties of emergent language
+  \citep{kang2020incorporatingpragmaticreasoningcommunication,yao2022linking,tucker2021discrete}.
 While there are too many papers to summarize comprehensively here, I estimate that there are on the order of $200$ papers directly related to emergent communication.\footnote{Figure based on finding ${\sim}150$ papers during a comprehensive literature review in 2023.}
 For a general review of the emergent communication literature, I recommend \citet{lazaridou2020emergentmultiagentcommunicationdeep}.
 
@@ -209,10 +211,11 @@ In the seven or so years of deep learning-based emergent communication's existen
 Much of the research has focused on addressing small-scale, isolated phenomena without a way to unify the findings into a broader understanding.
 While normal science (as Kuhn terms it \citep{kuhn}) often proceeds by small, additive research contributions, emergent communication has not developed paradigm where the small contributions can truly add together.
 One can read much of the literature on emergent communication, learn of many different trends that appeared in particular environments, and still largely have no idea why emergent languages look the way they do nor what they might look like in a new environment.
-Furthermore, despite the potential for groundbreaking application sin natural language processing and linguistics, emergent communication has not yielded any substantial contributions either \cmt{cite TMLR paper}.
-\cmt{Mention that EC is hard in general?}
+Furthermore, despite the potential for groundbreaking applications in natural language processing and linguistics, emergent communication has not yielded any substantial contributions either \citep{boldt2024review}.
 
-This thesis is intended to make foundational contributions addressing the structural issues in emergent communication research that has resulted in this.
+This thesis is intended to make foundational contributions addressing the unique structural issues in emergent communication research that has resulted in this.
+If the same old, tried and true methods of machine learning simply worked for emergent language, we would have seen tangible progress by now, but we have not, so one can assume that emergent language is a dead end, is missing a key technological prerequisite (e.g., computing resources, better reinforcement learning algorithms), or needs specially tailored methodological improvements.
+This thesis is an attempt at the last of these.
 In particular, the overall intent of the thesis is to create quantitative evaluative methods which work across a wide variety of emergent communication environments in order to support a research and development workflow more like that of the rest of deep learning-based research.
 Methods should yield \emph{quantitative} metrics to permit direct comparison of different systems, statistical analysis, and more automated methods of exploring emergent communication environments.
 These methods must also be \emph{evaluative} since we a number that we can optimize for---a goal---not simply a number describing one aspect of a system that requires further interpretation.
@@ -236,6 +239,7 @@ Naturally, some degree of theoretical understanding is necessary to explore inte
 Finally, from a practical standpoint, the engineering approach proved more tractable for writing a thesis: the intermediate papers more easily speak for themselves and making an immediate impact is far more feasible.
 
 
+
 \section{Overview}
 
 This thesis has three main parts:
@@ -246,7 +250,7 @@ Each of these parts largely stands on its own for the purposes of readability as
 Nevertheless, the entire thesis is intended to provide a coherent, multi-pronged approach to the problem of a lack of measurability of progress.
 
 
-\subsection{Emergent Language Data Resources}
+\subsection{Data resources for emergent language}
 \Cref{ch:elcc,ch:rich-corpora} introduce an important data resource to emergent communication research: the Emergent Language Corpus Collection (ELCC), a collection of emergent language corpora with semantic annotations of utterances derived from a variety of free and open source emergent communication implementations.
 Each of these corpora is accompanied by metadata describing statistical properties of the corpus, taxonomic properties of the environment it came from, and a turnkey shell script for reproducing the corpus (or developing a new one).
 This collection of corpora is made a public such that it can be both easily used and contributed to by the broader research community.

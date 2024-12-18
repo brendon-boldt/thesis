@@ -15,6 +15,7 @@ endif
 output/document.pdf: $(SOURCE_FILES) $(ASSETS)
 	latexmk \
 			-f \
+			-g \
 			-pdf \
 			-interaction=nonstopmode \
 			-outdir=output/ \

@@ -84,3 +84,9 @@
 \fi
 \makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
 %%% end block %%%
+
+
+\let\abstractOrig\abstract
+\let\endabstractOrig\endabstract
+\renewenvironment{abstract}{\abstractOrig\noindent\ignorespaces}{\endabstractOrig}
+
