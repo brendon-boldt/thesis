@@ -1,7 +1,5 @@
 \newcommand\tsc\textsc
 
-\cmt{Allude to recursive application of the algorithm in the chapter, although finding constituents or heads might be beyond the pay grade (still good for future work and contextualization, though).}
-
 \section{Introduction}
 
 Our goal in this chapter is to introduce an algorithm which discover structural patterns among morphemes in emergent language corpora which been segmented into morphemes.
@@ -20,7 +18,7 @@ We take this minimalist approach as the structural characteristics of emergent l
 \section{Algorithm}
 
 The algorithm takes the following as input,
-  (1) a corpus of utterances where each component is a morpheme (see \cmt{above chapter}),
+  (1) a corpus of utterances where each component is a morpheme (see \cref{ch:morphemes}),
   (2) a mapping from morphemes to morpheme classes,
   (3) a set of structural feature functions.
 The output of the algorithm is a list of structural features which apply to certain classes of morphemes across the corpus, giving a primitive notion of the ``syntax'' of the emergent language described in the corpus.
@@ -198,6 +196,12 @@ We, then, define the set of rules which characterize the corpus to be
   ,
 \end{align}
 where $\mathcal F$ is the set of all structural feature functions and $\mathcal C$ is the set of all morpheme classes.
+
+\subsection{Recursion}
+The above process could potentially be applied recursively where instances of morpheme patterns are replaced with with with a corresponding ``morpheme'' token (i.e., a non-terminal symbol in formal grammar terms).
+This would yield the potential to find higher-level patterns, if they exist.
+Nevertheless, recursive applications could also suffer from compounding errors in the applications the structure detection algorithm.
+For example, if the threshold is set too high for what counts as a structural pattern, patterns will be missed and higher-level rules will not be discovered; conversely, too low a threshold will yield patterns that are not genuinely descriptive while giving the illusion of documenting the structure of emergent languages.
 
 
 \section{Experiments}
