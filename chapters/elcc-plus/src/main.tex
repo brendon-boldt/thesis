@@ -13,11 +13,16 @@ Providing this additional context in an easily-accessible format based on ELCC w
 
 
 \paragraph{Related work}
+The most closely related work comes from the standardized reinforcement learning toolkits PettingZoo \citep{terry2021pettingzoo} and Minari \citep{minari}.
+  \unskip\footnote{Both of these are projects of the Farama Foundation which also maintains Gymnasium, the somewhat official continuation of OpenAI Gym.}
+\citet{terry2021pettingzoo} introduce the Agent--Environment Cycle (AEC) formalism to describe an API for multiagent reinforcement learning environments with a significant amount of generality.
+AEC, and consequently the API of PettingZoo, should, in theory, be able to express emergent communication environments.
+Leveraging this formalism and API would improve interoperability with existing tools in the RL ecosystem, but it could also come at a cost of naturally expressing emergent communication environments.
+Minari, on the other hand, is a toolkit for offline RL, including the serialization of trajectories (a.k.a., episodes, rollouts) into static datasets.
+Minari currently does not have any support for PettingZoo/AEC or any other multi-agent environments.
+Nevertheless, its serialization techniques will be relevant even if the codebase is not used directly.
 
-\phantom{}%
-\cmt{ELCC, obviously}
-\cmt{General RL trajectory storage format.}
-\cmt{Semantic annotation of any sort in EC research.}
+
 
 \section{Format}
 
@@ -43,14 +48,14 @@ Furthermore, this format is extensible since new adapters can be written to exte
 \begin{figure}
   \centering
   \includegraphics[height=1.5in]{chapters/elcc-plus/assets/babyai}
-  \caption{A visualization of the BabyAI navigation environment \protect\cmt{cite}.}
+  \caption{A visualization of the Minigrid (f.k.a., BabyAI) navigation environment \protect\citep{chevalier2018babyai,MinigridMiniworld23}.}
+  \unskip\label{fig:minigrid}
 \end{figure}
 
 In order to illustrate the format of the enriched collection, we will use two environments.
 The first environment is the discrimination variant the signalling game where the observations are concatenations of one-hot vectors.
-The second environment is a sender--receiver navigation based on BabyAI framework.
-In this game, the receiver is an embodied agent in a grid world environment who must navigate to the goal based on messages from the sender who can observe the whole environment.
-\cmt{illustrated in figure}
+The second environment is a sender--receiver navigation based on Minigrid framework.
+In this game, the receiver is an embodied agent in a grid world environment who must navigate to the goal based on messages from the sender who can observe the whole environment (illustrated in \Cref{fig:minigrid}).
 Additionally, there is a one-to-many relationship between messages and actions the receiver takes, that is, the receiver may take multiple steps before the sender sends another message.
 
 
@@ -140,7 +145,7 @@ This list of generalization can go on indefinitely, and so it is the best intere
   reward: 1.0
   steps: ...
 \end{verbatim}
-    \caption{Multi-step navigation game based on BabyAI environment}
+    \caption{Multi-step navigation game based on Minigrid environment}
   \end{subfigure}
   \caption{Example representations of two different emergent communication environments.  Format is based on YAML\@.}
   \unskip\label{fig:serialization}
@@ -237,11 +242,11 @@ The following metrics are proposed.
   \item \emph{Topographical similarity}\quad
     quantifies compositionality by measuring correlation between pairwise distances in the message space and pairwise distances in the meaning space.
     Also known as \emph{toposim}.
-    \cmt{cite}
+    \citep{brighton2006UnderstandingLE,lazaridou2018emergencelinguisticcommunicationreferential}
   \item \emph{Instantaneous coordination}\quad
     measures the effect that one agent's actions have on another's actions in a multi-agent environment.
     It is quantified as the mutual information between the utterances of a first agent and the action of a second agent at the next timestep.
-    \cmt{cite}
+    \citep{jaques2019social}
   % \item \emph{Utility-informativeness-complexity}\quad
   %   is a trio of metrics derived from information bottleneck theory \cmt{check this} and information theory more generally.
   %   Each of these is defined in terms of entropy with
@@ -251,5 +256,5 @@ The following metrics are proposed.
     For example, the entropy of communication may start with a high entropy as it is mostly random but gradually decrease as the agents develop a communication protocol with a limited number of expressions.
   \item \emph{Ease-of-teaching}\quad
     measures how quickly and effectively an emergent language is acquired by new member in a dynamic population of agents.
-    \cmt{cite}
+    \citep{li2019ease}
 \end{itemize}
