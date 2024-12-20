@@ -6,14 +6,18 @@ Our goal in this chapter is to introduce an algorithm which discover structural 
 This a step in the larger project of developing methods to identify the syntactic structure of emergent languages ultimately so as to compare emergent languages to human languages.
 This chapter makes minimal claims as to how similar the structural patterns it studies are to syntax in a fuller linguistic sense.
 We take this minimalist approach as the structural characteristics of emergent languages are largely unknown, so we make as few assumptions as possible as to how emergent languages are structured.
-\unskip\footnote{Comment to committee: I am on the fence as to whether to incorporate semantics into this chapter on structure. The primary way I would imagine doing this is by taking the structural feature functions and contextualizing in terms of certain meanings; that is, we ask how often a structural feature is present \emph{and} used to convey a certain meaning (which is a function of its parts).  I am leaning against this extension right now because I think this chapter has enough moving parts as it is, and I think it would be good to walk before running.}
+\unskip\footnote{Author note: I am on the fence as to whether to incorporate semantics into this chapter on structure. The primary way I would imagine doing this is by taking the structural feature functions and contextualizing in terms of certain meanings; that is, we ask how often a structural feature is present \emph{and} used to convey a certain meaning (which is a function of its parts).  I am leaning against this extension right now because I think this chapter has enough moving parts as it is, and I think it would be good to walk before running.}
 
 \paragraph{Related Work}
-\phantom{}%
-\cmt{UGI}
-\cmt{Categorial grammar induction}
-\cmt{Word order biases}
-\cmt{Lipinski}
+The syntactic structure of emergent language has been studied before from a few different angles.
+\Citet{chaabouni-etal-2019-word} look at the ordering of words in emergent language to see if they resemble human language.
+The work proposed in this chapter differs primarily in scope where instead of identifying one type of structure in one particular emergent language, this presented algorithm is intended to generalize across both structural patterns and emergent language environments.
+\Citet{van-der-wal-etal-2020-grammar} use unsupervised grammar induction algorithms to analyze the structure of emergent languages.
+Similarly, \citet{ueda2022categorial} use supervised categorial grammar induction to study the compositionality of emergent languages.
+% \cmt{Lipinski \citep{lipinski2024speaking}}
+The work in this chapter differs from these more typical grammar induction tasks because it makes fewer assumptions about the existence of structure at all in emergent languages.
+Rather than assuming that a structure exists and trying to uncover it, the algorithm attempts to detect if there is any structure at all and, only if so, determine what it is.
+\unskip\footnote{Author note: This related work section is a work in progress.}
 
 \section{Algorithm}
 
@@ -36,6 +40,7 @@ Additionally, each morpheme can belong to one or more ``classes'' corresponding 
 Most commonly, classes would be derived from the semantic features of the morpheme;
   for example, in a colored shape naming game, one morpheme class would be \emph{color} and another \emph{shape} (assuming the language fully compositional).
 Classes could also be based on the form of the morpheme like \emph{single-token} or \emph{double-token}.
+Finally, the morpheme extraction step might yield tokens which do not correspond to any meaning (that the algorithm could find); these morphemes will map to an ``unclassified'' catch-all class.
 These classes will later be used to determine if certain patterns occur only at the level of individual morphemes or at the level of certain classes of morphemes.
 This morpheme classification mapping is written as
 \begin{align}
@@ -43,9 +48,7 @@ This morpheme classification mapping is written as
   ,
 \end{align}
 where $\mathcal P(\cdot)$ is the power set operator and $\mathcal C$ is the set of all classes so the co-domain of the function is all non-empty subsets of $\mathcal C$.
-If a given morpheme does not fall into any class \emph{a priori} it should be assigned to an \emph{unclassified} class, so as to simplify later steps in the algorithm.
 
-\cmt{Singleton set for each morpheme or only unidentified morphemes.}
 
 \subsection{Structural feature functions}
 
@@ -82,7 +85,7 @@ Finally, in some cases, it may be the case that structural feature of interest d
 In such cases, the feature function could take a morpheme $m$ instead of a morpheme class $c$ as an argument, and occurrences of $c(u)$ in the formula could be replaced with $m = u$ (where $u$ is morpheme from the utterance).
 
 To illustrate the use of this formalism of structural feature functions we will define a handful of common structural features from the syntax of human language.
-These functions will also be used in the experiments presented in \cmt{ref}.
+These functions will also be used in the experiments presented in \cref{syntax:sec:experiments}.
 
 \paragraph{Absolute position}
 Defined above.
@@ -205,6 +208,7 @@ For example, if the threshold is set too high for what counts as a structural pa
 
 
 \section{Experiments}
+\unskip\label{syntax:sec:experiments}
 
 \subsection{Data}
 The experiments proposed for this chapter largely mirror those in \Cref{ch:morphemes}.
