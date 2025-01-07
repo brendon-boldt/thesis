@@ -7,13 +7,13 @@
     \toprule
     Source & Type & Data source & Multi-agent & Multi-step & $n$ corp. \\
     \midrule
-    % \citet{egg}, discrim.         & signalling   & synthetic & $3$ \\
-    \citet{egg}                       & signalling   & synthetic & No & No & $15$ \\
+    % \citet{kharitonov-etal-2019-egg}, discrim.         & signalling   & synthetic & $3$ \\
+    \citet{kharitonov-etal-2019-egg}                       & signalling   & synthetic & No & No & $15$ \\
     \citet{yao2022linking}            & signalling   & natural   & No & No & $2$ \\
     \citet{mu2021generalizations}     & signalling   & both      & No & No & $6$ \\
     \citet{chaabouni2022emergent}     & signalling   & natural   & Yes & No & $5$ \\
     \citet{unger2020GeneralizingEC}   & navigation   & synthetic & No & Yes & $18$ \\
-    \citet{boldt2022MathematicallyMT} & navigation   & synthetic & No & Yes & $20$ \\
+    \citet{boldt2023mathmodel} & navigation   & synthetic & No & Yes & $20$ \\
     \citet{brandizzi2022rlupus}       & conversation & ---       & Yes & Yes & $7$ \\
     \bottomrule
   \end{tabular}
@@ -52,7 +52,7 @@ Other systems use discrete communication but have episodes with only a single, o
 \unskip\label{elcc:sec:signalling}
 The \emph{signalling game} (or \emph{reference game}) \citep{lewis1970ConventionAP} represents a plurality, if not majority, of the systems present in the literature.
 A brief, non-exhaustive review of the literature yielded $43$ papers which use minor variations of the signalling game, a large number considering the modest body of emergent communication literature (see \Cref{elcc:sec:sg-list}).
-% \unskip\footnote{\protect\citet{2106.02668, 2203.13176, 2203.13344, 2204.12982, 2112.14518, 2111.06464, 2109.06232, 2108.01828, 2106.04258, 2103.08067, 2103.04180, 2101.10253, 2012.10776, 2012.02875, 2011.00890, 2010.01878, 2008.09866, 2008.09860, 2005.00110, 2004.09124, 2004.03868, 2004.03420, 2002.01365, 2002.01335, 2002.01093, 2001.08618, 2001.03361, 1911.05546, 1911.01892, 1910.05291, 1909.11060, 1906.02403, 1905.13687, 1905.12561, 1812.01431, 1808.10696, 1804.03984, 1705.11192, 1612.07182, 2302.08913, 2211.02412, 2209.15342, 2207.07025}}
+% \unskip\footnote{\protect\citet{mu2021generalizations, 2203.13176, yao2022linking, 2204.12982, 2112.14518, 2111.06464, 2109.06232, tucker2021discrete, 2106.04258, 2103.08067, 2103.04180, 2101.10253, 2012.10776, 2012.02875, li-etal-2020-emergent, 2010.01878, 2008.09866, 2008.09860, 2005.00110, 2004.09124, 2004.03868, 2004.03420, 2002.01365, 2002.01335, 2002.01093, 2001.08618, 2001.03361, 1911.05546, 1911.01892, 1910.05291, 1909.11060, li2019ease, 1905.13687, 1905.12561, 1812.01431, 1808.10696, lazaridou2018referential, 1705.11192, lazaridou2016multiagent, 2302.08913, 2211.02412, 2209.15342, 2207.07025}}
 The basic format of the signalling game is a single round of the \emph{sender} agent making an observation, passing a message to the \emph{receiver} agent, and the receiver performing an action based on the information from the message.
 The popularity of this game is, in large part, because of its simplicity in both concept and implementation.
 Experimental variables can be manipulated easily while introducing minimal confounding factors.
@@ -63,7 +63,7 @@ In the discrimination game, the receiver must answer a multiple-choice question,
 In the reconstruction game, the receiver must recreate the input directly, similar to the decoder of an autoencoder.
 
 \paragraph{Vanilla}
-For the most basic form of the signalling game, which we term ``vanilla'', we use the implementation provided in the Emergence of lanGuage in Games (EGG) framework \citep[MIT license]{egg}.
+For the most basic form of the signalling game, which we term ``vanilla'', we use the implementation provided in the Emergence of lanGuage in Games (EGG) framework \citep[MIT license]{kharitonov-etal-2019-egg}.
 It is vanilla insofar as it comprises the signalling game with the simplest possible observations (synthetic, concatenated one-hot vectors), a standard agent architecture (i.e., RNNs), and no additional dynamics or variations on the game.
 Both the discrimination game and the reconstruction game are included.
 This system provides a good point of comparison for other ECSs which introduce variations on the signalling game.
@@ -107,7 +107,7 @@ These games often introduce new aspects to agent interactions like:
 These kinds of systems, as a whole, are somewhat less popular in the literature.
 On a practical level, more complex systems are more difficult to implement and even harder to get to converge reliably---many higher-level behaviors, such as planning or inferring other agent's knowledge, are difficult problems for reinforcement learning in general, let alone with discrete multi-agent emergent communication.
 On a methodological level, more complexity in the ECS makes it harder to formally analyze the system as well as eliminate confounding factors in empirical investigation.
-With so many moving parts, it can be difficult to prove that some observed effect is not just a result of some seemingly innocent hyperparameter choice (e.g., learning rate, samples in the rollout buffer) \citep{boldt2022MathematicallyMT}.
+With so many moving parts, it can be difficult to prove that some observed effect is not just a result of some seemingly innocent hyperparameter choice (e.g., learning rate, samples in the rollout buffer) \citep{boldt2023mathmodel}.
 Nevertheless, we have reason to believe that these complexities are critical to understanding and learning human language as a whole \citep{bisk-etal-2020-experience}, meaning that the difficulties of more complex systems are worth overcoming as they are part of the process of creating more human-like emergent languages, which are more informative for learning about human language and more suitable for applications in NLP\@.
 
 
@@ -121,7 +121,7 @@ For example, if the receiver is in Room A at timestep $T$, it is more likely to 
 Practically speaking, the multiple utterances in a given episode are concatenated together to form a single line in the corpus in order to maintain the dependence of later utterances on previous ones.
 
 \paragraph{Continuous navigation}
-``Mathematically Modeling the Lexicon Entropy of Emergent Language'' \citep[GPL-3.0 license]{boldt2022MathematicallyMT} introduces a simple navigation-based ECS which is situated in a continuous environment.
+``Mathematically Modeling the Lexicon Entropy of Emergent Language'' \citep[GPL-3.0 license]{boldt2023mathmodel} introduces a simple navigation-based ECS which is situated in a continuous environment.
 A ``blind'' receiver is randomly initialized in an obstacle-free environment and must navigate toward a goal zone guided by messages from the sender which observes the position of the receiver relative to the goal.
 The sender sends a single discrete token at each timestep, and a line in the dataset consists of the utterances from each timestep concatenated together.
 This system shares the time-dependence between utterances of the grid-world navigation system although with no additional complexity of navigating around obstacle, opening doors, etc.

@@ -4,7 +4,7 @@ Specifically, we interpret the notion of the ``quality'' of an emergent language
 We measure this by using the emergent language as pretraining data for a downstream NLP tasks in human language---the better the downstream performance, the better the emergent language.
 We implement this benchmark as an easy-to-use Python package that only requires a text file of utterances from the emergent language to be evaluated.
 Finally, we empirically test the benchmark's validity using human, synthetic, and emergent language baselines.
-\unskip\footnote{Based on ``XferBench: a Data-Driven Benchmark for Emergent Language'' appearing in the \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} \citep{boldt2024xferbench}.}
+\unskip\footnote{Based on ``XferBench: a Data-Driven Benchmark for Emergent Language'' appearing in the \emph{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} \citep{xferbench}.}
 \end{abstract}
 
 \section{Introduction}
@@ -30,7 +30,7 @@ However, up to this point, there is no way of quantifying---in a holistic way---
 
 
 Research on deep learning-based emergent communication has seen the introduction of many metrics to measure various aspects of the language.
-These metrics quantify notions such as compositionality \citep{brighton2006UnderstandingLE,Lazaridou2018EmergenceOL}, expressivity \citep{guo2023emergent}, ease-of-teaching \citep{li2019ease}, and zero-shot transfer \citep{Bullard2020ExploringZE}, to name a few.
+These metrics quantify notions such as compositionality \citep{brighton2006UnderstandingLE,lazaridou2018referential}, expressivity \citep{guo2023emergent}, ease-of-teaching \citep{li2019ease}, and zero-shot transfer \citep{Bullard2020ExploringZE}, to name a few.
 Despite this proliferation of metrics, emergent language largely lacks \emph{evaluation} metrics.
 An evaluation metric is specifically one that measures the \emph{overall quality of an emergent language} and not simply a particular property.
 Thus, we introduce XferBench, a data-driven benchmark for evaluating the overall quality of emergent languages using transfer learning with deep neural models.
@@ -65,7 +65,7 @@ This chapter makes the following contributions:
 % \drm{This section is actually really important for this chapter because there is no much existing work on metrics for Emergent Language, just nothing extrinsic (as far as I know).}
 
 \paragraph{Emergent Communication}
-This chapter is situated in the field of emergent communication (a.k.a.\@ emergent language) which is generally covered by the review \citet{Lazaridou2020EmergentMC}.
+This chapter is situated in the field of emergent communication (a.k.a.\@ emergent language) which is generally covered by the review \citet{lazaridou2020review}.
 The field centers around the invention of language by deep neural networks typically using multi-agent reinforcement learning techniques.
 The study of emergent communication is intended to (1) shed light on the origin and nature of the human language \citep{lacroix2019biology,MoulinFrier2020MultiAgentRL,Galke2022EmergentCF} and (2) provide an alternative approach to problems in NLP and multi-agent reinforcement learning which relies on constructing language from the ground up and not just pre-existing (human) languages alone \citep{li-etal-2020-emergent,yao2022linking,mu2023ec2,downey-etal-2023-learning}.
 
@@ -76,7 +76,7 @@ Specifically, this chapter draws heavily from \citet{yao2022linking} (see also \
 In particular, this chapter takes \citet{yao2022linking}'s idea of using corpus transfer as a metric and adapts it into a benchmark pipeline which can easily be applied to new emergent languages.
 
 \paragraph{Benchmarks}
-% The subject of this chapter is also related to \citet{Brighton2006UnderstandingLE,Lazaridou2018EmergenceOL,Korbak2020MeasuringNC} which also look at quantitative metrics for emergent language, but the key difference is that XferBench seeks to provide an \emph{evaluation} metric which seeks to quantify the overall quality of the emergent language, not just some aspect in general.
+% The subject of this chapter is also related to \citet{Brighton2006UnderstandingLE,lazaridou2018referential,Korbak2020MeasuringNC} which also look at quantitative metrics for emergent language, but the key difference is that XferBench seeks to provide an \emph{evaluation} metric which seeks to quantify the overall quality of the emergent language, not just some aspect in general.
 Work such as \citet{guo2023emergent} and \citet{perkins2022icy} have looked at benchmarking particular aspects of emergent languages, but XferBench is the first of its kind in benchmarking the overall quality of an emergent language.
 \citet{yao2022linking} also explicitly provide a metric for emergent language quality, but this metric is restrictive in that it can only be applied to emergent languages derived from a model that takes images (that have captions available) as input; this conflicts with the design goals of XferBench discussed below.
 

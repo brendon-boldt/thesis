@@ -43,7 +43,7 @@ The irregular number of trials per search were due to executing as many trials a
 We select three categories of languages to evaluate with XferBench:
   human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC \citep[\smallish\url{https://huggingface.co/datasets/bboldt/elcc}, CC BY 4.0]{elcc}.
 The primary goal is for the search-derived languages to outperform all existing emergent languages and get as close to human language performance as possible.
-For the human languages, we use a subset of the baselines provided in \citet{boldt-mortensen-2024-xferbench}.
+For the human languages, we use a subset of the baselines provided in \citet{xferbench}.
 In particular, we use Mandarin and Hindi because they were the best- and worst-performing human languages, respectively, and French and Arabic to round out the language families represented.
 
 For the search-derived languages, we selected the three best languages from the final primary run of hyperparameter search (Search 4) and evaluate them on the full set of evaluation languages in XferBench.
@@ -51,7 +51,7 @@ We additionally include the three highest entropy languages from the entropy-max
 
 Finally, for the emergent language-based points of comparison, we select three of the best performing languages from ELCC\@.
 Most notably, this includes Yao+ (\texttt{\smallish corpus-transfer-\allowbreak yao-et-al/\mbox{coco\_2014}} \citep{yao2022linking}) which performed far better than all other emergent languages on XferBench.
-Mu+ (\texttt{\smallish generalizations-\allowbreak mu-goodman/\allowbreak cub-reference} \citep{mu2021emergent}) and Chaabouni+ (\texttt{\smallish ec-at-scale/imagenet-10x10} \citep{chaabouni2022emergent}) were also included as more typical high-performing emergent languages on XferBench.
+Mu+ (\texttt{\smallish generalizations-\allowbreak mu-goodman/\allowbreak cub-reference} \citep{mu2021generalizations}) and Chaabouni+ (\texttt{\smallish ec-at-scale/imagenet-10x10} \citep{chaabouni2022emergent}) were also included as more typical high-performing emergent languages on XferBench.
 
 
 \subsection{Results}

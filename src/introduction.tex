@@ -55,7 +55,7 @@ The set of applications themselves is divided into three categories:
 
 \subsection{XferBench: a Data-Driven Benchmark for Emergent Language}
 \noindent
-\citet{boldt2024xferbench} was published in the \textit{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} (NAACL).
+\citet{xferbench} was published in the \textit{Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)} (NAACL).
 This paper introduces a first-of-its-kind evaluation metric/benchmark for emergent languages.
 It addresses the question of the \emph{quality} of an emergent language by looking at its similarity to human language from a data-driven, machine learning perspective.
 Specifically, it quantifies ``similarity to human language''---and, therefore, overall quality---as how much pretraining on an emergent language corpus improves performance on modeling human language (although we also test machine translation).
@@ -77,7 +77,7 @@ Finally, these experiments reveal that there is a significant correlation betwee
 
 \subsection{Other Work}
 Some work completed during the course of master's and doctoral work will not factor heavily into the thesis.
-In ``Mathematically modelling the lexicon entropy of emergent language'' \citep{boldt2022mathematically}, we investigate using a formal model based on the Chinese restaurant process to make predictions of the entropy of lexica in emergent languages; this is intended to be a sort of exemplar of using formal models to make clear, determinate hypotheses regarding emergent communication experiments.
+In ``Mathematically modelling the lexicon entropy of emergent language'' \citep{boldt2023mathmodel}, we investigate using a formal model based on the Chinese restaurant process to make predictions of the entropy of lexica in emergent languages; this is intended to be a sort of exemplar of using formal models to make clear, determinate hypotheses regarding emergent communication experiments.
 In ``Shaped rewards bias emergent language'' \citep{boldt2022shaped}, we argue that reward shaping (a common feature of reinforcement learning experiments) has the potential to bias (i.e., predetermine) properties of the resulting emergent language.
 In ``Case study: deontological ethics in NLP'' \citep{prabhumoye-etal-2021-case}, we apply deontological approach to ethics to different real-world scenarios in natural language processing-based systems.
 
@@ -203,7 +203,7 @@ Other environments do appear in the literature such as navigation tasks or dialo
 In addition to compositionality, other phenomena have been the subject of investigation such as pragmatics, transfer learning, and the information theoretic properties of emergent language
   \citep{kang2020incorporatingpragmaticreasoningcommunication,yao2022linking,tucker2021discrete}.
 While there are too many papers to summarize comprehensively here, I estimate that there are on the order of $200$ papers directly related to emergent communication.\footnote{Figure based on finding ${\sim}150$ papers during a comprehensive literature review in 2023.}
-For a general review of the emergent communication literature, I recommend \citet{lazaridou2020emergentmultiagentcommunicationdeep}.
+For a general review of the emergent communication literature, I recommend \citet{lazaridou2020review}.
 
 \section{Motivation}
 
@@ -226,7 +226,7 @@ While the long-term development of emergent communication methods needs far more
 \paragraph{An aside}
 While the fundamental lack of progress has, from an early point, been the main focus of my doctoral research, I had to make a decision between two ways of addressing this problem: the ``scientific'' way and the ``engineering'' way.
 The scientific approach would entail developing a theory of emergent communication which would enable progress by first creating a concrete, unified theory that research could contribute two, and second, by illuminating the most promising directions based on the predictions of the field.
-Such an approach was addressed by my paper ``Mathematically Modeling the Lexicon Entropy of Emergent Language'' \citep{boldt2022mathematically} which was a sort of proof-of-concept for this approach, attempting to establish an empirically verifiable formal model of certain behaviors in emergent communication experiments.
+Such an approach was addressed by my paper ``Mathematically Modeling the Lexicon Entropy of Emergent Language'' \citep{boldt2023mathmodel} which was a sort of proof-of-concept for this approach, attempting to establish an empirically verifiable formal model of certain behaviors in emergent communication experiments.
 Of the two approaches, this one certainly had (and has) more appeal to me, but I ultimately decided against it largely because I judged that it was not feasible.
 In essence, the current paradigm of emergent communication research follows this approach (even if the scientific method is hardly employed explicitly), that is, trying to find general principles which can be empirically verified.
 I think this paradigm fails in large part because emergent language is\dots\emph{emergent}!
