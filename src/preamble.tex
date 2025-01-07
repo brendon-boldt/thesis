@@ -57,6 +57,12 @@
 % Headers/Footers
 \newcommand\draftdate{\color{gray}\today{} (draft)}
 \makeoddfoot{ruled}{\draftdate}{}{\thepage}
+\makeatletter
+\makepsmarks{ruled}{%
+  \nouppercaseheads
+  \createmark{chapter}{left}{shownumber}{\@chapapp{} }{. \space}
+}
+\makeatother
 \makeoddhead{ruled}{}{}{\leftmark}
 \makeoddfoot{plain}{\draftdate}{\thepage}{}
 \pagestyle{ruled}
