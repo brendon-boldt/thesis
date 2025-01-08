@@ -60,7 +60,7 @@
 \makeatletter
 \makepsmarks{ruled}{%
   \nouppercaseheads
-  \createmark{chapter}{left}{shownumber}{\@chapapp{} }{. \space}
+  \createmark{chapter}{left}{shownumber}{\small\@chapapp{} }{. \space}
 }
 \makeatother
 \makeoddhead{ruled}{}{}{\leftmark}
@@ -77,7 +77,7 @@
 \newcounter{comment}
 \newcommand\bjb[1]{{\stepcounter{comment}\color{purple}[BJB\@: #1]}}
 \newcommand\drm[1]{{\stepcounter{comment}\color{orange}[DRM\@: #1]}}
-\newcommand\cmt[1]{{\stepcounter{comment}\ifshowcomment\color{gray}[:#1]\fi}}
+\newcommand\cmt[1]{{\stepcounter{comment}\ifshowcomment\color{gray}[: #1]\fi}}
 
 \newcommand\note[1]{\color{gray}[#1]}
 
