@@ -4,26 +4,42 @@ Yet despite the importance of morphemes, the literature of emergent communicatio
 And as a result, there is no clear answer to the question of what a morpheme is emergent communication and how to identify them.
 This is a significant lacuna as it precludes much of the potential study of syntax, pragmatics, and sociological aspects of emergent communication.
 
-To ameliorate this, this chapter presents an algorithm for identifying morphemes in emergent communication.
-Specifically, the algorithm starts with a corpus of utterances in context (i.e., the world state and history when utterance occurred) as well as set of potential forms and meanings that could comprise morphemes in that corpus.
-The result of the algorithm is a list of pairs of units of form and meaning which are strongly associated with each other (i.e., morphemes).
+Thus, in this chapter, we develop an algorithm to solve the task of discovering a morpheme mapping (i.e., between form and meaning) in a semantically annotated emergent language corpus.
+The task is defined as follows:
+Given
+  (1) a corpora of emergent language utterances (arrays of tokens) paired with their context (JSON serializations of the environment's state)
+  and (2) a set of meaning-abstraction functions which map from contexts to potential abstract meanings,
+recover all utterance segments and their corresponding abstract meaning which are associated at a specified level of statistical significance.
+The algorithm will use the pointwise mutual information between potential form and meaning pairs to determine what pairings can be considered morphemes given the input corpus.
+
+
+% To ameliorate this, this chapter presents an algorithm for identifying morphemes in emergent communication.
+% Specifically, the algorithm starts with a corpus of utterances in context (i.e., the world state and history when utterance occurred) as well as set of potential forms and meanings that could comprise morphemes in that corpus.
+% The result of the algorithm is a list of pairs of units of form and meaning which are strongly associated with each other (i.e., morphemes).
+
 
 
 
 \paragraph{Related Work}
 \citet{havrylov2017sequence} performs a qualitative analysis of morphemes by taking an observation from the paper's signalling game (i.e., a natural image), generating a message with it, and finding other images which yield messages with the same prefix.
 Through this process, the authors find that the longer the matched prefix, the more closely related the matched observations were to the original.
-\citet{lipinski2024speaking} introduce an environment-specific analysis for discovering morphemes using probabilistic measures similar to those introduced in the algorithm below (\cref{morph:sec:algorithm}).
-\unskip\footnote{Author note: This section is a work in progress, as I have other relevant papers to review.}
-\cmt{Old-school EL papers}
-\cmt{Performing this task in general on human languages.}
+\citet{conklin2023compositionality} study form--meaning pairs looking at aggregate metrics quantifying notions such as synonymy and homonymy as opposed to trying to reconstruct a form--meaning mapping.
+\citet{lipinski2024speaking} introduce an environment-specific analysis for discovering form--meaning mappings using probabilistic measures which serve as a starting to those introduced in the algorithm below (\cref{morph:sec:algorithm}).
 
-% 
-% (algorithm specified at the end) http://www.lel.ed.ac.uk/~simon/Papers/Kirby/Learning,%20Bottlenecks%20and%20the%20Evolution%20of%20Recursive%20Syntax.pdf
-% https://eucaslab.github.io/downloads/2003.Brighton.PhD.Thesis.pdf - the relevant section starts at page 100
-% 
-% Simon’s one is greedy, Henry’s one uses MDL to do the same sort of thing in a more principled fashion. Roni Katzir does related MDL stuff https://english.tau.ac.il/profile/rkatzir which also might be worth a look if you haven’t come across it before.
-% There’s also my student Henry Conklin’s paper from ICLR last year, https://openreview.net/pdf?id=-Yzz6vlX7V-, he uses entropy-based measures to try to make sense of the rather messy languages that are produced in these emergent communication models - that variability can sometimes throw off other measures. 
+This problem overlaps with a handful of other tasks in natural language processing, although the differences in the details necessitate developing new methods.
+First, the proposed task differs from deep learning-based grounding tasks in robotics, computer vision, and natural language processing (e.g., \citet{Yeh_2018_CVPR,jiang-etal-2019-tiger}).
+In such tasks, deep learning is used to maximize performance on the mapping of one rich modality to another (e.g., image-to-natural language text) at the cost of using black box models which tell us little about the nature of the mapping.
+In contrast, the task of morpheme discovery in emergent language deals with modalities which are not (currently) as rich yet require a white-box strategy for discovering the mapping since this relationship between the two modalities (form and meaning) is one of the primary requirements.
+
+Second, closely related to the above is the field of symbol emergence in robotics (SER) \citep{Taniguchi17062016}, which studies the way that embodied robotic systems can invent and acquire symbolic (i.e., language-like) representations of meaningful features in its environment and behavior.
+While one of the subtasks of this field is to create mapping between symbols and meanings, the field as a whole is primarily concerned with rich problem setting presented by robotic agents situated in multimodal environments.
+This is in contrast to the more restricted setting of the task presented in this chapter which abstracts away from the details of embodiment and interaction to work with static serializations of semantics.
+% ? more related to SER https://web.media.mit.edu/~dkroy/papers/pdf/roy_pentland_2002.pdf
+
+The final related task is unsupervised word segmentation with text \citep{brent1999efficient,goldwater-etal-2006-contextual,mochihashi-etal-2009-bayesian}.
+While these algorithms for this task would be runnable on emergent language corpora, one of the assumptions is that the corpus has some meaningful underlying segmentation, which is true for natural language generally.
+Yet in the case of emergent language, we do not know ahead of time that there are any meaningful words to begin with, creating the potential for an instance of garbage in, garbage out.
+Furthermore, these segmentation methods do not create mapping from the segments to semantics which is one the key requirements of the task proposed in this chapter.
 
 
 \section{Algorithm}

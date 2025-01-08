@@ -16,8 +16,19 @@ The work proposed in this chapter differs primarily in scope where instead of id
 Similarly, \citet{ueda2022categorial} use supervised categorial grammar induction to study the compositionality of emergent languages.
 % \cmt{Lipinski \citep{lipinski2024speaking}}
 The work in this chapter differs from these more typical grammar induction tasks because it makes fewer assumptions about the existence of structure at all in emergent languages.
+\cmt{cite}
 Rather than assuming that a structure exists and trying to uncover it, the algorithm attempts to detect if there is any structure at all and, only if so, determine what it is.
 \unskip\footnote{Author note: This related work section is a work in progress.}
+
+\cmt{Move notes about old-school work to syntax section.}
+% (algorithm specified at the end) http://www.lel.ed.ac.uk/~simon/Papers/Kirby/Learning,%20Bottlenecks%20and%20the%20Evolution%20of%20Recursive%20Syntax.pdf
+% This tries to solve a different problem compared to the morph-struct algorithm.  Namely, it tries to find rules given meaning-form pairs instead of trying to find formal patterns simpliciter.
+
+% https://eucaslab.github.io/downloads/2003.Brighton.PhD.Thesis.pdf - the relevant section starts at page 100
+% Also seems to presuppose that the utterances are generated from a grammar.
+ 
+% Simon’s one is greedy, Henry’s one uses MDL to do the same sort of thing in a more principled fashion. Roni Katzir does related MDL stuff https://english.tau.ac.il/profile/rkatzir which also might be worth a look if you haven’t come across it before.
+% Same difference as above.
 
 \section{Algorithm}
 
