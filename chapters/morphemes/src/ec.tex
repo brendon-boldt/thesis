@@ -1,0 +1,66 @@
+\begin{table*}
+\centering
+\input{chapters/morphemes/assets/ec-table}
+\caption{Morpheme inventory metrics (described in \cref{sec:ec-quant}) across various emergent languages. (AV: attribute--value, SW: ShapeWorld, Inv.: Inventory)}%
+\label{tab:ec-quant}
+\end{table*}
+
+\section{Analysis of Emergent Languages}%
+\label{sec:el}
+\subsection{Datasets}
+We apply CSAR to two different signalling game environments: one with vector-based observations and one with image-based observations.
+
+\paragraph{Vector observations}
+In the vector observation signalling game the agents directly observe one-hot vectors which directly correspond to the information to be communicated \citep[MIT license]{egg}.
+Specifically, we use two variants:
+  (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
+  and (2) the ``sparse'' setting where there are $8$ binary attributes and only attributes which are ``true'' are included in the meanings given to CSAR\@.
+Hyperparameters for both environments are given in \cref{app:el-hparams}.
+
+\paragraph{ShapeWorld observations}
+% Move part to appendix?
+The second environment is introduced by \citet[MIT license]{mu2021general} with the following differences:
+  (1) observations are images,
+  and (2) employs variations which increase the level of abstraction of the game to encourage generalization.
+First, this environment uses the ShapeWorld tool for generating observations \citep{kuhnle2017shapeworldnewtest};
+  namely, underlying concepts are particular shapes (e.g., red square) while the observations passed to the agents in the signalling game are pixel-based images.
+Second, \citet{mu2021general} provide three variants with increasing levels of abstraction:
+  (1) \emph{reference}: the sender indicates a single image,
+  (2) \emph{set reference}: the sender indicates a set of images with a common attribute,
+  and (3) \emph{concept}: as in \emph{set reference} but the receiver's observations are different instances sharing the common attribute (referenced in \cref{fig:example}).
+
+\subsection{Metrics}%
+\label{sec:ec-quant}
+We present the following metrics to give analyze the morpheme inventories induced from the emergent language data:
+\smallskip
+\begin{description}[nosep,itemindent=-1em]
+  \item[Inventory size] Number of morphemes in the inventory.
+  \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence.
+  \item[Synonymy] Entropy across forms for a given meaning.
+  \item[Polysemy] Entropy across meanings for a given form.
+  \item[Form size] Mean number of tokens in a form.
+  \item[Meaning size] Mean number of tokens in a meaning.
+  \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL}.
+\end{description}
+\smallskip
+With the exception of inventory size and toposim, the above metrics are weighted by \emph{prevalence} which is the proportion of records from which the morpheme was ablated.
+
+\subsection{Results}
+\Cref{tab:ec-quant} shows the results (induced morphemes from each emergent language are given in \cref{app:ec-inv}).
+Looking at form size, while the forms of morphemes do tend towards smaller values, many comprise more than one token, suggesting that assuming that each token can be analyzed as a word or independent unit of meaning is not a safe assumption.
+% Meaning size tends more strongly toward one token per morpheme, implying that the emergent languages 
+% This has implications for the compositionality of emergent language (discussed below).
+Addressing the mapping between forms and meanings, we see that synonymy (forms per meaning) is higher than polysemy (meanings per form).
+The fact that there is a higher degree of synonymy than polysemy makes sense insofar as the optimization penalizes ambiguity (polysemy) while it does not penalize merely inefficient encoding (synonymy).
+This is concordant with finding such as \citet{chaabouni2019antiefficient} which finds that emergent languages, in the absence of addition pressures, do not develop efficient encoding schemes.
+% Additionally, the ShapeWorld languages show much higher degrees of synonymy and polysemy than the vector environment likely due in part to the continuous nature of the observations.
+% Given that synonymy and polysemy are far above $1$ for all emergent languages, the morpheme inventory sizes are far above their theoretical minimums (e.g., $16$ for a $4$-attribute, $4$-value signalling game).
+
+\paragraph{Compositionality}
+The meaning size metric, in particular, is interesting insofar as it relates to compositionality.
+In the simplest case of compositionality, morphemes comprise singleton meanings which can be combined to form compound meanings.
+More holistic languages, on the other hand, assign multiple atomic meanings per morpheme resulting in in larger meaning sizes.
+The fact that the emergent languages tend towards a meaning size of $1$ suggests a non-trivial degree of compositionality under this interpretation.
+Yet when we compare meaning sizes values to topographic similarity values computed across records (i.e., not involving CSAR), we find that there is no obvious correlation between toposim values and meaning sizes.
+This could be due to the fact that individual form tokens could have ``partial meanings'' and need to be combined to comprise an atomic meaning.
+Although our sample size is too small to make any definitive claims.

@@ -42,12 +42,16 @@
 \unskip\label{ch:syntax}
 \input{chapters/syntax/src/main}
 
-
-% \chapter{Conclusion}
-% \unskip\label{ch:conclusion}
+\input{src/conclusion}
 
 \bibliographystyle{plainnat}
-\bibliography{src/main,chapters/xferbench/src/main,chapters/elcc/src/main,chapters/elcc/src/sg-arxiv,chapters/hpo/src/main}
+\bibliography{%
+  src/main,
+  chapters/xferbench/src/main,
+  chapters/elcc/src/main,
+  chapters/elcc/src/sg-arxiv,
+  chapters/hpo/src/main,
+  chapters/morphemes/src/main}
 
 \appendix
 \addtocontents{toc}{\setcounter{tocdepth}{0}}
@@ -60,6 +64,9 @@
 
 \chapter{Optimizing with Transfer Learning}
 \input{chapters/hpo/src/appendix}
+
+\chapter{Morpheme Induction}
+\inputmorph{appendix}
 
  \typeout{INFO: \arabic{comment} comments.}
 \end{document}

@@ -1,0 +1,137 @@
+% \maketitle
+
+\begin{abstract}
+We introduce CSAR, an algorithm for inducing morphemes from emergent language corpora of parallel utterances and meanings.
+It is a greedy algorithm that (1) weights morphemes based on mutual information between forms and meanings, (2) selects the highest-weighted pair, (3) removes it from the corpus, and (4) repeats the process to induce further morphemes (i.e., Count, Select, Ablate, Repeat).
+The effectiveness of CSAR is first validated on procedurally generated datasets and compared against baselines for related tasks.
+Second, we validate CSAR's performance on human language data to show that the algorithm makes reasonable predictions in adjacent domains.
+Finally, we analyze a handful of emergent languages, quantifying linguistic characteristics like degree of synonymy and polysemy.
+\end{abstract}
+
+
+\section{Introduction}
+
+Emergent languages---communication systems invented by neural networks via reinforcement learning---are fascinating entities.
+They give us a chance to experiment with the processes underlying the development of human language to which we would not otherwise have access.
+A perennial problem in this field, though, is that emergent languages are difficult to interpret.
+The strategies emergent languages use to convey meaning do not always align with those known from human language \citep{kottur-etal-2017-natural,chaabouni2019antiefficient,kharitonov2020emergentlanguagegeneralizationacquisition}.
+Yet a lack of general-purpose methods for investigating the structure of emergent communication prevents us from systematically investigating how they encode meaning.
+
+As an essential step towards understanding emergent languages, we introduce CSAR, an algorithm for \emph{morpheme induction} on emergent language.
+That is, given an input corpus of parallel data: utterances and their associated meanings, find the smallest meaningful components of utterances with their accompanying meaning.
+Simply put, this task is to jointly segment utterances and align them with their meanings.
+The output of this algorithm, then, is a mapping between the forms and meanings of the emergent language (example shown in \cref{fig:example}).
+Furthermore, the proposed algorithm is easily applicable to almost any emergent language due to the simplicity of the input format.
+In fact, the algorithm is general purpose enough to produce reasonable results in other domains, as we demonstrate with human language-based image captioning, machine translation, and word segmentation data.
+Validating CSAR's performance on human language data as well as synthetic data is critical to demonstrating its effectiveness since there is no way of obtaining ground truth morphemes for emergent languages.
+
+\begin{figure}
+\centering
+\begin{tabular}{ll}
+  \toprule
+  Form & Meaning \\
+  \midrule
+  3, 6 & \{not, gray\} \\
+  7, 7 & \{not, blue\} \\
+  32 & \{circle\} \\
+  4, 5 & \{not, yellow\} \\
+  6, 12, 6, 12 & \{green, or, yellow\} \\
+  % 6, 6 & \{not, red\} \\
+  3, 12, 3 & \{blue, or, yellow\} \\
+  \bottomrule
+\end{tabular}
+% \fbox{\parbox{0.8\linewidth}{This table will have an interesting example of (part of the) morpheme inventory mixing compositionality with non-compositionality. Maybe with the weight of each morpheme corresponding the color tone.}}
+
+\caption{Example of morphemes extracted from a signalling game with pixel observations.}%
+\label{fig:example}
+\end{figure}
+
+An inventory of the morphemes of an emergent language is the foundation of many further linguistic analyses.
+Existing studies of compositionality \citep{korbak2020measuringnontrivialcompositionalityemergent}, word boundaries \citep{ueda2023on}, and grammar induction \citep{van-der-wal-etal-2020-grammar} could be validated and augmented with information on the morphology of emergent languages,
+  and 
+  new directions would also be made possible, including analyses of the morphosyntactic patterns and typological properties of emergent languages.
+Ultimately, such studies form one of the pillars of emergent communication research: learning what emergent language can tell us about human language \citep{boldt2024review}.
+
+In \cref{sec:prob} we define the task of morpheme induction and discuss related work.
+\cref{sec:alg} presents the proposed algorithm, CSAR\@.
+\cref{sec:val} validates CSAR's performance on procedurally generated and human language data.
+\cref{sec:el} applies CSAR to emergent languages.
+And we discuss the paper's findings and limitations and conclude in \cref{sec:discuss,sec:limitations,sec:conclusion}.
+
+
+\paragraph{Contributions}
+This work:
+(1) Introduces an algorithm for inducing morphemes, applicable to a wide variety of emergent language corpora.
+(2) Offers an easy-to-use Python implementation for executing the proposed algorithm on arbitrary emergent language data.
+(3) Provides a first look into the morphology of emergent languages including phenomena such as polysemy and synonymy.
+
+
+
+\section{Problem Definition}%
+\label{sec:prob}
+In this section we give a precise definition of the problem and the terms we will use throughout the paper.
+% In light of this definition, we can then more clearly discuss related work.
+
+\subsection{Task: morpheme induction}
+We define the task of \emph{morpheme induction} as follows:
+Given a corpus of \emph{utterances} and their corresponding \emph{complete meanings}, identify \emph{minimal, well-founded form--meaning pairs} (i.e., \emph{morphemes}) present in the corpus.
+This collection of pairs is the \emph{morpheme inventory} of the corpus.
+
+\smallskip
+\begin{description}[nosep,itemindent=-1em]
+  \item[form] a sequence of (form) tokens; represented as an integer sequence in emergent language.
+  \item[utterance] a complete sequence of tokens produced by an agent; forms are subsequences of utterances.
+  \item[meaning] a set of meaning tokens (i.e., atomic meanings grounded in the environment).
+  \item[complete meaning] a meaning which represents the entire meaning of an utterance.
+    \unskip\footnote{atomic meaning $\in$ meaning $\subseteq$ complete meaning}
+  % \item[form--meaning pair] simply a particular form
+  \item[well-founded] a form--meaning pair is well-founded when the particular form corresponds with a particular meaning.
+  \item[minimal] a well-founded form--meaning pair is minimal when there is no way to decompose the pair while maintaining continuity of meanings.
+\end{description}
+\medskip
+
+% \cmt{Mention, in a sentence, that we make minimal assumptions about the data (or maybe include that in the appendix.}
+% Move to appendix?
+It is important to note that we make two assumptions about the complete meanings.
+First, complete meanings are assumed to be \emph{abstracted} already, hence the reason we can represent them as a set of atomic meanings.
+That is to say that the ``raw semantics'' of the utterances are already broken down into individual components of interest; this task does not entail automatically finding meaning in arbitrary data (cf.\@ clustering).
+Second, since complete meanings are sets, they are not able to represent more complex phenomena that might require graph structures, for example (cf.\@ abstract meaning representations).
+
+Additionally, we note that \emph{well-founded correspondence} is a concept subject to a variety of philosophical accounts.
+Sometimes these accounts hold that the meaning is derived from either the behavior or state of mind of a language user.
+Yet in this task, we only have access to a corpus, not to the language users themselves;
+  thus, we employ a notion of ``well-founded correspondence'' most akin to a statistical view semantics (e.g., as in the distributional hypothesis).
+  % \citep{Harris01081954}
+
+
+\subsection{Related work}
+
+\paragraph{Emergent language}
+
+\citet{lipinski2024speaking} serves as the inspiration for this paper through its application of normalized pointwise mutual information to probe emergent languages for certain kinds of form--meaning relationships,
+  though it stops short of providing full morpheme inventories over arbitrary data.
+\citet{ueda2023on} introduces a method of form-only segment induction for emergent language based on token-level entropy patterns in utterances.
+
+Finally, \citet{brighton} introduce methods for inducing morphemes from simulations of language evolution.
+In particular, the algorithm is based on finite state transducers and the minimum description length principle.
+The key difference, though, is that the FST-based method assumes a strict form--meaning correspondence that does not appear to hold in emergent languages generated by deep neural networks.
+Thus, CSAR is designed to handle noise and looser form--meaning correspondence.
+
+\paragraph{Statistical word alignment}
+The task of morpheme induction resembles the task of statistical word alignment for machine translation insofar as it involves learning a mapping between two modalities.
+Well-known algorithms for this task include the IBM alignment models \citep{ibm-model-1}.
+While morphemes can be extracted from the alignments, the alignments themselves are not intended to represent morphemes as such.
+
+\paragraph{Segment induction}
+Segment induction is similar to morpheme induction, except that it deals only with the forms;
+  these methods, then, cannot provide a mapping between form meaning because they are meaning-unaware.
+Sometimes this task is called ``morpheme induction'' since the segments are supposed to correspond to morphemes, but they are not morphemes in the particular sense we use for this paper, that is: explicit form--meaning pairs.
+An example of an algorithm which addresses this task is Morfessor \citep{creutz-lagus-2002-unsupervised,morfessor2} or the submissions to the SIGMORPHON 2022 Shared Task \citet{batsuren-etal-2022-sigmorphon}.
+\citet{narasimhan-etal-2015-unsupervised} introduce a semi-supervised segment induction algorithm that uses semantic features to guide segmentation (viz.\@ groups of morphologically related words), although meanings are not modelled explicitly and ``word'' is not a well-defined concept for emergent languages.
+The discovery of valid segments by tokenization methods based on statistics---such as BPE \citep{sennrich-etal-2016-neural,gage1994bpe} and Unigram LM \citep{kudo-2018-subword}---is largely an epiphenomenon, not a design goal.
+% \cmt{Double check some of the work Kenny Smith mentioned since that will be important to include.}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -1,0 +1,54 @@
+% \usepackage[preprint]{acl-style-files/latex/acl}
+% \usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{wasysym}
+%\setlength\titlebox{<dim>}
+% and set <dim> to something 5cm or larger.
+
+% \title{Universal Morpheme Discovery for Emergent Language}
+% \title{Theoretically Universal Morpheme Discovery for Emergent Language}
+% \title{Universal Morphology Characterization for Emergent Language}
+% \title{Morpheme Induction for Emergent Language}
+
+% \author{Brendon Boldt \and David Mortensen \\
+%   Language Technologies Institute \\
+%   Carnegie Mellon University \\
+%   Pittsburgh, PA, USA \\
+%   \texttt{\{bboldt,dmortens\}@cs.cmu.edu}}
+
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage[table]{xcolor}
+\usepackage{latexsym,amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+% \usepackage[nameinlink,capitalize]{cleveref}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,shadows.blur,calc,positioning,fit,backgrounds}
+\usepackage{algorithm,listings}
+
+
+% \newcommand\smallish{\fontsize{10pt}{10pt}\selectfont}
+
+% \newcounter{comment}
+% \newcommand\cmt[1]{{\stepcounter{comment}\color{gray}[#1]}}
+% \newcommand\bjb[1]{{\stepcounter{comment}\color{violet}[BJB: #1]}}
+% \newcommand\drm[1]{{\stepcounter{comment}\color{orange}[DRM: #1]}}
+
+%%% Matplotlib block %%%
+\def\mathdefault#1{#1}
+\everymath=\expandafter{\the\everymath\displaystyle}
+
+\ifdefined\pdftexversion\else  % non-pdftex case.
+  \usepackage{fontspec}
+\fi
+\makeatletter\@ifpackageloaded{underscore}{}{\usepackage[strings]{underscore}}\makeatother
+%%% end block %%%

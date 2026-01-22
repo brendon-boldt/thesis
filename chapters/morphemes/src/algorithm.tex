@@ -1,0 +1,146 @@
+\section{Algorithm}%
+\label{sec:alg}
+
+In this section we introduce the algorithm for morpheme induction: CSAR (Count, Select, Ablate, Repeat).
+CSAR comprises the following steps:
+\smallskip
+\begin{enumerate}[nosep]
+  \item Collect form and meaning candidates from the corpus.
+  \item While form and meaning candidates remain.
+  \begin{enumerate}[leftmargin=1.5em,nosep]
+    \item Count co-occurrences of form and meaning candidates.
+    \item Select form--meaning pair with the highest weight.
+    \item Remove instances of the form--meaning pair from the corpus.
+  \end{enumerate}
+  \item Selected form--meaning pairs constitute the morpheme inventory of the corpus.
+\end{enumerate}
+\medskip
+The code implementing CSAR as well as the experiments discussed later is available under a free and open source license at {\url{https://github.com/brendon-boldt/csar}}.
+
+\subsection{Representation and preprocessing}%
+\label{sec:alg-rep}
+
+\paragraph{Input data}
+The input data to CSAR is a parallel \emph{corpus} of utterances and their meanings.
+Each record in the corpus is a tuple of form and meaning where a form is a list of (form) tokens and a meaning is a set of (meaning) tokens.
+% Practically speaking, form and meaning tokens are treated as integers IDs (e.g., to use for indexing into arrays \drm{This is kind of awkward and unclear.}), but we emphasize that they are \emph{tokens} because there is no inherent relationship between any two tokens aside from equivalence.
+
+\paragraph{Candidate collection}
+Given the corpus, we can identify and count the \emph{form} and \emph{meaning candidates} to produce their corresponding \emph{occurrence matrices}. 
+A form candidate is any substring of form tokens under consideration for inducing morphemes.
+A meaning candidate is any subset of meaning tokens under consideration for inducing morphemes.
+The most straightforward approach is to simply consider every non-empty substring of forms and subset meanings, although CSAR is not constrained to this approach in theory (cf.\@ \cref{app:candidate}).
+
+Having defined the universe of forms and meanings, we can build a binary \emph{occurrence matrix} for forms and one for meanings, where each row corresponds to a record and each entry corresponds to the presence ($1$) or absence ($0$) of a form/meaning in that record.
+Thus, the form occurrence matrix has the shape
+  $O_{\mathcal F}: |\mathcal R| \times |\mathcal F|$
+  and the meaning matrix $O_{\mathcal M}: |\mathcal R| \times |\mathcal M|$,
+  where
+  $\mathcal R$ is the list of records,
+  $\mathcal F$ is the set of all forms candidates,
+  and $\mathcal M$ is the set of all meanings candidates.
+
+\paragraph{Example}
+If we had a simple corpus with records
+  (``s'', {$\square$}),
+  (``st'', {$\boxtimes$}),
+  (``ct'', {$\otimes$}),
+  the corresponding occurrence matrices would be:
+\begin{equation}
+  \mathcal O_{\mathcal F} =
+    \left[
+    \begin{smallmatrix}
+      \cdot & \text{s} & \cdot & \cdot & \cdot \\
+      \cdot & \text s & \text t & \cdot & \text{st} \\
+      \text c & \cdot & \text t & \text{ct} & \cdot \\
+    \end{smallmatrix}
+    \right]
+  \hspace{0.7em}
+  \mathcal O_{\mathcal M} =
+    \left[
+    \begin{smallmatrix}
+      \square & \cdot & \cdot & \cdot & \cdot \\
+      \square & \times & \cdot & \boxtimes & \cdot \\
+      \cdot & \times & \bigcirc & \cdot & \otimes \\
+    \end{smallmatrix}
+    \right]
+    \!,
+\end{equation}
+where entries with value $1$'s are shown with the occurring symbols, and entries with value $0$'s with $\cdot$ for clarity.
+
+\subsection{Main loop}
+
+\paragraph{Weighting and co-occurrences}
+Given the occurrence matrices, the next step is to compute the weights of all potential pairs.
+The pair with the highest weight will be selected and added to the morpheme inventory.
+The weight of a form--meaning pair is the mutual information of the binary variables representing the corresponding form and meaning.
+% The weight of a form--meaning pair $w(f,m)$ is given by
+The mutual information of a particular form--meaning pair is given by
+\begin{equation}
+  % w(f, m) &= p(m, f)p(m|f) \\ &- p(\neg m, f)p(\neg m| f) \\ &- p(m, \neg f)p(m|\neg f) \\
+  % \hat p(m, f) - \hat p(m, \neg f)- \hat p(\neg m, f) ,
+  I(F;M) =
+  \sum_{x\in F}
+  \,
+  \sum_{y\in M}
+  p(x,y) \log_2 \frac{p(x,y)}{p(x)p(y)}
+  ,
+\end{equation}
+where
+  $F=\{f,\neg f\}$,
+  $p(f)$ is the probability of $f$ appearing in a record,
+  $p(\neg f)$ is the probability of $f$ not appearing,
+  and the rest are defined analogously.
+The key term of the mutual information expression is the joint probability between a form and a meaning, $p(f,m)$: since $f$ and $m$ are binary variables, all other joint probabilities can be computed from their joint probability and the marginal probabilities.
+The joint probability can be computed by normalizing the sum of co-occurrences of given forms and meanings, namely:
+\begin{equation}
+  p(f,m)=
+  \frac1{|\mathcal R|}
+  \sum_{j=1}^{|\mathcal R|} O_{\mathcal F}[j,i_f] \wedge O_{\mathcal M}[j,i_m]
+\end{equation}
+where $i_f$ and $i_m$ are the indices of $f$ and $m$ in their respective matrices.
+More succinctly, co-occurrences can be computed with matrix multiplications, yielding
+\begin{equation}
+  p(f,m) =
+  \frac1{|\mathcal R|}\cdot\left(O_{\mathcal F}^\top O_{\mathcal M}\right)[i_f, i_m]
+\end{equation}
+Other weighting methods were explored including joint probabilities, pointwise mutual information, and normalized pointwise mutual information, though mutual information was found to perform best empirically.
+
+The above weighting function results in ties which we break with the following heuristics:
+  (1) higher initial weight,
+  (2) fewer selected pairs with this form,
+  (3) larger form size,
+  and (4) smaller meaning size.
+
+
+\paragraph{Remove pair from corpus}
+The final step of the algorithm's main loop is ablating the pair from the corpus.
+That is, once we select a form--meaning pair, we want to remove all co-occurrences of the form and meaning in order to determine what form--meaning correspondences remain to be explained.
+For example, after ablating the pair (``t'', {$\times$}), the corpus from above would comprise
+  (``s'', {$\square$}),
+  (``s'', {$\square$}),
+  and (``c'', {$\Circle$});
+  the occurrence matrices would then be updated to reflect this.
+In cases where ablating a pair is ambiguous, we apply a heuristic (see \Cref{app:ambig-app}).
+
+
+\paragraph{Repeating and stopping}
+After ablating the selected form--meaning pair, the algorithm repeats the main loop, beginning again at the weight-computation step (with the updated occurrence matrices).
+The one difference is that---in subsequent weight computations---the weight of a pair cannot go up, preventing spurious correlations from arising in later steps.
+
+This loop continues until form or meaning occurrences are exhausted or some other criterion is met (e.g., time limit, inventory size limit).
+In this way, CSAR is an ``anytime'' algorithm since it can be stopped after an arbitrary number of iterations and still produce a sensible result.
+This is because the most heavily weighted morphemes can be considered the highest \emph{confidence} morphemes, meaning that stopping the algorithm before completion will only leave out the lowest confidence morphemes.
+
+
+\subsection{Implementation}
+% Move section appendix?
+The implementation of CSAR introduced in this paper is written in Python making use of sparse matrices from \texttt{scipy} \citep[BSD 3-Clause license]{scipy} and JIT compilation with \texttt{numba} \citep[BSD 2-Clause license]{numba} to speed up execution.
+CSAR is conceptually simple. Most of the implementation complexity lies in efficiently handling the occurrence matrices, especially when removing a form--meaning pair from the corpus.
+For example, the co-occurrence matrix has the shape $|\mathcal F| \times |\mathcal M|$ which is massive considering that $\mathcal F$ and $\mathcal M$ are already accounting for the universes of all possible forms and meanings in the corpus.
+Nevertheless, there are a wide range of heuristics that can be applied to greatly speed up execution while maintaining performance (see \cref{app:opt}).
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

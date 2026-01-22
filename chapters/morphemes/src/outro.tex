@@ -1,0 +1,44 @@
+\section{Discussion}%
+\label{sec:discuss}
+
+Due to CSAR's strong performance and easy application to a wide variety of emergent language environments, it would be a valuable addition to the standard toolkit of emergent language analyses.
+In particular, it helps fill a gap of environment-agnostic methods for interpreting the ways that emergent languages convey meaning---a perennial question in the field. 
+Down the road, this opens up research questions concerning the evolution of meaning in emergent language, such as those discussed in \citet{brighton}, but with the ability to deal with the larger scale and particular difficulties of \emph{deep learning-based} emergent communication.
+
+Furthermore, morpheme inventories are a foundation for higher-level linguistic analyses of emergent language like inducing their syntactic structure.
+To skip the morpheme induction step would be comparable to attempting to understand the grammatical role of the letter \emph{C} in English.
+Such analyses of the syntax of emergent language and beyond are critical to understanding how emergent and human language are similar and how they are different.
+
+
+% \cmt{David's rewrite: Though the greedy nature of CSAR imposes some limitations, its improved ability to capture form-meaning correspondences represent a significant step forward in morpheme detection.}
+
+
+
+
+\section{Conclusion}%
+\label{sec:conclusion}
+
+CSAR presents a strong platform for investigating the morphology of emergent language, demonstrating the ability to find minimal form--meaning pairs in both procedural and human language data.
+Given the morpheme inventory of an emergent languages we can not only analyze phenomena like synonymy and polysemy but also the typological features of emergent languages, determining which human languages they most closely resemble, if they resemble any.
+Such a study of morphology forms the foundation for the more general study of the linguistic features of emergent language and unlocks the door to the insights they can provide us about human language.
+
+
+
+\section{Limitations}%
+\label{sec:limitations}
+
+\paragraph{Greed is not always good}
+While the greediness of CSAR does simplify induction (conceptually and implementation-wise), improve runtime, and provide good partial inventories,
+  it suffers from the same limitation inherent to greedy algorithms: it can get trapped in local optima.
+For example, it is possible to construct corpora for which a greedy approach is ``misled'' since certain heuristics require revision based on information encountered later in the induction process (e.g., preferring smaller versus larger forms).
+
+We did consider non-greedy approaches to morpheme induction but ultimately decided not to pursue them in this work because (1) the greedy approach itself demonstrated strong performance and (2) initial attempts at non-greedy approaches (e.g., tree search) yielded intractable runtimes.
+For example, an error due to greediness might select morpheme $B$ before morpheme $A$ because $B$ had a higher weight while $A$ was ultimately correct.
+To select $A$ instead of $B$, the morpheme candidates would have to be reordered which, without an efficient way to propose these order, worsens the time complexity from $O(n^c)$ to $O(n!)$.
+Related algorithms use iterative approaches (IBM models and Morfessor) or search \citep{brighton} to avoid the local minima that trap greedy approaches.
+Future work could incorporate such methods to improve upon the performance of CSAR for morpheme induction.
+
+\paragraph{Limited emergent language data}
+The other limitation of this paper relates to the type and breadth of emergent language data.
+In terms of type, since we do not have ground truth morpheme inventories for emergent language, we cannot directly evaluate CSAR's performance on the target domain (hence the validation with procedurally generated and human languages).
+In terms of breadth, without a larger and more representative sample of more systematically generated data we are unable to make definitive claims about the patterns and trends of morpheme inventories in emergent languages.
