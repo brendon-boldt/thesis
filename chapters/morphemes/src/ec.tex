@@ -1,36 +1,36 @@
-\begin{table*}
-\centering
-\input{chapters/morphemes/assets/ec-table}
-\caption{Morpheme inventory metrics (described in \cref{sec:ec-quant}) across various emergent languages. (AV: attribute--value, SW: ShapeWorld, Inv.: Inventory)}%
-\label{tab:ec-quant}
-\end{table*}
+% \begin{table*}
+% \centering
+% \input{chapters/morphemes/assets/ec-table}
+% \caption{Morpheme inventory metrics (described in \cref{sec:ec-quant}) across various emergent languages. (AV: attribute--value, SW: ShapeWorld, Inv.: Inventory)}%
+% \label{tab:ec-quant}
+% \end{table*}
 
-\section{Analysis of Emergent Languages}%
-\label{sec:el}
-\subsection{Datasets}
-We apply CSAR to two different signalling game environments: one with vector-based observations and one with image-based observations.
-
-\paragraph{Vector observations}
-In the vector observation signalling game the agents directly observe one-hot vectors which directly correspond to the information to be communicated \citep[MIT license]{egg}.
-Specifically, we use two variants:
-  (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
-  and (2) the ``sparse'' setting where there are $8$ binary attributes and only attributes which are ``true'' are included in the meanings given to CSAR\@.
-Hyperparameters for both environments are given in \cref{app:el-hparams}.
-
-\paragraph{ShapeWorld observations}
-% Move part to appendix?
-The second environment is introduced by \citet[MIT license]{mu2021general} with the following differences:
-  (1) observations are images,
-  and (2) employs variations which increase the level of abstraction of the game to encourage generalization.
-First, this environment uses the ShapeWorld tool for generating observations \citep{kuhnle2017shapeworldnewtest};
-  namely, underlying concepts are particular shapes (e.g., red square) while the observations passed to the agents in the signalling game are pixel-based images.
-Second, \citet{mu2021general} provide three variants with increasing levels of abstraction:
-  (1) \emph{reference}: the sender indicates a single image,
-  (2) \emph{set reference}: the sender indicates a set of images with a common attribute,
-  and (3) \emph{concept}: as in \emph{set reference} but the receiver's observations are different instances sharing the common attribute (referenced in \cref{fig:example}).
+\section{Old Analysis of Emergent Languages}%
+\cmt{Remove}
+% \subsection{Datasets}
+% We apply CSAR to two different signalling game environments: one with vector-based observations and one with image-based observations.
+% 
+% \paragraph{Vector observations}
+% In the vector observation signalling game the agents directly observe one-hot vectors which directly correspond to the information to be communicated \citep[MIT license]{egg}.
+% Specifically, we use two variants:
+%   (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
+%   and (2) the ``sparse'' setting where there are $8$ binary attributes and only attributes which are ``true'' are included in the meanings given to CSAR\@.
+% Hyperparameters for both environments are given in \cref{app:el-hparams}.
+% 
+% \paragraph{ShapeWorld observations}
+% % Move part to appendix?
+% The second environment is introduced by \citet[MIT license]{mu2021general} with the following differences:
+%   (1) observations are images,
+%   and (2) employs variations which increase the level of abstraction of the game to encourage generalization.
+% First, this environment uses the ShapeWorld tool for generating observations \citep{kuhnle2017shapeworldnewtest};
+%   namely, underlying concepts are particular shapes (e.g., red square) while the observations passed to the agents in the signalling game are pixel-based images.
+% Second, \citet{mu2021general} provide three variants with increasing levels of abstraction:
+%   (1) \emph{reference}: the sender indicates a single image,
+%   (2) \emph{set reference}: the sender indicates a set of images with a common attribute,
+%   and (3) \emph{concept}: as in \emph{set reference} but the receiver's observations are different instances sharing the common attribute (referenced in \cref{fig:example}).
 
 \subsection{Metrics}%
-\label{sec:ec-quant}
+% \label{sec:ec-quant}
 We present the following metrics to give analyze the morpheme inventories induced from the emergent language data:
 \smallskip
 \begin{description}[nosep,itemindent=-1em]
@@ -64,3 +64,84 @@ The fact that the emergent languages tend towards a meaning size of $1$ suggests
 Yet when we compare meaning sizes values to topographic similarity values computed across records (i.e., not involving CSAR), we find that there is no obvious correlation between toposim values and meaning sizes.
 This could be due to the fact that individual form tokens could have ``partial meanings'' and need to be combined to comprise an atomic meaning.
 Although our sample size is too small to make any definitive claims.
+
+
+
+\section{Analysis of Emergent Languages}%
+\label{sec:el}
+
+\cmt{Do I need to give qualitative examples of morphemes?  Probably should.}
+
+\begin{table}
+  \small
+  \centering
+  \input{chapters/morphemes/assets/csar-analysis-table.tex}
+  \caption{Metrics (described in \cref{sec:ec-quant}) across the morpheme inventories of various emergent languages (averaged across $10$ runs).
+  (Bijec.:\@ morpheme bijectivity, Mean. Size: meaning size, Inv.\@ $H$: inventory entropy, AV: attribute--value)}%
+  \label{tab:ec-quant}
+\end{table}
+
+
+\cmt{Give a brief introduction to what we are doing here.}
+\cmt{Mention somewhere the heuristics we had to enable for CUB.}
+
+\subsection{Environments}
+We apply CSAR to a handful of signalling game environments with three different observation spaces:
+  one-hot vectors,
+  synthetic images of shapes,
+  and natural images of birds.
+Within each of the environments, further signalling game variations are described below.
+
+
+\paragraph{Vector observations}
+In the vector observation signalling game (based on the EGG framework \citep{egg}) the agents directly observe one-hot vectors without having to further extract representations.
+Specifically, we use two variants of the observation space:
+  (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
+  and (2) the ``sparse'' setting where there are $8$ binary attributes which are either present or absent.
+During the training of the emergent language agents, the sparse variant is identical to the attribute-value variant (except for the number of attributes and values), but when the corpora are passed to CSAR, the attributes with a value of $0$ are filtered out, yielding variable length meanings.
+  % and only attributes which are ``true'' are included in the meanings given to CSAR\@.
+Hyperparameters for both environments are given in \cref{app:el-hparams} \cmt{Update}.
+
+For both observation spaces, we also test two variations of the signalling game.
+\cmt{Check that I am not explaining this earlier in the chapter.} The first is the \emph{discrimination game}, where the receiver must answer a multiple-choice question where the correct observation is accompanied by multiple (incorrect) distractors.
+The second is the \emph{reconstruction game}, where the receiver must recreate the original observation similar to the decoding segment of an autoencoder.
+
+\paragraph{Image observations}
+The second environment is introduced by \citet{mu2021general} and uses both synthetic and natural images for its observation space.
+The synthetic images come from ShapeWorld, a tool for generating images of shapes with varying properties \citep{kuhnle2017shapeworldnewtest} while the natural images are from the CUB-200-2011 dataset documenting various kinds of birds \citep{WahCUB_200_2011}.
+In addition to a more standard discrimination game (termed \emph{reference game} in this paper), \citet{mu2021general} also introduce the \emph{set-reference} and \emph{concept} variants of the discrimination game.
+These variations increase the level of abstraction in the game in order to encourage more generalizable (and compositional) languages to emerge.
+\cmt{Discuss where we get the meanings for these environments since we can't use the observations directly.}
+
+Specifically, the reference game functions like the discrimination game described above except that there are multiple target images and the sender sees both the target images and the distractors.
+The receiver, in this case, must classify the each image as being target or distractor (i.e., multi-label instead of multi-class).
+In the reference game, the target images are all identical while in the set-reference game, the target images are variations of the same object (e.g., a red triangle in different positions/rotations).
+Finally, in the concept game, the target images comprise different objects sharing one or more concepts (e.g., triangular).
+
+\subsection{Metrics}%
+\label{sec:ec-quant}
+
+We present a handful of quantitative metrics to act as summary statistics for the morpheme inventories induced from the above emergent languages.
+\smallskip
+\begin{description}[nosep,itemindent=-1em]
+  \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence (probability of occurring out of all morpheme occurrences identified during induction).
+  \item[Morpheme bijectivity] \cmt{complete after incorporating phrasebook paper}
+  \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL} of the corpus (i.e., not based on the morpheme inventory).
+  \item[Synonymy] Entropy across forms for a given meaning; computed using prevalence of forms normalized within the particular meaning.
+  \item[Polysemy] Entropy across meanings for a given form; as with \emph{synonymy}, \emph{mutatis mutandis}.
+  \item[Form size] Mean number of tokens in a form, weighted by morpheme prevalence.
+  \item[Meaning size] Mean number of tokens in a meaning, weighted by morpheme prevalence.
+\end{description}
+\smallskip
+With the exception of inventory size and toposim, the above metrics are weighted by \emph{prevalence} which is the proportion of records from which the morpheme was ablated.
+
+\subsection{Results}
+
+The morpheme inventory metrics are given in \cref{tab:ec-quant} where they averaged across $10$ runs of each environment.
+\cmt{Reference appendix with qualitative examples.}
+\cmt{Update qualitative examples in appendix.}
+
+\cmt{correlation between bijectivity and toposim}
+\cmt{bijectivity generally speaking}
+\cmt{compositionality with meaning size vs bijectivity/toposim}
+\cmt{ref-setref-concept progression}
