@@ -110,6 +110,12 @@ This heuristic can be interpreted as the mean form tokens per meaning tokens tim
 \subsection{Emergent language hyperparameters}%
 \label{app:el-hparams}
 
+Due to the computational constraints for some of the environments, we stop CSAR after inducing the top $200$ morphemes for each language as well as disabling the lookahead substitution heuristic.
+Additionally, for the CUB (natural images) environment, the following optimization were employed:
+  limiting to the maximum meaning size considered to $3$,
+  pruning morpheme candidates that had a prevalence ${\le}1\%$,
+  and consider only the $1000$ most frequent forms and $1000$ most frequent meanings.
+
 The following hyperparameters were used for the vector observation environment:
 \smallskip
 \begin{description}[nosep,itemindent=-1em]
@@ -122,19 +128,29 @@ The following hyperparameters were used for the vector observation environment:
 \end{description}
 \medskip
 
-The ShapeWorld observation environment uses the following hyperparameters
+The ShapeWorld observation environment uses the following hyperparameters:
 \smallskip
 \begin{description}[nosep,itemindent=-1em]
   \item[observations] $5$ shapes, $6$ colors, $3$ operators (and, or, not); \emph{and} or \emph{or} may only be used once
   \item[\textit{n} examples] $20$ total; $10$ correct targets, $10$ distractors
-  \item[vocab size] $32$
+  \item[vocab size] $30$ (not including beginning- and end-of-sentence tokens)
   \item[max sequence length] $8$
-  \item[dataset size (CSAR input)] $20\,000$ records
+  \item[dataset size (CSAR input)] $1\,200$ records
 \end{description}
+
+The CUB observation environment uses the following hyperparameters (same as ShapeWorld unless noted):
+\begin{description}[nosep,itemindent=-1em]
+  \item[observations]
+    $200$ classes of birds with $40$--$60$ images each;
+    $312$ binary attributes derived from the images
+  \item[vocab size] $18$
+  \item[\textit{n} examples] $10$ total
+  \item[vision backbone] ResNet-18
+\end{description}
+
 \medskip
 
 Both environments had any beginning-of-sentence and end-of-sentence tokens removed before being fed into CSAR\@.
-Running the above experiments requires about $25$ GPU-hours on NVIDIA GeForce RTX 2080Ti.
 
 
 \section{Morfessor Results on Emergent Language}
@@ -180,18 +196,7 @@ Top $100$ morphemes induced by CSAR from human and emergent language datasets.
 \subsection{Emergent languages}%
 \label{app:ec-inv}
 
-\paragraph{Vector, attribute--value}
-Note that meanings are in the format \emph{\mbox{attribute\_value}} meaning that 1\_2 means the $1$\textsuperscript{st} attribute has value $2$.
+Below are the top $20$ morphemes for the various emergent languages described in \cref{sec:ec-quant}.
+For attr--val environments, a semantic component of ``1\_2'' means the 1\textsuperscript{st} attribute has a value of 2.
 
-\medskip
-\noindent
-{\input{chapters/morphemes/assets/ec-vector-av}}
-
-\paragraph{Vector, bag of meanings}
-{\input{chapters/morphemes/assets/ec-vector-sparse}}
-\paragraph{Shapeworld, reference}
-{\input{chapters/morphemes/assets/ec-shapeworld-ref}}
-\paragraph{Shapeworld, set reference}
-{\input{chapters/morphemes/assets/ec-shapeworld-setref}}
-\paragraph{Shapeworld, concept}
-{\input{chapters/morphemes/assets/ec-shapeworld-concept}}
+\input{chapters/morphemes/assets/csar-analysis-qualitative}

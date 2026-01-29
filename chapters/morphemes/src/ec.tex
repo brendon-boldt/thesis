@@ -1,66 +1,100 @@
-\begin{table*}
-\centering
-\input{chapters/morphemes/assets/ec-table}
-\caption{Morpheme inventory metrics (described in \cref{sec:ec-quant}) across various emergent languages. (AV: attribute--value, SW: ShapeWorld, Inv.: Inventory)}%
-\label{tab:ec-quant}
-\end{table*}
-
 \section{Analysis of Emergent Languages}%
 \label{sec:el}
-\subsection{Datasets}
-We apply CSAR to two different signalling game environments: one with vector-based observations and one with image-based observations.
+
+Here we apply CSAR to a handful of emergent language environments and observe various metrics which can be derived from the induced morpheme inventories.
+Although we do not have ground-truth morphemes for these environments, we can still observe patterns in the induced morphemes which demonstrate the diagnostic power of CSAR\@.
+
+\subsection{Environments}
+The selected emergent language environments span three different observation spaces:
+  one-hot vectors,
+  synthetic images of shapes,
+  and natural images of birds.
+Within each of the environments, further signalling game variations are described below.
+
 
 \paragraph{Vector observations}
-In the vector observation signalling game the agents directly observe one-hot vectors which directly correspond to the information to be communicated \citep[MIT license]{egg}.
-Specifically, we use two variants:
+In the vector observation signalling game (based on the EGG framework \citep{egg}) the agents directly observe one-hot vectors without having to further extract representations.
+Specifically, we use two variants of the observation space:
   (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
-  and (2) the ``sparse'' setting where there are $8$ binary attributes and only attributes which are ``true'' are included in the meanings given to CSAR\@.
+  and (2) the ``sparse'' setting where there are $8$ binary attributes which are either present or absent.
+During the training of the emergent language agents, the sparse variant is identical to the attribute-value variant (except for the number of attributes and values), but when the corpora are passed to CSAR, the attributes with a value of $0$ are filtered out, yielding variable length meanings.
+  % and only attributes which are ``true'' are included in the meanings given to CSAR\@.
 Hyperparameters for both environments are given in \cref{app:el-hparams}.
 
-\paragraph{ShapeWorld observations}
-% Move part to appendix?
-The second environment is introduced by \citet[MIT license]{mu2021general} with the following differences:
-  (1) observations are images,
-  and (2) employs variations which increase the level of abstraction of the game to encourage generalization.
-First, this environment uses the ShapeWorld tool for generating observations \citep{kuhnle2017shapeworldnewtest};
-  namely, underlying concepts are particular shapes (e.g., red square) while the observations passed to the agents in the signalling game are pixel-based images.
-Second, \citet{mu2021general} provide three variants with increasing levels of abstraction:
-  (1) \emph{reference}: the sender indicates a single image,
-  (2) \emph{set reference}: the sender indicates a set of images with a common attribute,
-  and (3) \emph{concept}: as in \emph{set reference} but the receiver's observations are different instances sharing the common attribute (referenced in \cref{fig:example}).
+For both observation spaces, we also test two variations of the signalling game.
+The first is the \emph{discrimination game}, where the receiver must answer a multiple-choice question where the correct observation is accompanied by multiple (incorrect) distractors.
+The second is the \emph{reconstruction game}, where the receiver must recreate the original observation similar to the decoding segment of an autoencoder.
+
+\paragraph{Image observations}
+The second environment is introduced by \citet{mu2021general} and uses both synthetic and natural images for its observation space.
+The synthetic images come from ShapeWorld, a tool for generating images of shapes with varying properties \citep{kuhnle2017shapeworldnewtest} while the natural images are from the CUB-200-2011 dataset documenting various kinds of birds \citep{WahCUB_200_2011}.
+The meanings for these environments are discrete attributes describing the images (e.g., ``red'' for ShapeWorld or ``wing color: brown'' for CUB) provided with the datasets.
+In addition to a more standard discrimination game (termed \emph{reference game} in this paper), \citet{mu2021general} also introduce the \emph{set-reference} and \emph{concept} variants of the discrimination game.
+These variations increase the level of abstraction in the game in order to encourage more generalizable (and compositional) languages to emerge.
+
+Specifically, the reference game functions like the discrimination game described above except that there are multiple target images and the sender sees both the target images and the distractors.
+The receiver, in this case, must classify the each image as being target or distractor (i.e., multi-label instead of multi-class).
+In the reference game, the target images are all identical while in the set-reference game, the target images are variations of the same object (e.g., a red triangle in different positions/rotations).
+Finally, in the concept game, the target images comprise different objects sharing one or more concepts (e.g., triangular).
 
 \subsection{Metrics}%
 \label{sec:ec-quant}
-We present the following metrics to give analyze the morpheme inventories induced from the emergent language data:
+
+We present a handful of quantitative metrics to act as summary statistics for the morpheme inventories induced from the above emergent languages.
 \smallskip
 \begin{description}[nosep,itemindent=-1em]
-  \item[Inventory size] Number of morphemes in the inventory.
-  \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence.
-  \item[Synonymy] Entropy across forms for a given meaning.
-  \item[Polysemy] Entropy across meanings for a given form.
-  \item[Form size] Mean number of tokens in a form.
-  \item[Meaning size] Mean number of tokens in a meaning.
-  \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL}.
+  \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence (probability of occurring out of all morpheme occurrences identified during induction).
+    We use the inventory entropy to give a rough sense of the breadth of the morpheme inventory as CSAR can induce a large number of low-prevalence, low-quality morphemes (whereas entropy is more robust to this).
+    A rough translation to size is $H^2\approx$ equivalent number of equally-probable morphemes.
+  \item[Morpheme bijectivity]
+    Weighted mean normalized pointwise mutual information (NPMI) of morphemes in the inventory corresponding to how ``one-to-one'' the morphemes identified are;
+      higher bijectivity corresponds to higher quality morphemes/inventory.
+    See \cmt{reference phrasebook chapter} for the introduction of this metric.
+  \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL} of the corpus (i.e., not based on the morpheme inventory).
+  \item[Synonymy] Entropy across forms for a given meaning; computed using prevalence of forms normalized within the particular meaning.
+  \item[Polysemy] Entropy across meanings for a given form; as with synonymy, \emph{mutatis mutandis}.
+  \item[Form size] Mean number of tokens in a form, weighted by morpheme prevalence.
+  \item[Meaning size] Mean number of tokens in a meaning, weighted by morpheme prevalence.
 \end{description}
 \smallskip
 With the exception of inventory size and toposim, the above metrics are weighted by \emph{prevalence} which is the proportion of records from which the morpheme was ablated.
 
 \subsection{Results}
-\Cref{tab:ec-quant} shows the results (induced morphemes from each emergent language are given in \cref{app:ec-inv}).
-Looking at form size, while the forms of morphemes do tend towards smaller values, many comprise more than one token, suggesting that assuming that each token can be analyzed as a word or independent unit of meaning is not a safe assumption.
-% Meaning size tends more strongly toward one token per morpheme, implying that the emergent languages 
-% This has implications for the compositionality of emergent language (discussed below).
-Addressing the mapping between forms and meanings, we see that synonymy (forms per meaning) is higher than polysemy (meanings per form).
-The fact that there is a higher degree of synonymy than polysemy makes sense insofar as the optimization penalizes ambiguity (polysemy) while it does not penalize merely inefficient encoding (synonymy).
-This is concordant with finding such as \citet{chaabouni2019antiefficient} which finds that emergent languages, in the absence of addition pressures, do not develop efficient encoding schemes.
-% Additionally, the ShapeWorld languages show much higher degrees of synonymy and polysemy than the vector environment likely due in part to the continuous nature of the observations.
-% Given that synonymy and polysemy are far above $1$ for all emergent languages, the morpheme inventory sizes are far above their theoretical minimums (e.g., $16$ for a $4$-attribute, $4$-value signalling game).
+
+\begin{table}
+  \small
+  \centering
+  \input{chapters/morphemes/assets/csar-analysis-table.tex}
+  \caption{Metrics (described in \cref{sec:ec-quant}) across the morpheme inventories of various emergent languages (averaged across $10$ runs).}%
+  \label{tab:ec-quant}
+\end{table}
+
+The morpheme inventory metrics are given in \cref{tab:ec-quant} where they averaged across $10$ runs of each environment; some examples of morphemes from the inventories are given in \cref{app:ec-inv}.
+
+\paragraph{Inventory, form, and meaning size}
+Inventory entropy along with form and meaning size give sense of the general ``shape'' of the morpheme inventories---how large they are as a whole and what their components look like.
+With respect to inventory entropy, we find that generally, the image-observation environments results in higher entropy morphemes, which is to be expected with richer input source.
+On the other end of the interval, the (Vector, Attribute--value, Reconstruction) environment shows the lowest almost matching the lower bound of $4$ bits.\footnote{Since this environment as $4$ attributes which can each taken on $4$ values, that would correspond to $4\cdot4=16$ unique, equiprobable morphemes (order-dependence notwithstanding), corresponding to $\log_216=4$ bits of entropy.}
+
+While both form length and meaning size remain small, their is a notable presence of sizes greater than $1$.
+For form length, this suggests that the assumption that individual form tokens can be treated as words is not well founded; instead, the smallest meaningful units can comprise multiple tokens.
+For meanings, this indicates some degree of ``fusionality'' where the minimal unit of meaning corresponds to multiple atomic meanings at once and inseparably.
+
+\paragraph{Inventory quality}
+Insofar as morpheme bijectivity measures the quality of the morpheme inventories induced, we find that the quality across most environments is medium-to-low with only the reconstruction game with attribute--value vector observations averages above $0.5$ \cmt{Reference the phrasebook plot that gives a general sense of how well things go given a bijectivity.}.
+Generally speaking, the bijectivity values for the vector-based environments are higher than the those of the image-based environments, suggesting that the noiseless, pre-disentangled observations result in languages which are more easily captured by CSAR\@.
+The reference games in the image-based environments show especially low bijectivity potentially, in part, because the communication can reference low-level observation features without significant pressure towards generality.
+
+\paragraph{Synonymy and polysemy}
+Synonymy and polysemy, taken together, naturally correlate with morpheme bijectivity as the former metrics test for unidirectional correlation (e.g., how informative is a form for various meanings) while NPMI (the basis for bijectivity) takes bidirectional correlation (i.e., do a form and meaning correlate with each other exclusively).
+Empirically, the vector-based environments have more synonymy than polysemy while the image-based have this pattern reversed.
+Our initial hypothesis would be that synonymy would exceed polysemy insofar as polysemy incurs a cost with respect to communicative efficacy (i.e., ambiguity) while synonymy does not.
+That being said, the fuzzier relationship between the observations and the semantics in image environments (since it is a lossy conversion) compared to the one-to-one relationship between meanings and observations in the vector-based environments may explain part of the unexpected behavior.
+
+
 
 \paragraph{Compositionality}
-The meaning size metric, in particular, is interesting insofar as it relates to compositionality.
-In the simplest case of compositionality, morphemes comprise singleton meanings which can be combined to form compound meanings.
-More holistic languages, on the other hand, assign multiple atomic meanings per morpheme resulting in in larger meaning sizes.
-The fact that the emergent languages tend towards a meaning size of $1$ suggests a non-trivial degree of compositionality under this interpretation.
-Yet when we compare meaning sizes values to topographic similarity values computed across records (i.e., not involving CSAR), we find that there is no obvious correlation between toposim values and meaning sizes.
-This could be due to the fact that individual form tokens could have ``partial meanings'' and need to be combined to comprise an atomic meaning.
-Although our sample size is too small to make any definitive claims.
+We find that morpheme bijectivity and toposim are relatively well correlated in our quantitative analysis, as is expected since they both aim to be measures of compositionality.
+On the other hand, we do not find any notable correlation between bijectivity/toposim and meaning size which could also be viewed a measure of compositionality; viz.\@ fewer meaning components per morpheme correspond with a more one-to-one relationship between forms and atomic meanings (cf.\@ holistic languages with many meaning components per form).
+The bijectivity--toposim correlation is also reflected in the progression from reference to set-reference to concept games in the image-based environments: not only does the toposim generally increase moving along the game progression (as presented in \citet{mu2021general}) but the morpheme bijectivity as well.
+This gives even stronger evidence for claims of \citet{mu2021general} as morpheme bijectivity is argued to be a better measure of compositionality that toposim \cmt{ref later chapter}.

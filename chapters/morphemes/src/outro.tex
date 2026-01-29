@@ -38,6 +38,11 @@ To select $A$ instead of $B$, the morpheme candidates would have to be reordered
 Related algorithms use iterative approaches (IBM models and Morfessor) or search \citep{brighton} to avoid the local minima that trap greedy approaches.
 Future work could incorporate such methods to improve upon the performance of CSAR for morpheme induction.
 
+\paragraph{Bias towards smaller forms and meanings}
+In light of the greedy approach, a further limitation of CSAR is its bias towards smaller forms and meanings due to the fact that mutual information is intrinsic bias towards frequently appearing forms and meanings (n.b.: smaller forms necessarily appear as or more often than larger, composite forms.
+While this bias is beneficial where emergent languages are genuinely decomposable into smaller units, in languages which do not decompose effectively, CSAR induces low quality inventories (i.e., having low morpheme bijectivities) with small forms and meanings rather than inducing more bijective inventories with holistic meanings (i.e., larger forms and meanings).
+Some heuristics balancing mutual information and bijectivity could address this while maintaining greediness, but ultimately non-greedy approaches might be necessary.
+
 \paragraph{Limited emergent language data}
 The other limitation of this paper relates to the type and breadth of emergent language data.
 In terms of type, since we do not have ground truth morpheme inventories for emergent language, we cannot directly evaluate CSAR's performance on the target domain (hence the validation with procedurally generated and human languages).

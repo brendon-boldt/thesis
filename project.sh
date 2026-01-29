@@ -5,6 +5,25 @@ maintex=src/main.tex
 
 setopt globdots nullglob
 
+function fmttime {
+  secs=$1
+  tot_hours=$(( $secs / 3600 ))
+  days=$(( $tot_hours / 24 ))
+  hours=$(( $tot_hours % 24 ))
+  echo $days days, $hours hours
+}
+
+function ddl {
+  now=$(date +%s)
+  ddl_manuscript=$(date +%s -d '2026-02-09T10:00')
+  ddl_defense=$(date +%s -d '2026-03-09T10:00')
+
+  echo -n "Manuscript: "
+  fmttime $(( $ddl_manuscript - $now ))
+  echo -n "Defense: "
+  fmttime $(( $ddl_defense - $now ))
+}
+
 function watch {
   while true; do
       inotifywait -qqe modify -e move_self **/*.{tex,bib,dot}
