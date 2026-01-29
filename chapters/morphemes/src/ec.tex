@@ -29,21 +29,21 @@
 %   (2) \emph{set reference}: the sender indicates a set of images with a common attribute,
 %   and (3) \emph{concept}: as in \emph{set reference} but the receiver's observations are different instances sharing the common attribute (referenced in \cref{fig:example}).
 
-\subsection{Metrics}%
-% \label{sec:ec-quant}
-We present the following metrics to give analyze the morpheme inventories induced from the emergent language data:
-\smallskip
-\begin{description}[nosep,itemindent=-1em]
-  \item[Inventory size] Number of morphemes in the inventory.
-  \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence.
-  \item[Synonymy] Entropy across forms for a given meaning.
-  \item[Polysemy] Entropy across meanings for a given form.
-  \item[Form size] Mean number of tokens in a form.
-  \item[Meaning size] Mean number of tokens in a meaning.
-  \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL}.
-\end{description}
-\smallskip
-With the exception of inventory size and toposim, the above metrics are weighted by \emph{prevalence} which is the proportion of records from which the morpheme was ablated.
+% \subsection{Metrics}%
+% % \label{sec:ec-quant}
+% We present the following metrics to give analyze the morpheme inventories induced from the emergent language data:
+% \smallskip
+% \begin{description}[nosep,itemindent=-1em]
+%   \item[Inventory size] Number of morphemes in the inventory.
+%   \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence.
+%   \item[Synonymy] Entropy across forms for a given meaning.
+%   \item[Polysemy] Entropy across meanings for a given form.
+%   \item[Form size] Mean number of tokens in a form.
+%   \item[Meaning size] Mean number of tokens in a meaning.
+%   \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL}.
+% \end{description}
+% \smallskip
+% With the exception of inventory size and toposim, the above metrics are weighted by \emph{prevalence} which is the proportion of records from which the morpheme was ablated.
 
 \subsection{Results}
 \Cref{tab:ec-quant} shows the results (induced morphemes from each emergent language are given in \cref{app:ec-inv}).
@@ -126,6 +126,8 @@ We present a handful of quantitative metrics to act as summary statistics for th
 \begin{description}[nosep,itemindent=-1em]
   \item[Inventory entropy] Entropy (in bits) of the morphemes according to their prevalence (probability of occurring out of all morpheme occurrences identified during induction).
   \item[Morpheme bijectivity] \cmt{complete after incorporating phrasebook paper}
+    \cmt{mention that is both a measure of compositionality and of quality}
+    \cmt{Give a sense of what a good value vs bad value is in terms of quality}
   \item[Topographic similarity] Correlation (Spearman's $\rho$) between distances in the utterance space and complete meaning space \citep{brighton2006toposim,lazaridou2018EmergenceOL} of the corpus (i.e., not based on the morpheme inventory).
   \item[Synonymy] Entropy across forms for a given meaning; computed using prevalence of forms normalized within the particular meaning.
   \item[Polysemy] Entropy across meanings for a given form; as with \emph{synonymy}, \emph{mutatis mutandis}.
@@ -141,7 +143,15 @@ The morpheme inventory metrics are given in \cref{tab:ec-quant} where they avera
 \cmt{Reference appendix with qualitative examples.}
 \cmt{Update qualitative examples in appendix.}
 
-\cmt{correlation between bijectivity and toposim}
-\cmt{bijectivity generally speaking}
-\cmt{compositionality with meaning size vs bijectivity/toposim}
-\cmt{ref-setref-concept progression}
+\cmt{Comment on form length and how the assumption of token == form is not safe.}
+\cmt{Anything about synonymy and polysemy?}
+
+Insofar as morpheme bijectivity measures the quality of the morpheme inventories induced, we find that the quality across most environments is medium-to-low with only the reconstruction game with attribute--value vector observations averages above $0.5$.
+Generally speaking, the bijectivity values for the vector-based environments are higher than the those of the image-based environments, suggesting that the noiseless, pre-disentangled observations result in languages which are more easily captured by CSAR\@.
+
+\cmt{Include limitation of CSAR somewhere that is not defaulting to holistic languages.}
+
+We find that morpheme bijectivity and toposim are relatively well correlated in our quantitative analysis, as is expected since they both aim to be measures of compositionality.
+On the other hand, we do not find any notable correlation between bijectivity/toposim and meaning size which could also be viewed a measure of compositionality; viz.\@ fewer meaning components per morpheme correspond with a more one-to-one relationship between forms and atomic meanings (cf.\@ holistic languages with many meaning components per form).
+The bijectivity--toposim correlation is also reflected in the progression from reference to set-reference to concept games in the image-based environments: not only does the toposim generally increase moving along the game progression (as presented in \citet{mu2021general}) but the morpheme bijectivity as well.
+This gives even stronger evidence for claims of \citet{mu2021general} as morpheme bijectivity is argued to be a better measure of compositionality that toposim \cmt{ref later chapter}.
