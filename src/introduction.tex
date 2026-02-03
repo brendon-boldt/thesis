@@ -164,7 +164,7 @@ The signalling game was introduced in the context of game theory by David Lewis 
 The signalling game is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
 It consists of only two agents: a sender and a receiver.
 The sender makes on observation (e.g., an orange circle) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was an orange circle, not a blue circle).
-A visualization of the signalling game is provided in \Cref{fig:signaling-game}.
+A visualization of the signalling game is provided in \cref{fig:signaling-game}.
 The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
 On the other hand, holistic communication sometimes emerges where a unique word refers to red square, bearing no relation to the word(s) for red circle.
 Compositional communication, generally, is seen as more desirable both for practical reasons (more efficient encoding of information) as well as for its resemblance to how humans tend to encode meaning in language.
@@ -244,9 +244,9 @@ Finally, from a practical standpoint, the engineering approach proved more tract
 \section{Overview}
 
 This thesis has three main parts:
-The first comprises \Cref{ch:elcc,ch:rich-corpora}, which introduce a large collection of emergent language corpora and corresponding semantic annotations.
-Second, \Cref{ch:xferbench,ch:hpo} introduce and showcase XferBench, a deep transfer learning-based evaluation metric for emergent language corpora.
-Lastly, \Cref{ch:morphemes,ch:syntax} introduce methods for detecting linguistic structures in emergent language corpora.
+The first comprises \cref{ch:elcc,ch:rich-corpora}, which introduce a large collection of emergent language corpora and corresponding semantic annotations.
+Second, \cref{ch:xferbench,ch:hpo} introduce and showcase XferBench, a deep transfer learning-based evaluation metric for emergent language corpora.
+Lastly, \cref{ch:morphemes,ch:phrasebook} introduce methods for detecting linguistic structures in emergent language corpora.
 Each of these parts largely stands on its own for the purposes of readability as well as their contributions.
 Nevertheless, the entire thesis is intended to provide a coherent, multi-pronged approach to making measurable progress in emergent language possible.
 
@@ -278,14 +278,15 @@ While it is not as simple to establish a ranking of ``better'' and ``worse'' wit
 
 \subsection{Detecting linguistic structures}
 
-\Cref{ch:morphemes,ch:syntax} introduce algorithms for detecting linguistic structures in any emergent language corpora that possesses in annotations as described above in ELCC.\@
+\cmt{Check this change in reference to phrasebook}
+\Cref{ch:morphemes,ch:phrasebook} introduce algorithms for detecting linguistic structures in any emergent language corpora that possesses in annotations as described above in ELCC.\@
 \Cref{ch:morphemes} specifically looks at detecting ``morphemes'' in the sense of atomic units of form with a distinct meaning.
 The output is a list of token sequences which correspond with particular meanings in the environment.
-Not only does this enable a host of interesting analyses, but it also lays the groundwork for \Cref{ch:syntax} which introduces an algorithm to detect structure among these morphemes, making a first step towards identifying the syntax of emergent languages.
+Not only does this enable a host of interesting analyses, but it also lays the groundwork for \cmt{fix} which introduces an algorithm to detect structure among these morphemes, making a first step towards identifying the syntax of emergent languages.
 
 The original intent for the linguistics-focused component of this thesis was to develop a benchmark similar in intent to XferBench but looking at how close the linguistic features of emergent language were to those of human language in areas such as syntax, social variation, and discourse.
 Yet upon planning the concrete details of such a metric, it was apparent that it was not clear \emph{if} such features as syntax or discourse existed in any meaningful way, let alone there being a way to detect them.
-Thus, in order to help decide where to begin we visualized and informal hierarchy of linguistic phenomena in \Cref{fig:linguistic-dag}; the direction of the hierarchy is determined by what phenomena presuppose the existence of more basic phenomena.
+Thus, in order to help decide where to begin we visualized and informal hierarchy of linguistic phenomena in \cref{fig:linguistic-dag}; the direction of the hierarchy is determined by what phenomena presuppose the existence of more basic phenomena.
 What was immediately apparent is that while it easy to point to concrete notions of semantics and tokens (the atomic components of a message/utterance in emergent communication), even even the existence and nature of the immediate combination of these---morphemes---was not established (and hardly explored).
 
 \begin{figure}
@@ -298,5 +299,5 @@ What was immediately apparent is that while it easy to point to concrete notions
   \unskip\label{fig:linguistic-dag}
 \end{figure}
 
-Thus, I decided to pursue establishing a method to show the existence of and identify morphemes and syntax---the backbone of the hierarchy depicted in \Cref{fig:linguistic-dag}, which is likely the most that can be done toward developing a metric of linguistic similarity in the scope of this thesis.
+Thus, I decided to pursue establishing a method to show the existence of and identify morphemes and syntax---the backbone of the hierarchy depicted in \cref{fig:linguistic-dag}, which is likely the most that can be done toward developing a metric of linguistic similarity in the scope of this thesis.
 Nevertheless, the proposed algorithms still fit well within this thesis' theme of pioneering accessible general purpose in methods in emergent communication that permit the direct comparison of emergent languages across a wide of environment and implementations.

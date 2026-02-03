@@ -1,0 +1,36 @@
+\section{Conclusion}%
+\label{sec:pb-conclusion}
+
+The above experiments have demonstrated the effectiveness of CSAR and the phrasebook algorithms as foundations for studying the morphological and syntactic structures of emergent language.
+Beyond the particular languages studied here, the methods presented demonstrate a more general paradigm of investigating the linguistic features of emergent languages by ablating explicit models of communication and testing them \emph{in situ}.
+Such an approach is better grounded in the use of the emergent language itself rather than merely hypothesizing about the relationship between surface-level features and their relationship with the language itself.
+With the tools and techniques presented in this paper, the field of emergent language is better equipped to explore the nature of human language.
+
+
+% \drm{You have already said this twice in the introduction. Try to think about what the deep significance of this work is an communicate it here.}
+% 
+% 
+% The above \emph{in situ} experiments have shown that it is indeed possible to communicate in emergent language with an induced morphological phrasebook.
+% Primarily, this demonstrates that the morpheme induction algorithm CSAR can be effective on emergent languages beyond the procedurally generated and human languages it was initially tested on.
+% Furthermore, varying and ablating the emergent language environment as well as the morpheme induction and phrasebook agent algorithms presents a novel way to probe the morphosyntactic properties of emergent language.
+% Finally, the experiments have also allowed us to propose morpheme bijectivity (derived from the outputs of CSAR) as a compositionality metric by virtue of it predicting the generalization performance of the compositional phrasebook agents.
+% Thus, while the empirical evaluations focused on variations of a single emergent language environment, the methods presented are far more general and prove a promising way to investigate the morphosyntax of a wide range of emergent languages in future work.
+
+
+\section{Limitations}%
+\label{sec:pb-limitations}
+We identify the following primary limitations in our work:
+\begin{enumerate}[nosep]
+  \item The phrasebook sender and receiver algorithms were designed more or less heuristically rather than being motivated by some particular feature of how the online agents convey meaning in emergent language. A more principled design approach, grounded in how the neural network agents express meaning, could yield even better performance for the phrase-book agents.
+  \item We have performed limited qualitative of evaluation of the emergent languages, and in particular the strategies used by the online neural network agents to generalize without simple compositionality.  Observing the emergent languages more closely is an important step into figuring out precisely why morpheme induction and/or phrasebook algorithms fail while the neural networks succeed.
+  \item Although the methods we present are applicable to a wide variety of emergent language environments, the empirical evaluations were performed with a limited variety of environments, so it is not possible to determine whether or not the experimental results are fully applicable to other environments from the presented experiments alone.
+  \item The morpheme bijectivity metric is limited to the emergent languages that CSAR can handle, specifically emergent languages with discrete, decomposable observations.  While CSAR, and thereby morpheme bijectivity, could theoretically be expanded, it currently cannot be applied to continuous observations.
+
+\end{enumerate}
+
+
+
+
+\section{Ethical Considerations}%
+\label{sec:pb-ethical}
+We do not identify any ethical considerations or potential risks relevant to this work as it constitutes basic machine learning and linguistics research using synthetic data.

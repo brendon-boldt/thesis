@@ -1,0 +1,59 @@
+shape: (52, 4)
+┌─────────────────────────┬───────────────┬─────────────┬───────────────┐
+│ variant_name            ┆ variant_value ┆ Pair        ┆ Test Accuracy │
+│ ---                     ┆ ---           ┆ ---         ┆ ---           │
+│ str                     ┆ str           ┆ str         ┆ f64           │
+╞═════════════════════════╪═══════════════╪═════════════╪═══════════════╡
+│ Inventory size (CSAR)   ┆ 10            ┆ PB Receiver ┆ 0.16          │
+│ Inventory size (CSAR)   ┆ 10            ┆ PB Sender   ┆ 0.2           │
+│ Inventory size (CSAR)   ┆ 100           ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 100           ┆ PB Sender   ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 20            ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 20            ┆ PB Sender   ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 200           ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 200           ┆ PB Sender   ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 30            ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 30            ┆ PB Sender   ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 50            ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ 50            ┆ PB Sender   ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ ∞*            ┆ PB Receiver ┆ 1.0           │
+│ Inventory size (CSAR)   ┆ ∞*            ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 1             ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 1             ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 2             ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 2             ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 3             ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 3             ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 4             ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 4             ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 6             ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ 6             ┆ PB Sender   ┆ 1.0           │
+│ Max form length (CSAR)  ┆ ∞*            ┆ PB Receiver ┆ 1.0           │
+│ Max form length (CSAR)  ┆ ∞*            ┆ PB Sender   ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 1             ┆ PB Receiver ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 1             ┆ PB Sender   ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 2             ┆ PB Receiver ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 2             ┆ PB Sender   ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 3             ┆ PB Receiver ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ 3             ┆ PB Sender   ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ ∞*            ┆ PB Receiver ┆ 1.0           │
+│ Max meaning size (CSAR) ┆ ∞*            ┆ PB Sender   ┆ 1.0           │
+│ Search best (CSAR)      ┆ No            ┆ PB Receiver ┆ 1.0           │
+│ Search best (CSAR)      ┆ No            ┆ PB Sender   ┆ 1.0           │
+│ Search best (CSAR)      ┆ Yes*          ┆ PB Receiver ┆ 1.0           │
+│ Search best (CSAR)      ┆ Yes*          ┆ PB Sender   ┆ 1.0           │
+│ Strip EoS token         ┆ No            ┆ PB Receiver ┆ 1.0           │
+│ Strip EoS token         ┆ No            ┆ PB Sender   ┆ 1.0           │
+│ Strip EoS token         ┆ Yes*          ┆ PB Receiver ┆ 1.0           │
+│ Strip EoS token         ┆ Yes*          ┆ PB Sender   ┆ 1.0           │
+│ Weight method (CSAR)    ┆ App           ┆ PB Receiver ┆ 0.96          │
+│ Weight method (CSAR)    ┆ App           ┆ PB Sender   ┆ 1.0           │
+│ Weight method (CSAR)    ┆ JP            ┆ PB Receiver ┆ 1.0           │
+│ Weight method (CSAR)    ┆ JP            ┆ PB Sender   ┆ 1.0           │
+│ Weight method (CSAR)    ┆ MI*           ┆ PB Receiver ┆ 1.0           │
+│ Weight method (CSAR)    ┆ MI*           ┆ PB Sender   ┆ 1.0           │
+│ Weight method (CSAR)    ┆ NPMI          ┆ PB Receiver ┆ 0.0           │
+│ Weight method (CSAR)    ┆ NPMI          ┆ PB Sender   ┆ 0.0           │
+│ Weight method (CSAR)    ┆ PMIM          ┆ PB Receiver ┆ 1.0           │
+│ Weight method (CSAR)    ┆ PMIM          ┆ PB Sender   ┆ 1.0           │
+└─────────────────────────┴───────────────┴─────────────┴───────────────┘

@@ -1,0 +1,81 @@
+\section{Methods}%
+\label{sec:pb-methods}
+
+The code for this paper available under a free license at {\small\url{http://example.com/supplemental-materials-for-review}}.
+
+\subsection{Environment}
+The emergent language environment we use for our investigation is the reconstruction variant of the signalling game (similar to \citet{chaabouni2019antiefficientencodingemergentcommunication,chaabouni-etal-2020-compositionality}).
+The reconstruction game comprises two agents, a sender and a receiver.
+The sender makes an observation and produces a message which the receiver must use to reproduce the original observation (without any additional input);
+  this can be seen as mimicking an autoencoder architecture where the central bottleneck layer is a sequence of discrete symbols.
+We select the reconstruction game because it in addition to being well-studied in literature, it provides a clear way of testing generalization via a held-out test set.
+Our implementation is based on the EGG framework \citep[MIT license]{egg}.
+
+In our implementation, the observations are a concatenation of one-hot vectors, which each represent a distinct attribute taking on a particular value.
+For example, if we have a game where observations comprise $2$ attributes which can each take on one of $3$ values, we would resent the observation $[0\,\,2]$ as follows:
+\[
+  \setlength\arraycolsep{2pt}
+  \left[\begin{matrix}0&2\end{matrix}\right]
+  \underset{\text{one-hot}}\rightarrow
+  \left[\begin{matrix}1&0\\0&0\\0&1\end{matrix}\right]
+  \underset{\text{flatten}}\rightarrow
+  \left[\begin{matrix}1&0&0&0&0&1\end{matrix}\right]
+  ,
+\]
+with the concatenated one-hot vector being the input to the sender and desired output from the receiver.
+The messages in our environment are represented similarly: sequences of tokens represented as one-hot vectors (although the one-hot vectors are not concatenated because they are processed sequentially).
+Observations are sampled uniformly from all of the possible combinations of values for each attribute.
+Agents only see a subset of these possible observations at training time with the rest being held out for a test set.
+
+
+\subsection{Morpheme induction}
+Morpheme induction is the process of inferring minimal, meaningful form--meaning pairs from a corpus of messages with their accompanying meanings (i.e., an \emph{annotated} corpus).
+Messages are taken to be sequences of atomic tokens while the accompanying meanings are represented as sets of atomic meaning tokens.
+Forms, in this case, are subsequences of tokens and meanings are subsets of the observation made by the sender.
+A given form--meaning pair is \emph{meaningful} if the form and meaning correspond to each other in the language and \emph{minimal} if the pair cannot be further decomposed into simpler pairs while maintaining the same meaning.
+
+We use the CSAR algorithm to induce morphemes from the annotated emergent language corpora produced by the emergent language game \citep[MIT license]{boldt2025csar}.
+Its outline is:
+\begin{itemize}[nosep,labelsep=2pt]
+  \item[\textbf{C}]ount co-occurrences of forms and meanings.
+  \item[\textbf{S}]elect pair with highest mutual information.
+  \item[\textbf{A}]blate selected pair from corpus.
+  \item[\textbf{R}]epeat process, starting at \emph{Count}.
+\end{itemize}
+The intuition is that form--meaning pairs with high mutual information both correlate well with each other as well as occur frequently within the corpus.
+
+
+\subsection{Agents}
+\paragraph{Neural networks}
+The sender agent comprises two fully-connected embedding layers, separated by a tanh activation, mapping from the observation to the embedding space which is given to an RNN to produce the message.
+The discrete vocabulary items are sampled using a Gumbel-Softmax layer \citep{maddison2017concrete,jang2017categorical} before being passed to the RNN of the receiver agent, follows by two full-connected layers, as in the sender.
+The agents are trained on a mean-squared error objective.
+When the exact-match training accuracy reaches $99.99\%$, either the sender or receiver's parameters are reset to encourage better generalization (by default the receiver is reset twice before concluding training after reaching the accuracy threshold) \citep{li2019ease}.
+
+We use two different types of neural network-based agents in our empirical evaluation which we term \emph{online} and \emph{offline}.
+The online agents are simply the neural networks that were trained as part of the original emergent language environment, which means that the sender and receiver were jointly optimized and gradients backpropagated from receiver to sender.
+The offline agents, on the other hand, are trained directly from the annotated corpora in a fully supervised setting.
+Thus, the offline agents do not receive any additional information or benefit from joint optimization compared to the phrasebook-based agents which also operate based only on the annotated corpora.
+
+
+\paragraph{Phrasebook}
+\inputphrasebook{src/algorithms}
+The phrasebook agents map from observations to messages (senders) or messages to observations (receivers) by executing an algorithm given the morpheme inventory (``phrasebook'') induced by CSAR\@.
+Both algorithms are founded on the assumption that the emergent languages are \emph{concatenatively compositional} over morphemes; that is, the meanings present in morphemes can be combined by concatenating their corresponding forms.
+
+The sender uses a greedy algorithm (\cref{alg:sender}) which loops over the morphemes in the phrasebook from best to worst;
+  when a morpheme's meaning is a subset of the observation, the corresponding form is added to the message under construction.
+The morpheme's meaning is them ablated from the observation, and the loop continues until all the meanings are matched or the message reaches the maximum length permitted by the environment.
+If the observation is exhausted before the max length is reached, the observation is reset to the original value and algorithm repeats from the beginning of the morpheme inventory.
+This results in multiple of the highest-weighed morphemes being employed in the message (this turns out to be critical to phrasebook sender performance; see \cref{sec:morphosyntax}).
+When the maximum message length is reached, the morphemes are reordered by ascending positional \emph{affinity} before being concatenated.
+Positional affinity is defined as the mean start index of that morpheme across the input corpus.
+
+We also implement more sophisticated algorithms for constructing messages from an observation: best-first search and integer programming (used in the ablation experiments and briefly described in \cref{app:sender-alg}).
+
+The receiver algorithm (\cref{alg:receiver}) follows the same basic idea as the sender.
+The morphemes are looped over, testing to see if a morpheme's form is a subsequence of the message.
+If it the form is contained in the message, the morpheme's meaning is added to a meaning accumulator proportional to the morpheme's weight and the number of occurrences in the message.
+Unlike the sender, the form is not subtracted from the message, and the algorithm proceeds through the whole phrasebook only one time;
+  thus, a sort of superposition of all mathcing morphemes is considered.
+After the phrasebook is exhausted, the final meaning is determined by taking the index of the max accumulator value for each attribute.

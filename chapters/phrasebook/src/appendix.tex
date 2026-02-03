@@ -1,0 +1,268 @@
+% \appendix
+\crefalias{section}{appendix}
+
+\section{Environment Details}%
+\label{app:env}
+
+The following hyperparameters (for the main experiment) were selected to optimize for online and phrasebook agent performance base, in part, on the environment and agent ablation experiments.
+The neural network architecture of the online agents is as follows:
+\begin{itemize}[nosep]
+  \item Observation (concatenated one-hot vectors)
+  \item Sender
+  \begin{itemize}
+    \item Feed-forward layer (embedding layer)
+    \item Tanh activation layer
+    \item Feed forward layer
+    \item RNN (w/ Gumbel-Softmax layer)
+  \end{itemize}
+  \item Message (max length $+1$ by vocabulary size matrix; last token is an end-of-sentence token.)
+  \item Receiver
+  \begin{itemize}
+    \item RNN
+    \item Feed-forward layer (embedding layer)
+    \item Tanh activation layer
+    \item Feed forward layer
+    \item Projection layer to observation space
+  \end{itemize}
+  \item Prediction (same dimension as observation)
+\end{itemize}
+The offline agents have the same architecture.
+The offline sender is trained with cross-entropy loss after the bottleneck layer.
+The offline receiver is trained with mean squared error after the projection layer (like the online receiver).
+
+
+Our environment uses the following hyperparameters.
+\begin{description}[nosep]
+  \item[accuracy threshold] $0.9999$; training accuracy value at which next agent reset is performed or training is stopped if all resets have been performed.
+  \item[neural network resets] (receiver, receiver); sequence of resets of sender/receivers after accuracy threshold is reached.
+  \item[max epochs] $300$; epochs after which training is stopped and the trial is considered a failure.
+  \item[observation distribution] uniform; distribution from which the values for the attributes are drawn from.
+  \item[\emph{n} attributes] $4$; number of attributes in the observation.
+  \item[\emph{n} values] $4$; number of distinct values in that each attribute can take.
+  \item[test proportion] $10\%$; proportion of unique observations that are held out from training for the test set to gauge generalization performance.
+  \item[batch size] $2^{10}$; batch size of the neural network agents during training.
+  \item[loss function] mean squared error; objective function used for backpropagation during training; the other loss function implemented and tested is cross-entropy loss.
+  \item[learning rate] $1.8\times10^{-3}$; learning rate for neural network agents.
+  \item[learning rate schedule] none; learning rate was left constant during training.
+  \item[\emph{n} examples per epoch] $2^{14}$; number of examples shown to the neural network agents before checking the accuracy and possibly performing rests or concluding training.
+  \item[optimizer] AdamW\@; optimizer for the neural network agents.
+  \item[weight decay] $1\times10^{-10}$; weight decay applied through the optimizer.
+  \item[reset optimizer] yes; whether or not to reset the optimizer's parameters for the agent that is reset as determined by the reset schedule.
+  \item[max message length] $8$; maximum length of the message from the sender agent; the final message passed to the receiver is always one token longer than the maximum length as the message from the sender is padded with one or more end-of-sentence/pad tokens (the same token).
+  \item[discrete optimization method] Gumbel-Softmax; the method used for handling the discrete nature of the senders methods; REINFORCE is another method but was not used in the experiments.
+  \item[sender RNN cell type] GRU\@; other options include Elman (``RNN'') and LSTM\@.
+  \item[receiver RNN cell type] \emph{as above}.
+  \item[sender RNN layers] $1$.
+  \item[receiver RNN layers] $1$.
+  \item[sender hidden size] $256$; number of hidden units in the sender's RNN\@.
+  \item[receiver hidden size] \emph{as above, mutatis mutandis}.
+  \item[sender embedding size] $128$; number of units in the embedding (feed-forward) layers in the sender.
+  \item[receiver embedding size] \emph{as above, mutatis mutandis}.
+  \item[sender \emph{n} embedding layers] $2$; number of embedding layers before the RNN\@.
+  \item[receiver \emph{n} embedding layers] $2$; number of embedding layers after the RNN\@.
+  \item[Gumbel-Softmax straight through] no; whether or not to use sampled one-hot values for the vectors during the forward pass while using the categorical values during the backward pass.
+  \item[Gumbel-Softmax temperature] $1$.
+  \item[vocabulary size] $64$; number of possible distinct types in the message, that is, the size of the one-hot vectors forming the message; this number includes the reserved end-of-sentence/pad token.
+\end{description}
+
+
+\section{Alternative Sender Algorithms}%
+\label{app:sender-alg}
+Both implementations of more sophisticated algorithms for the phrasebook-based sender resulted inferior performance.
+We speculate that the primary reason for this is that the greedy approach of selecting the highest weighted morphemes (which match the desired meaning) and repeating them as much as would fit matches the strategy of conveying meaning more than the inductive biases of the more sophisticated approaches.
+
+\paragraph{Search}
+This algorithm implemented best-first search where the objective was to account for each component of the observation by selecting a morpheme while minimizing the sum of morpheme costs, defined as the negative weight of the morpheme assigned by CSAR\@.
+
+\paragraph{Integer Programming}
+In this sender algorithm the meaning of each morpheme is treated as binary vector scaled by the weight given by CSAR for that morpheme.
+An integer programming solver would then try to maximize the distance per attribute between the correct value and the highest incorrect value by selecting a non-negative number of occurrences for each morpheme while staying within the max length.
+
+\section{Computing Resources}%
+\label{app:compute}
+The environment employed for this paper requires a GPU with modest memory requirements (${<}1\,\text{GiB}$).
+Altogether, the experiments used ${\sim}200\,\text{GPU-hours}$ on an Nvidia L40S or equivalent.
+
+\section{Qualitative Results}%
+\label{app:qual}
+Example inventories given in \cref{tab:inv-typical,tab:inv-bad,tab:inv-fusion}.
+Example of messages generated by the neural and phrasebook agents (derived from \cref{tab:inv-typical}) given below:
+
+\inputphrasebook{assets/messages}
+
+\begin{table}
+  \centering
+  %>>> inventory_table("BaseExp_JpKTwS")
+  \inputphrasebook{generated/inventory/BaseExp_JpKTwS}
+  \caption{A typical morpheme inventory.}%
+  \label{tab:inv-typical}
+\end{table}
+
+\begin{table}
+  \centering
+  %>>> inventory_table("BaseExp_cKMMmL")
+  \inputphrasebook{generated/inventory/BaseExp_cKMMmL}
+  \caption{An outlier inventory with very poor performance.}%
+  \label{tab:inv-bad}
+\end{table}
+
+\begin{table}
+  \centering
+  %>>> inventory_table("BaseExp_hutBhb")
+  \inputphrasebook{generated/inventory/BaseExp_hutBhb}
+  \caption{First $40$ entries of inventory with a larger degree of fusionality (multiple atomic meanings per morpheme).}%
+  \label{tab:inv-fusion}
+\end{table}
+
+\section{Quantitative Summary of Results}%
+\label{app:quant-sum}
+In \cref{fig:quant-sum-all,fig:quant-sum-pair}, we illustrate the distributions of various quantitative metrics from the main experiment (\cref{sec:exp-main}) using various metrics defined below.
+With the exception of \emph{Inventory size}, the following are weighted by the \emph{normalized prevalence}\footnote{Raw prevalences do not add up to $1$ since multiple morphemes can occur in one message, thus we normalize them to sum to $1$ to treat them as a probability measure.} of the morpheme (how often it occurred in the corpus during induction).
+\smallskip
+
+\begin{description}[nosep]
+  \item[Inventory size] Number of morphemes in the inventory.
+  \item[Vocabulary size] Number of distinct form tokens.
+  \item[Inventory entropy] Entropy of morphemes by normalized prevalence.
+  \item[Form length] Mean length of the morphemes' forms.
+  \item[Meaning size] Mean size of the morphemes' meanings.
+  \item[Morpheme bijectivity] Defined in \cref{sec:exp-comp}.
+  \item[Forms per meaning] Mean number of distinct forms which map to a given meaning.
+  \item[Meanings per form] Mean number of distinct meanings which map to a given form.
+  \item[Synonymy entropy] Entropy of forms conditioned on a particular meaning (across all meanings).
+  \item[Polysemy entropy] Entropy of meanings conditioned on a particular form (across all forms).
+\end{description}
+
+
+\begin{figure*}
+  \centering
+  %>>> inventory_metrics_hist((2, 2))
+  \includegraphicsphrasebook{generated/inventory-metrics/all.pdf}
+  \caption{Histograms of metrics from main experiment.}%
+  \label{fig:quant-sum-all}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  %>>> inventory_metrics_pair((1.5, 1.5), ["Morpheme Bijectivity", "Inventory Entropy", "Synonymy Entropy", "Polysemy Entropy"])
+  \includegraphicsphrasebook{generated/inventory-metrics/pair.pdf}
+  \caption{Bivariate histograms of selection of metrics from main experiment.}%
+  \label{fig:quant-sum-pair}
+\end{figure*}
+
+
+\section{Environment Ablation Results}%
+\label{app:env-ab}
+The full results for the ablation of the morpheme induction algorithm and phrasebook agents are shown in \cref{fig:env-ab1,fig:env-ab2}.
+
+\begin{figure*}
+  \centering
+  %>>> env_ab_dims = (28/10, 22/10)
+  %>>> params = [
+  %>>>   "n_attributes",
+  %>>>   "n_values",
+  %>>>   "test_prop",
+  %>>>   "vocab_size",
+  %>>>   "max_len",
+  %>>>   "straight_through",
+  %>>>   "training_schedule",
+  %>>>   "reset_optimizer",
+  %>>> ]
+  %>>> env_ab("app1", *env_ab_dims, params)
+  \includegraphicsphrasebook{generated/env-ab/app1.pdf}
+  \caption{Phrasebook agents' test accuracy across morpheme induction and phrasebook agent ablations. *Default values.}%
+  \label{fig:env-ab1}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  %>>> params = [
+  %>>>   "cell_type",
+  %>>>   "loss_func",
+  %>>>   "sender_n_embedding_layers",
+  %>>>   "receiver_n_embedding_layers",
+  %>>>   "sender_n_rnn_layers",
+  %>>>   "receiver_n_rnn_layers",
+  %>>> ]
+  %>>> env_ab("app2", *env_ab_dims, params)
+  \includegraphicsphrasebook{generated/env-ab/app2.pdf}
+  \caption{Phrasebook agents' test accuracy across morpheme induction and phrasebook agent ablations. *Default values.}%
+  \label{fig:env-ab2}
+\end{figure*}
+
+\section{Phrasebook Agent Ablation Details}%
+\label{app:ag-ab}
+
+\paragraph{Weight method}
+The default method of weighting morphemes in CSAR is mutual information.
+Other methods include provided and tested include:
+\medskip
+\begin{description}[nosep]
+  \item[NPMI] Normalized pointwise mutual information of the form and meaning.
+  \item[Joint probability] The probability of the form and meaning occurring together in the corpus.
+  \item[PMIM] Pointwise mutual information mass; the PMI of the form and meaning weighted by the their joint probability.
+  \item[Applicability] Defined as weighted probability of the meaning occurring given the form less the probability of the meaning not occurring given the form and the meaning occurring given the form is \emph{not} present; i.e., $p(m,f)p(m|f) - p(\neg m,f)p(\neg m|f) - p(m,\neg f)p(m|\neg f)$.
+\end{description}
+
+\paragraph{Results}
+The full results for the ablation of the morpheme induction algorithm and phrasebook agents are shown in \cref{fig:ag-ab1,fig:ag-ab2}.
+
+\begin{figure*}
+  \centering
+  %>>> variants = [
+  %>>>   "maxsemcomps",
+  %>>>   "maxngram",
+  %>>>   "invsize",
+  %>>>   "weight",
+  %>>>   "searchbest",
+  %>>>   "stripeos",
+  %>>> ]
+  %>>> ag_ab("app1", 27/10, 25/10, variants)
+  \includegraphicsphrasebook{generated/ag-ab/app1.pdf}
+  \caption{Phrasebook agents' test accuracy across morpheme induction and phrasebook agent ablations. *Default values.}%
+  \label{fig:ag-ab1}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  %>>> variants = [
+  %>>>   "repeatm",
+  %>>>   "ablatem",
+  %>>>   "method",
+  %>>>   "order",
+  %>>>   "idempotent",
+  %>>>   "ablatef",
+  %>>> ]
+  %>>> ag_ab("app2", 27/10, 25/10, variants)
+  \includegraphicsphrasebook{generated/ag-ab/app2.pdf}
+  \caption{Phrasebook agents' test accuracy across morpheme induction and phrasebook agent ablations. *Default values.}%
+  \label{fig:ag-ab2}
+\end{figure*}
+
+\section{Compositionality Metrics}%
+\label{app:acc-scatter-all}
+Scatter plots and $R^2$ values given in \cref{fig:acc-scatter-all}.
+
+\begin{figure*}
+  \centering
+  %>>> dims = 30/10, 24/10
+  %>>> accuracy_scatter("app_inventory_mi_norm", *dims)
+  %>>> accuracy_scatter("app_corpus_bosdis", *dims)
+  %>>> accuracy_scatter("app_toposim_levenshtein", *dims)
+  %>>> accuracy_scatter("app_inventory_npmi_norm", *dims)
+  \newcommand\subfig[2]{
+    \begin{subfigure}{0.48\linewidth}
+      \centering
+      \includegraphicsphrasebook{generated/acc-scatter/#1.pdf}
+      \caption{#2}
+    \end{subfigure}
+  }
+  \subfig{app_toposim_levenshtein}{Corpus topographic similarity ($R^2=0.57$)}
+  \hfill
+  \subfig{app_corpus_bosdis}{Bag-of-symbols disentanglement (bosdis) ($R^2=0.29$)}
+  \subfig{app_inventory_npmi_norm}{Morpheme bijectivity ($R^2=0.85$)}
+  \hfill
+  \subfig{app_inventory_mi_norm}{Morpheme mutual information ($R^2=0.54$)}
+  \caption{Plot of different compositionality metrics vs.\@ phrasebook sender (blue) and receiver (orange) accuracy.  Note the difference in number of points is caused by stratified sampling which keeps a constant number of values per bucket on the $x$-axis.}%
+  \label{fig:acc-scatter-all}
+\end{figure*}

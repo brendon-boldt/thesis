@@ -1,0 +1,118 @@
+shape: (111, 4)
+┌───────────────────┬─────────────┬─────────────┬───────────────┐
+│ param_key         ┆ param_value ┆ Agents      ┆ Test Accuracy │
+│ ---               ┆ ---         ┆ ---         ┆ ---           │
+│ str               ┆ str         ┆ str         ┆ f64           │
+╞═══════════════════╪═════════════╪═════════════╪═══════════════╡
+│ max_len           ┆ 12          ┆ Online      ┆ 1.0           │
+│ max_len           ┆ 12          ┆ PB Receiver ┆ 1.0           │
+│ max_len           ┆ 12          ┆ PB Sender   ┆ 1.0           │
+│ max_len           ┆ 20          ┆ Online      ┆ 1.0           │
+│ max_len           ┆ 20          ┆ PB Receiver ┆ 0.92          │
+│ max_len           ┆ 20          ┆ PB Sender   ┆ 0.92          │
+│ max_len           ┆ 3           ┆ Online      ┆ 1.0           │
+│ max_len           ┆ 3           ┆ PB Receiver ┆ 0.92          │
+│ max_len           ┆ 3           ┆ PB Sender   ┆ 0.86          │
+│ max_len           ┆ 4           ┆ Online      ┆ 1.0           │
+│ max_len           ┆ 4           ┆ PB Receiver ┆ 1.0           │
+│ max_len           ┆ 4           ┆ PB Sender   ┆ 1.0           │
+│ max_len           ┆ 8           ┆ Online      ┆ 1.0           │
+│ max_len           ┆ 8           ┆ PB Receiver ┆ 1.0           │
+│ max_len           ┆ 8           ┆ PB Sender   ┆ 1.0           │
+│ n_attributes      ┆ 2           ┆ Online      ┆ 0.0           │
+│ n_attributes      ┆ 2           ┆ PB Receiver ┆ 0.0           │
+│ n_attributes      ┆ 2           ┆ PB Sender   ┆ 0.0           │
+│ n_attributes      ┆ 3           ┆ Online      ┆ 1.0           │
+│ n_attributes      ┆ 3           ┆ PB Receiver ┆ 0.833         │
+│ n_attributes      ┆ 3           ┆ PB Sender   ┆ 0.833         │
+│ n_attributes      ┆ 4           ┆ Online      ┆ 1.0           │
+│ n_attributes      ┆ 4           ┆ PB Receiver ┆ 1.0           │
+│ n_attributes      ┆ 4           ┆ PB Sender   ┆ 1.0           │
+│ n_attributes      ┆ 5           ┆ Online      ┆ 1.0           │
+│ n_attributes      ┆ 5           ┆ PB Receiver ┆ 1.0           │
+│ n_attributes      ┆ 5           ┆ PB Sender   ┆ 1.0           │
+│ n_attributes      ┆ 6           ┆ Online      ┆ 1.0           │
+│ n_attributes      ┆ 6           ┆ PB Receiver ┆ 1.0           │
+│ n_attributes      ┆ 6           ┆ PB Sender   ┆ 0.9915        │
+│ n_values          ┆ 2           ┆ Online      ┆ 0.0           │
+│ n_values          ┆ 2           ┆ PB Receiver ┆ 0.0           │
+│ n_values          ┆ 2           ┆ PB Sender   ┆ 0.0           │
+│ n_values          ┆ 3           ┆ Online      ┆ 1.0           │
+│ n_values          ┆ 3           ┆ PB Receiver ┆ 1.0           │
+│ n_values          ┆ 3           ┆ PB Sender   ┆ 0.875         │
+│ n_values          ┆ 4           ┆ Online      ┆ 1.0           │
+│ n_values          ┆ 4           ┆ PB Receiver ┆ 1.0           │
+│ n_values          ┆ 4           ┆ PB Sender   ┆ 1.0           │
+│ n_values          ┆ 6           ┆ Online      ┆ 1.0           │
+│ n_values          ┆ 6           ┆ PB Receiver ┆ 1.0           │
+│ n_values          ┆ 6           ┆ PB Sender   ┆ 1.0           │
+│ n_values          ┆ 8           ┆ Online      ┆ 1.0           │
+│ n_values          ┆ 8           ┆ PB Receiver ┆ 0.8975        │
+│ n_values          ┆ 8           ┆ PB Sender   ┆ 0.9905        │
+│ reset_optimizer   ┆ 0           ┆ Online      ┆ 1.0           │
+│ reset_optimizer   ┆ 0           ┆ PB Receiver ┆ 1.0           │
+│ reset_optimizer   ┆ 0           ┆ PB Sender   ┆ 1.0           │
+│ reset_optimizer   ┆ 1           ┆ Online      ┆ 1.0           │
+│ reset_optimizer   ┆ 1           ┆ PB Receiver ┆ 1.0           │
+│ reset_optimizer   ┆ 1           ┆ PB Sender   ┆ 1.0           │
+│ straight_through  ┆ 0           ┆ Online      ┆ 1.0           │
+│ straight_through  ┆ 0           ┆ PB Receiver ┆ 1.0           │
+│ straight_through  ┆ 0           ┆ PB Sender   ┆ 1.0           │
+│ straight_through  ┆ 1           ┆ Online      ┆ 1.0           │
+│ straight_through  ┆ 1           ┆ PB Receiver ┆ 1.0           │
+│ straight_through  ┆ 1           ┆ PB Sender   ┆ 1.0           │
+│ test_prop         ┆ 0.1         ┆ Online      ┆ 1.0           │
+│ test_prop         ┆ 0.1         ┆ PB Receiver ┆ 1.0           │
+│ test_prop         ┆ 0.1         ┆ PB Sender   ┆ 1.0           │
+│ test_prop         ┆ 0.25        ┆ Online      ┆ 1.0           │
+│ test_prop         ┆ 0.25        ┆ PB Receiver ┆ 1.0           │
+│ test_prop         ┆ 0.25        ┆ PB Sender   ┆ 1.0           │
+│ test_prop         ┆ 0.5         ┆ Online      ┆ 1.0           │
+│ test_prop         ┆ 0.5         ┆ PB Receiver ┆ 0.977         │
+│ test_prop         ┆ 0.5         ┆ PB Sender   ┆ 1.0           │
+│ test_prop         ┆ 0.75        ┆ Online      ┆ 0.448         │
+│ test_prop         ┆ 0.75        ┆ PB Receiver ┆ 0.3175        │
+│ test_prop         ┆ 0.75        ┆ PB Sender   ┆ 0.4035        │
+│ training_schedule ┆ None        ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ None        ┆ PB Receiver ┆ 0.96          │
+│ training_schedule ┆ None        ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ R           ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ R           ┆ PB Receiver ┆ 1.0           │
+│ training_schedule ┆ R           ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ RR          ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ RR          ┆ PB Receiver ┆ 1.0           │
+│ training_schedule ┆ RR          ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ RRR         ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ RRR         ┆ PB Receiver ┆ 1.0           │
+│ training_schedule ┆ RRR         ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ RS          ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ RS          ┆ PB Receiver ┆ 1.0           │
+│ training_schedule ┆ RS          ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ S           ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ S           ┆ PB Receiver ┆ 0.92          │
+│ training_schedule ┆ S           ┆ PB Sender   ┆ 0.84          │
+│ training_schedule ┆ SR          ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ SR          ┆ PB Receiver ┆ 1.0           │
+│ training_schedule ┆ SR          ┆ PB Sender   ┆ 1.0           │
+│ training_schedule ┆ SS          ┆ Online      ┆ 1.0           │
+│ training_schedule ┆ SS          ┆ PB Receiver ┆ 0.88          │
+│ training_schedule ┆ SS          ┆ PB Sender   ┆ 0.72          │
+│ training_schedule ┆ SSS         ┆ Online      ┆ 0.92          │
+│ training_schedule ┆ SSS         ┆ PB Receiver ┆ 0.8           │
+│ training_schedule ┆ SSS         ┆ PB Sender   ┆ 0.72          │
+│ vocab_size        ┆ 1024        ┆ Online      ┆ 1.0           │
+│ vocab_size        ┆ 1024        ┆ PB Receiver ┆ 0.96          │
+│ vocab_size        ┆ 1024        ┆ PB Sender   ┆ 0.82          │
+│ vocab_size        ┆ 16          ┆ Online      ┆ 1.0           │
+│ vocab_size        ┆ 16          ┆ PB Receiver ┆ 0.92          │
+│ vocab_size        ┆ 16          ┆ PB Sender   ┆ 0.84          │
+│ vocab_size        ┆ 256         ┆ Online      ┆ 1.0           │
+│ vocab_size        ┆ 256         ┆ PB Receiver ┆ 1.0           │
+│ vocab_size        ┆ 256         ┆ PB Sender   ┆ 0.96          │
+│ vocab_size        ┆ 4           ┆ Online      ┆ 1.0           │
+│ vocab_size        ┆ 4           ┆ PB Receiver ┆ 0.04          │
+│ vocab_size        ┆ 4           ┆ PB Sender   ┆ 0.08          │
+│ vocab_size        ┆ 64          ┆ Online      ┆ 1.0           │
+│ vocab_size        ┆ 64          ┆ PB Receiver ┆ 1.0           │
+│ vocab_size        ┆ 64          ┆ PB Sender   ┆ 1.0           │
+└───────────────────┴─────────────┴─────────────┴───────────────┘

@@ -1,0 +1,66 @@
+% Oct27_YWkTHI @ save/oct27.1/Oct27_YWkTHI
+% {3222} {3222}
+% neural "26 26 25 25 18 18 18 18 0"
+% phrasebook "26 26 18 18 18 18 25 43 0"
+%    "26" {..2.}
+%    "18 18 18 18" {.2.2}
+%    "25" {3...}
+%    "26" {..2.}
+%    "43" {...2}
+% neural "4 4 3 3 1 1 1 1 0"
+% phrasebook "4 4 1 1 1 1 3 43 0"
+  % \node (s-neural) [blockStyle,right=of obs] {\blocktext{NNet Sender}{4 4 3 3 1 1 1 1 0}};
+
+
+\tikzstyle{blockStyle}=[
+  draw=black!50,
+  text width=21mm,
+  minimum width=2cm,
+  text centered,
+  rounded corners,
+  font=\scriptsize,
+]
+
+\newcommand\blocktext[2]{{#1}\\{\color{black!70}#2}}
+
+\begin{tikzpicture}
+  [node distance=5mm and 7mm, outer sep=0mm, inner xsep=-1mm]
+
+  \node (obs)
+    [blockStyle]
+    {\blocktext{\includegraphicsphrasebook[width=4mm]{assets/eye}\\Observation}{\texttt{[3\,2\,1\,2]}}};
+  \node (s-neural)
+    [blockStyle,right=of obs]
+    {\blocktext{\includegraphicsphrasebook[width=7mm]{assets/nnet.pdf}\\Neural Net\\Sender}{\texttt{"4\,4\,3\,3\,1\,1\,1\,1"}}};
+  \node (s-phrase)
+    [blockStyle,below=of s-neural]
+    {\blocktext{\includegraphicsphrasebook[width=4mm]{assets/magnifying-glass}\\Phrasebook\\Sender}{{\texttt{"\sethlcolor{cyan!20}\hl{4}\,\hl{4}\,\sethlcolor{yellow!50}\hl{1\,1\,1\,1}\,\sethlcolor{red!30}\hl{3} \sethlcolor{green!40}\hl{9}"}}}};
+  \node (r-neural1) [blockStyle,right=of s-neural] {\blocktext{\includegraphicsphrasebook[width=7mm]{assets/nnet.pdf}\\Neural Net\\Receiver}{Answer: \texttt{[3\,2\,1\,2]}}};
+  \node (r-neural2) [blockStyle,right=of s-phrase] {\blocktext{\includegraphicsphrasebook[width=7mm]{assets/nnet.pdf}\\Neural Net\\Receiver}{Answer: \texttt{[3\,2\,1\,2]}}};
+  \node (r-eq) at ({r-neural1} |- {$(r-neural1)!0.5!(r-neural2)$}) [] {\textbf{=}};
+  \node (phrasebook)
+    [blockStyle,text width=25mm,below=of obs]
+    {\blocktext{\includegraphicsphrasebook[width=4mm]{assets/book}\\Phrasebook}{%
+      \setlength\tabcolsep{1pt}
+      \begin{tabular}{ll}
+      \texttt{[3...]}$\rightarrow$ & \sethlcolor{red!30}\hl{\texttt{"3"}} \\
+      \texttt{[.2.2]}$\rightarrow$ & \sethlcolor{yellow!50}\hl{\texttt{"1\,1\,1\,1"}} \\
+      \texttt{[..1.]}$\rightarrow$ & \sethlcolor{cyan!20}\hl{\texttt{"4"}} \\
+      \texttt{[...2]}$\rightarrow$ & \sethlcolor{green!40}\hl{\texttt{"9"}} \\
+      \end{tabular}
+    }};
+  % Book icon from https://www.svgrepo.com/svg/509033/book-open
+  % Eye from https://www.svgrepo.com/svg/505373/eye-open
+  % Magnifying glass https://www.svgrepo.com/svg/479898/magnifying-glass-10
+
+  \draw [-stealth] (obs) to (s-neural);
+  \draw [-stealth] (obs) to (s-phrase);
+  \draw [-stealth] (phrasebook) to (s-phrase);
+  \draw [-stealth] (s-phrase) to (r-neural2);
+  \draw [-stealth] (s-neural) to (r-neural1);
+  % \draw [-stealth, bend left, dashed] (obs.east) to (distobs);
+  % \draw [-stealth, dashed, inner sep=0mm] (reward.west) to[looseness=0.8, out=135, in=225] (sender.south west);
+  % \draw [-stealth, dashed] (reward.west) to[looseness=1, out=135, in=225] (receiver.west);
+
+  % \clip (obs.west |- obs.north) rectangle (distobs.east |- reward.south);
+\end{tikzpicture}

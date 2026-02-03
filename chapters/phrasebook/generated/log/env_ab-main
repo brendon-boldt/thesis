@@ -1,0 +1,13 @@
+shape: (6, 4)
+┌───────────┬────────────────────┬─────────────┬───────────────┐
+│ param_key ┆ param_value        ┆ Agents      ┆ Test Accuracy │
+│ ---       ┆ ---                ┆ ---         ┆ ---           │
+│ str       ┆ str                ┆ str         ┆ f64           │
+╞═══════════╪════════════════════╪═════════════╪═══════════════╡
+│ loss_func ┆ Cross-entropy      ┆ Online      ┆ 0.96          │
+│ loss_func ┆ Cross-entropy      ┆ PB Receiver ┆ 0.12          │
+│ loss_func ┆ Cross-entropy      ┆ PB Sender   ┆ 0.04          │
+│ loss_func ┆ Mean squared error ┆ Online      ┆ 1.0           │
+│ loss_func ┆ Mean squared error ┆ PB Receiver ┆ 1.0           │
+│ loss_func ┆ Mean squared error ┆ PB Sender   ┆ 1.0           │
+└───────────┴────────────────────┴─────────────┴───────────────┘

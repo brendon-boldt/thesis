@@ -1,0 +1,217 @@
+\section{Experiments}%
+\label{sec:pb-experiments}
+
+In this section, we describe the experiments performed and give their results with a full discussion and analysis of the results in \cref{sec:pb-discussion}.
+See \cref{app:compute} for details on computing resources used.
+
+\begin{figure}
+  \centering
+  %>>> df = READ("assets/main_metrics.parquet")
+  %>>> _order = {
+  %>>>   x: i
+  %>>>   for i, x in enumerate([
+  %>>>     "Online",
+  %>>>     "Offline Sen.",
+  %>>>     "Offline Rec.",
+  %>>>     "PB Sender",
+  %>>>     "PB Receiver",
+  %>>>   ])
+  %>>> }
+  %>>> df = (
+  %>>>   df
+  %>>>   .filter(
+  %>>>     (C("metric") == "acc_exact")
+  %>>>   )
+  %>>> ).sort(C("pair").map_elements(lambda x: _order.get(x, 99), return_dtype=int))
+  %>>> W = 2.4  #in
+  %>>> height = 2.0  #in
+  %>>> aspect = W / height
+  %>>> g = sns.catplot(
+  %>>>   df.to_pandas(),
+  %>>>   x="pair",
+  %>>>   y="value",
+  %>>>   kind="boxen",
+  %>>>   hue="split",
+  %>>>   sharex=False,
+  %>>>   height=height,
+  %>>>   aspect=aspect,
+  %>>> )
+  %>>> sns.move_legend(g, "center left", bbox_to_anchor=(0.20, 0.45), frameon=True, title=None)
+  %>>> plt.ylabel("Accuracy")
+  %>>> plt.xlabel("Agent Pair")
+  %>>> plt.gcf().axes[0].tick_params("x", rotation=20)
+  %>>> plt.tight_layout()
+  %>>> SAVE("generated/main-acc.pdf")
+  \includegraphicsphrasebook[clip,trim=8pt 7pt 14pt 8pt]{generated/main-acc.pdf}
+  \caption{Accuracies across ${\sim}1200$ random seeds for various agent pairs. \emph{Online} and \emph{Offline} are the neural network-based agents, while \emph{PB} refers to the phrasebook-based agent.}%
+  \label{fig:performance}
+\end{figure}
+
+\subsection{Phrasebook vs.\@ neural network agents}%
+\label{sec:exp-main}
+We begin our empirical evaluation by comparing the performance of the phrasebook-based agents with the online and offline neural network-based agents across ${\sim}1200$ seeds of the reconstruction game (\cref{fig:performance}).
+We look at exact-match accuracy on train and test sets for the original online--online setting as well as to and from the offline and phrasebook agents.
+This setting uses $4$-attribute, $4$-value observations which means that random chance performance is $\frac1{4^4}\approx 0.4\%$ (see \cref{app:env} for further hyperparameters).
+Some qualitative examples of inventories and messages sent by the neural sender are given in \cref{app:qual}.
+A quantitative summaries of the morpheme inventories (e.g., inventory size, synonymy) is included in \cref{app:quant-sum}.
+
+% \cmt{Qualitative analysis of neural network and phrasebook agent output.}
+% \cmt{Quantitative analysis of polysemy and synonymy.}
+% \cmt{We could just dump a good inventory, a 0.8 inventory, and one of the outlying bad ones in the appendix and then reference them as necessary in the paper.}
+
+\subsection{Environment ablation}%
+\label{sec:env-ab}
+
+\begin{figure}
+  \centering
+  %>>> params = [
+  %>>>   # "max_len",
+  %>>>   "loss_func",
+  %>>> ]
+  %>>> env_ab("main", 30/10, 17/10, params)
+  \includegraphicsphrasebook[clip,trim=1mm 2mm 3mm 15pt]{generated/env-ab/main.pdf}
+  \caption{Accuracy plot for loss function ablation experiment.  Full plots in \cref{app:env-ab}.}%
+  \label{fig:env-ab}
+\end{figure}
+
+We follow up our primary evaluation of our phrasebook-based agents with variations of the hyperparameters of the emergent language environment (and the online agents) to determine what environmental factors make emergent languages more or less intelligible to morpheme induction and the accompanying phrasebook agents.
+An example of the results is shown in \cref{fig:env-ab} with all results given in \cref{app:env-ab}.
+Each setting was run for $100$ random seeds
+  (some settings had fewer than $100$ runs converge in the initial training).
+
+\newcommand\expleftmargin{12pt}
+
+In particular, we vary the following hyperparameters in the environment and online agents:
+\begin{description}[nosep,leftmargin=\expleftmargin]
+  \item[\textbf{\emph{n}} attributes, \emph{n} values] (default: $(4, 4)$).
+  % \item[\textbf{\emph{n}} values] (default: $4$).
+  \item[test proportion] Proportion of possible observations held out for the test set (default: $10\%$).
+  \item[vocabulary size] Number of distinct types usable in a message (default: $64$).
+  \item[max message length] Maximum number of tokens in a message; padded with end-of-sentence token if less than max (default: $8$).
+  \item[GS straight through] Use a stochastic one-hot vector during the forward pass through the Gumbel-Softmax layer (default: no).
+  \item[Agent reset schedule] Sequence of sender/receiver resets during training (default: (receiver, receiver)).
+  \item[Reset optimizer parameters] Reset Adam optimizer parameters along with the agent parameters during reset (default: yes).
+  \item[RNN cell type] Which RNN cell type to use (Elman, LSTM, GRU; default: GRU).
+  \item[loss function] Which loss function to train the online agents with (cross-entropy or mean squared error; default: MSE).
+  \item[\textbf{\emph{n}} embedding layers] Number of fully-connected layers before/after the sender's/receiver's RNN (default: $2$).
+  % \item[\textbf{\emph{n}} embedding layers, receiver] As above, except: after the receiver's RNN (default: $2$).
+  \item[\textbf{\emph{n}} RNN layers] (default: 1)
+\end{description}
+
+
+% Ablation dimensions
+% \begin{itemize}
+%   \item vocabulary size, sequence length
+%   \item test proportion
+%   \item network arch
+%     \begin{itemize}
+%       \item loss
+%       \item size
+%       \item $n$ layers
+%     \end{itemize}
+%   \item epochs and resetting
+% \end{itemize}
+
+\subsection{Phrasebook agent ablation}
+\begin{figure}
+  \centering
+  %>>> variants = [
+  %>>>   # "maxsemcomps",
+  %>>>   "repeatm",
+  %>>> ]
+  %>>> ag_ab("main", 30/10, 17/10, variants)
+  \includegraphicsphrasebook[clip,trim=4pt 8pt 8pt 16pt]{generated/ag-ab/main.pdf}
+  \caption{Accuracy plots various for \emph{repeat morpheme} phrasebook sender ablation.  Full plots in \cref{app:ag-ab}.}%
+  \label{fig:ag-ab}
+\end{figure}
+
+In this section we test ablations and variations of the morpheme induction process as well as the phrasebook sender and receiver algorithms.
+These variations will elucidate what aspects of the algorithms and morphemes are most salient to using the emergent language.
+An example of the results is shown in \cref{fig:ag-ab} with all results given in \cref{app:ag-ab}.
+
+In the morpheme induction algorithm we vary:
+\begin{description}[nosep,leftmargin=\expleftmargin]
+  \item[max inventory size] Use the top-$k$ morphemes for the inventory (default: $k=\infty$).
+  \item[max form length] Consider forms up to length $l$ (default: $l=\infty$).
+  \item[max meaning size] Consider meanings up to size $s$ (default: $s=\infty$).
+  \item[weight method] What probabilistic metric to use in selecting weighting and selecting morpheme candidates (default: mutual information); other methods given in \cref{app:ag-ab}.
+  \item[strip EoS token] Remove the padding/end-of-sentence token from messages before induction (default: yes).
+  \item[search best] Apply a lookahead heuristic in ablating ambiguous morphemes (default: yes).
+\end{description}
+
+\smallskip
+In the phrasebook sender we vary:
+\begin{description}[nosep,leftmargin=\expleftmargin]
+  \item[morpheme selection method] Whether to use greedy algorithm (default) for selecting morphemes, search, or integer programming.
+  \item[form order] How to order the forms in the message (default: \emph{affinity}); other method includes \emph{insertion} order (no reordering) and \emph{shuffled} (at the morpheme level).
+  \item[repeat morpheme] Permit repetitions of the same morpheme (default: yes); if no, exit after all meanings are accounted for.
+  \item[ablate meaning] Track meaning atoms remaining in the observations (default: yes); if no, perform a single pass through the inventory and apply any matching morpheme (increases diversity of morphemes used).
+\end{description}
+
+\smallskip
+In the phrasebook receiver we vary:
+\begin{description}[nosep,leftmargin=\expleftmargin]
+  \item[ablate form] Mask out form tokens as they are matched with morphemes (default: no); if no, match all morphemes in the inventory that apply.
+  \item[idempotent form] Ignore repetition of the same morpheme in a message (default: no);
+    analogous to \emph{repeat morpheme} for the sender algorithm.
+\end{description}
+\smallskip
+
+Each variation is applied to the base configuration independently and is tested against the same $100$ corpora generated with different random seeds.
+
+% In this section, we sweep over various hyperparameters of phrasebook senders and receivers, as observing the change in performance in response to these changes will serve as a probe into what parts of the induction and phrasebook algorithms are critical to communicating in emergent language.
+% Specifically, we vary hyperparameters from three sources: the morpheme induction algorithm (CSAR), the phrasebook sender, and the phrasebook receiver.
+% \cmt{Currently, experiments have only been run on the induction hyperparameters.}
+% Some selected results are displayed in \cref{fig:ag-ab} (full results in \cmt{appendix ref}).
+
+% For the morpheme induction algorithm we find that stripping the end-of-sentence token present in the environment has no discernible effect on performance.
+% Varying the maximum $n$-gram and meaning size both show small changes in performance but in opposite directions:
+% Performance increases as the maximum allowed meaning size increases, suggesting that permitting some degree of fusion (multiple meanings for one form) has a positive effect.
+% On the other hand, increasing the maximum allowed form length \cmt{be consistent with $n$-gram and form length} causes performance to slightly decrease, suggesting that mutli-token forms are not a good description of these emergent languages.
+% Finally, we test different weighting function provided by CSAR (aside from the default mutual information setting) including joint probability, normalized pointwise-mutual information (NPMI), and probability mass-weight pointwise mutual information, with the default mutual information performing the best by a large margin.
+
+% Ablation dimensions
+% \begin{itemize}
+%   \item Inventory size
+%   \item Form length and meaning size
+%   \item Search, MIP
+%   \item Shuffle
+%   \item No doubling
+% \end{itemize}
+
+\subsection{Compositionality}%
+\label{sec:exp-comp}
+\begin{figure}
+  \centering
+  %>>> # accuracy_scatter("inventory_mi", 31/10, 23/10)
+  %>>> # accuracy_scatter("inventory_npmi", 31/10, 23/10)
+  %>>> # accuracy_scatter("inventory_mi_norm", 31/10, 25/10)
+  %>>> # accuracy_scatter("toposim_hamming", 31/10, 18/10)
+  %>>> accuracy_scatter("corpus_bosdis", 31/10, 16/10)
+  %>>> accuracy_scatter("toposim_levenshtein", 31/10, 16/10)
+  %>>> accuracy_scatter("inventory_npmi_norm", 31/10, 16/10)
+  \newcommand\subfig[2]{
+    \begin{subfigure}{\linewidth}
+      \centering
+      \includegraphicsphrasebook[clip,trim=1mm 3mm 2mm 2mm]{generated/acc-scatter/#1.pdf}
+      \caption{#2}
+    \end{subfigure}
+  }
+  \subfig{toposim_levenshtein}{Corpus topographic similarity ($R^2=0.57$)}
+  \subfig{inventory_npmi_norm}{Morpheme bijectivity ($R^2=0.85$)}
+  \caption{Plot of two different potential predictors of phrasebook sender (blue) and receiver (orange) accuracy: corpus topographic similarity (top) and mean NPMI of morphemes (bottom).}%
+  \label{fig:toposim}
+\end{figure}
+
+In our final experiment, we investigate how the performance of the phrasebook agents correlates with topographic similarity and a compositionality metric we introduce, \emph{morpheme bijectivity} (\cref{fig:toposim}).
+\unskip{We also tested bag-of-symbols disentanglement \citep{chaabouni-etal-2020-compositionality} and a mutual information-based variant of the morpheme bijectivity metric (\cref{fig:acc-scatter-all}).}
+These metrics are computed reusing the training corpora and phrasebook agent accuracies from the environment ablation experiments (\cref{sec:env-ab}) in order to test against a wider variety of languages and phrasebook agent performances.
+\unskip\footnote{We exclude variations on the hyperparameters $n$ values, $n$ attributes, and test proportion because they skew the relative difficulty of the reconstruction game.}
+Since the independent variable values (i.e., toposim and intrinsic inventory metrics) are not evenly distributed, we employ stratified sampling across $5$ buckets to avoid overweighting the most prevalent buckets.
+
+Topographic similarity (a.k.a., ``toposim'') \citep{brighton2006toposim,lazaridou2018EmergenceOL} is the most popular metric of compositionality in the emergent language literature and is defined as the Spearman rank correlation coefficient ($\rho$) between pairwise distances in the observation space and distances in the message space. 
+We use Levenshtein distance as the metric for the message space and Hamming distance for the observation space (since the observations are represented by sets of a fixed size).
+
+We compare toposim with a new metric, \emph{morpheme bijectivity}, derived from CSAR's morpheme inventory.
+Morpheme bijectivity is defined as the mean normalized pointwise mutual information\footnote{Computed for form--meaning pairs before any ablations.} (NPMI) weighted by the prevalence\footnote{The joint probability of the form--meaning pair after previous ablations are applied.} of morphemes in the inventory given by CSAR\@.
+The intuition with mean NPMI is that morphemes with higher NPMI's (i.e., closer to having a one-to-one relationship) result in observation--message mappings that are less ambiguous and easier to process.

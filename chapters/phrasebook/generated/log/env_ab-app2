@@ -1,0 +1,58 @@
+shape: (51, 4)
+┌─────────────────────────────┬────────────────────┬─────────────┬───────────────┐
+│ param_key                   ┆ param_value        ┆ Agents      ┆ Test Accuracy │
+│ ---                         ┆ ---                ┆ ---         ┆ ---           │
+│ str                         ┆ str                ┆ str         ┆ f64           │
+╞═════════════════════════════╪════════════════════╪═════════════╪═══════════════╡
+│ loss_func                   ┆ Cross-entropy      ┆ Online      ┆ 0.96          │
+│ loss_func                   ┆ Cross-entropy      ┆ PB Receiver ┆ 0.12          │
+│ loss_func                   ┆ Cross-entropy      ┆ PB Sender   ┆ 0.04          │
+│ loss_func                   ┆ Mean squared error ┆ Online      ┆ 1.0           │
+│ loss_func                   ┆ Mean squared error ┆ PB Receiver ┆ 1.0           │
+│ loss_func                   ┆ Mean squared error ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 1                  ┆ Online      ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 1                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 1                  ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 2                  ┆ Online      ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 2                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 2                  ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 3                  ┆ Online      ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 3                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_embedding_layers ┆ 3                  ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 1                  ┆ Online      ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 1                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 1                  ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 2                  ┆ Online      ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 2                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 2                  ┆ PB Sender   ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 3                  ┆ Online      ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 3                  ┆ PB Receiver ┆ 1.0           │
+│ receiver_n_rnn_layers       ┆ 3                  ┆ PB Sender   ┆ 1.0           │
+│ sender_cell_type            ┆ Elman              ┆ Online      ┆ 1.0           │
+│ sender_cell_type            ┆ Elman              ┆ PB Receiver ┆ 0.36          │
+│ sender_cell_type            ┆ Elman              ┆ PB Sender   ┆ 0.16          │
+│ sender_cell_type            ┆ GRU                ┆ Online      ┆ 1.0           │
+│ sender_cell_type            ┆ GRU                ┆ PB Receiver ┆ 1.0           │
+│ sender_cell_type            ┆ GRU                ┆ PB Sender   ┆ 1.0           │
+│ sender_cell_type            ┆ LSTM               ┆ Online      ┆ 0.92          │
+│ sender_cell_type            ┆ LSTM               ┆ PB Receiver ┆ 0.32          │
+│ sender_cell_type            ┆ LSTM               ┆ PB Sender   ┆ 0.32          │
+│ sender_n_embedding_layers   ┆ 1                  ┆ Online      ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 1                  ┆ PB Receiver ┆ 0.96          │
+│ sender_n_embedding_layers   ┆ 1                  ┆ PB Sender   ┆ 0.92          │
+│ sender_n_embedding_layers   ┆ 2                  ┆ Online      ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 2                  ┆ PB Receiver ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 2                  ┆ PB Sender   ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 3                  ┆ Online      ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 3                  ┆ PB Receiver ┆ 1.0           │
+│ sender_n_embedding_layers   ┆ 3                  ┆ PB Sender   ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 1                  ┆ Online      ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 1                  ┆ PB Receiver ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 1                  ┆ PB Sender   ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 2                  ┆ Online      ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 2                  ┆ PB Receiver ┆ 0.96          │
+│ sender_n_rnn_layers         ┆ 2                  ┆ PB Sender   ┆ 0.96          │
+│ sender_n_rnn_layers         ┆ 3                  ┆ Online      ┆ 1.0           │
+│ sender_n_rnn_layers         ┆ 3                  ┆ PB Receiver ┆ 0.92          │
+│ sender_n_rnn_layers         ┆ 3                  ┆ PB Sender   ┆ 0.92          │
+└─────────────────────────────┴────────────────────┴─────────────┴───────────────┘

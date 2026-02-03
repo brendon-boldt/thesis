@@ -1,0 +1,27 @@
+shape: (20, 4)
+┌─────────────────────────┬───────────────┬─────────────┬───────────────┐
+│ variant_name            ┆ variant_value ┆ Pair        ┆ Test Accuracy │
+│ ---                     ┆ ---           ┆ ---         ┆ ---           │
+│ str                     ┆ str           ┆ str         ┆ f64           │
+╞═════════════════════════╪═══════════════╪═════════════╪═══════════════╡
+│ Ablate form             ┆ No*           ┆ PB Receiver ┆ 1.0           │
+│ Ablate form             ┆ No*           ┆ PB Sender   ┆ 1.0           │
+│ Ablate form             ┆ Yes           ┆ PB Receiver ┆ 1.0           │
+│ Ablate meaning          ┆ No            ┆ PB Sender   ┆ 0.68          │
+│ Ablate meaning          ┆ Yes*          ┆ PB Receiver ┆ 1.0           │
+│ Ablate meaning          ┆ Yes*          ┆ PB Sender   ┆ 1.0           │
+│ Form order              ┆ Affinity*     ┆ PB Receiver ┆ 1.0           │
+│ Form order              ┆ Affinity*     ┆ PB Sender   ┆ 1.0           │
+│ Form order              ┆ Insertion     ┆ PB Sender   ┆ 1.0           │
+│ Form order              ┆ Shuffle       ┆ PB Sender   ┆ 0.98          │
+│ Idempotent form         ┆ No*           ┆ PB Receiver ┆ 1.0           │
+│ Idempotent form         ┆ No*           ┆ PB Sender   ┆ 1.0           │
+│ Idempotent form         ┆ Yes           ┆ PB Receiver ┆ 1.0           │
+│ Repeat morpheme, sender ┆ No            ┆ PB Sender   ┆ 0.6           │
+│ Repeat morpheme, sender ┆ Yes*          ┆ PB Receiver ┆ 1.0           │
+│ Repeat morpheme, sender ┆ Yes*          ┆ PB Sender   ┆ 1.0           │
+│ Sender algorithm        ┆ Greedy*       ┆ PB Receiver ┆ 1.0           │
+│ Sender algorithm        ┆ Greedy*       ┆ PB Sender   ┆ 1.0           │
+│ Sender algorithm        ┆ IP            ┆ PB Sender   ┆ 0.84          │
+│ Sender algorithm        ┆ Search        ┆ PB Sender   ┆ 0.58          │
+└─────────────────────────┴───────────────┴─────────────┴───────────────┘

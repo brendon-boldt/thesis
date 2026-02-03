@@ -1,0 +1,48 @@
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+\begin{document}
+
+\tikzstyle{nnode}=[
+  circle,
+  draw,
+  line width=1pt,
+]
+
+\begin{tikzpicture}
+  [node distance=0.5mm, outer sep=0mm]
+
+  \node (n12) [nnode] at (0,0) {};
+  \node (n11) [nnode, above=of n12] {};
+  \node (n13) [nnode, below=of n12] {};
+
+  \node (n31) [nnode] at ({(1.5,0)} |- {$(n11)!0.5!(n12)$}) {};
+  \node (n32) [nnode, below=of n31] {};
+
+  \node (n22) [nnode] at ({$(n12)!.5!(n31)$} |- {n31}) {};
+  \node (n21) [nnode, above=of n22] {};
+  \node (n23) [nnode, below=of n22] {};
+  \node (n24) [nnode, below=of n23] {};
+
+  \draw [-] (n11) to (n21);
+    \draw [-] (n11) to (n22);
+    \draw [-] (n11) to (n23);
+    \draw [-] (n11) to (n24);
+  \draw [-] (n12) to (n21);
+    \draw [-] (n12) to (n22);
+    \draw [-] (n12) to (n23);
+    \draw [-] (n12) to (n24);
+  \draw [-] (n13) to (n21);
+    \draw [-] (n13) to (n22);
+    \draw [-] (n13) to (n23);
+    \draw [-] (n13) to (n24);
+  \draw [-] (n31) to (n21);
+    \draw [-] (n31) to (n22);
+    \draw [-] (n31) to (n23);
+    \draw [-] (n31) to (n24);
+  \draw [-] (n32) to (n21);
+    \draw [-] (n32) to (n22);
+    \draw [-] (n32) to (n23);
+    \draw [-] (n32) to (n24);
+\end{tikzpicture}
+\end{document}

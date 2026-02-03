@@ -1,0 +1,10 @@
+% \documentclass[11pt]{article}
+% \input{src/preamble}
+\newcommand\inputphrasebook[1]{\input{chapters/phrasebook/#1}}
+\newcommand\includegraphicsphrasebook[2][]{\includegraphics[#1]{chapters/phrasebook/#2}}
+
+\inputphrasebook{src/intro}
+\inputphrasebook{src/methods}
+\inputphrasebook{src/experiments}
+\inputphrasebook{src/discussion}
+\inputphrasebook{src/outro}

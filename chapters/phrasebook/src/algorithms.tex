@@ -1,0 +1,63 @@
+\lstset{%
+  escapeinside={<}{>},
+  basicstyle=\small\ttfamily,
+  columns=fullflexible,
+  numbers=right,
+  numbersep=-1.2em,
+}
+
+\lstdefinelanguage{pseudo}{%
+  morekeywords={tuple,list,int,for,if,while,set,float,in,is,return},
+  morecomment=[l][\color{blue}]{\#},
+  morecomment=[l][\color{gray}]{::}
+}
+
+\begin{algorithm}[t]
+  \begin{lstlisting}[language=pseudo]
+morpheme :: tuple
+  form :: list[int]
+  meaning :: set[int]
+  weight :: float
+# Sorted by weight, descending
+inventory :: list[morpheme]
+observation :: set[int]
+max_length :: int
+
+message :: list[int]
+while True:
+  meanings_left = observation
+  for morph in inventory:
+    if morph.meaning <$\subseteq$> meanings_left:
+      meanings_left -= morph.meaning
+      message.extend(morph.form)
+      if len(message) <$\ge$> max_length:
+        return message
+      if meanings_left is empty:
+        break  # out of for loop
+  \end{lstlisting}
+  \caption{Outline of sender algorithm}%
+  \label{alg:sender}
+\end{algorithm}
+
+\begin{algorithm}[t]
+  \begin{lstlisting}[language=pseudo]
+# Sorted by weight, descending
+inventory :: list[morpheme]
+message :: list[int]
+attributes :: list[set[int]]
+
+# Cumulative weight of each meaning
+meanings :: map[int, float]
+for morph in inventory:
+  n = count_matches(message, morph.form)
+  for m in morph.meaning:
+    meanings[m] += n * morph.weight
+# Max-weighted value for each attribute
+observation :: set[int]
+for attr in attributes:
+  observation += argmax(meanings <$\cap$> attr)
+return observation
+  \end{lstlisting}
+  \caption{Outline of receiver algorithm}%
+  \label{alg:receiver}
+\end{algorithm}

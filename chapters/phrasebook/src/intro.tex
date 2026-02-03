@@ -1,0 +1,79 @@
+% \maketitle
+
+\begin{abstract}
+We build rule-based emergent language (EL) agents using induced morphological phrasebooks and test their communicative performance in the EL environment with its neural network agents.
+This contributes three things:
+First, it assesses the quality of the morphemes discovered by the induction algorithm \emph{in situ}, which we find to be effective for communicating in the EL\@.
+Second, it allows us to uncover morphosyntactic properties of EL through ablating the morpheme induction and the phrasebook algorithms, showing that the ELs rely on repetition as well as morpheme ordering to convey meaning.
+Third, we find that the bijectivity of morphemes (measured via normalized pointwise mutual information), serves as a metric of compositionality that is more closely correlated with the ability of the phrasebook-agents to ``speak'' and ``hear'' an EL than existing metrics such as topographic similarity or bag-of-symbols disentanglement.
+\end{abstract}
+
+\section{Introduction}
+Deep learning-based emergent language (a.k.a.\@ emergent communication) presents a fascinating way to study the origins and development of human language by observing how the interplay of functional pressures and inductive biases produce communication systems.
+Yet a major challenge in studying emergent languages is interpreting how they convey meaning---neural networks may invent communication systems which lack features of human language.
+Thus, a primary goal of emergent language research has been to investigate the linguistic structures present in emergent languages from morphology to semantics to syntax and how they compare with those of human language \citep{van-der-wal-etal-2020-grammar,ueda2022categorial,boldt2024review}.
+
+One technique introduced to discover the morphology of emergent language is CSAR \citep{boldt2025csar}, an algorithm which induces morphemes (minimal form--meaning pairs) from an emergent language corpus of messages and their accompanying semantics.
+CSAR was initially validated on human and procedurally generated languages, yet its effectiveness on emergent languages was not tested due the unavailability of ``ground truth'' morphemes in emergent languages.
+To address this shortcoming, we test the morphemes induced by CSAR \emph{in situ} by constructing algorithms to ``speak'' and ``hear'' emergent languages using the induced morpheme ``phrasebooks'' (illustrated in \cref{fig:diagram}).
+These phrasebook-based agents are built on the assumption that the emergent language is \emph{concatenatively compositional}, that is, that we can compose the meanings of morphemes by concatenating their forms into a message.
+
+\begin{figure}
+  \centering
+  \inputphrasebook{src/diagram}
+  \caption{Main experimental setting where we compare a phrasebook-based agent with the original neural network-based sender. We also experiment with a phrasebook-based receiver.}%
+  \label{fig:diagram}
+\end{figure}
+
+Analyzing the effectiveness of these phrasebook-based agents communicating in emergent language provides two insights.
+First, it reveals whether or not CSAR is uncovering a meaningful mapping between form and meaning for the emergent language, and, as a consequence, can serve as a good foundation for subsequent study of the structure of emergent languages.
+Second, it serves a probe into the morphosyntactic properties of emergent language (when we vary the morpheme induction and phrasebook algorithms).
+
+Finally, with these results, we propose a new compositionality metric: \emph{morpheme bijectivity}, defined as the weighted average of morphemes' normalized pointwise mutual information as induced by CSAR\@.
+This metric correlates better with the ability of the phrasebook-based agents (which presuppose compositionality) to use emergent language than existing metrics of compositionality like topographic similarity or bag-of-symbols disentanglement.
+
+% Finally, our work adds empirical insight into the ongoing discussion on the relationship between compositionality and generalization in emergent languages \cmt{cites}.
+% Namely, we find that the neural network-based agents easy generalize across many different environmental settings while the phrasebook-based agents, which make stricter assumptions on compositionality, perform well in a more limited selection of environments.
+% This reinforces the previous findings that simple compositionality is one way of supporting generalizability but not the only way and that emergent languages do indeed generalize without compositionality \cmt{cites}.
+
+% \paragraph{Contributions} \drm{These contributions largely restate what is in the preceding paragraphs. Eliminate redundancy in on direction or the other.}
+% This paper:
+% \begin{enumerate}[nosep,leftmargin=15pt]
+%   \item Assesses the quality of morphemes induced by CSAR from emergent languages using the original neural network agents, finding that the morpheme induction algorithm is widely, though not universally, effective across variations of the reconstruction game.
+%   \item Identifies morphosyntactic features of emergent language through ablating the morpheme induction algorithm as well as the phrasebook-based sender and receiver agents.
+%   \item Presents a compositionality metric---morpheme bijectivity---that more closely correlates with the ability of a morphological, compositional rule-based agent to communicate with neural emergent language speakers.
+% \end{enumerate}
+
+\paragraph{Impact}
+
+Beyond validating the performance of CSAR and characterizing the morphosyntax of a particular set of emergent languages, this paper provides a more general paradigm for more principled evaluation of the linguistic features of emergent languages.
+That is, by constructing a procedural method for speaking and hearing the emergent language, we can directly probe for its various morphological and syntactical properties.
+This is much more akin to the process in linguistics of proposing theoretical models and testing their predictions than prior approaches in emergent language.
+As a whole, this paper, then, moves emergent language research closer towards its goal of discovering the nature of human language.
+
+\paragraph{Structure}
+\Cref{sec:pb-related-work} discusses prior work most relevant to this paper.
+\Cref{sec:pb-methods} presents an overview of the environments, agents, and algorithms uses in the experiments.
+\Cref{sec:pb-experiments} briefly specifies the experiments and their results with a robust discussion in \cref{sec:pb-discussion}.
+The conclusion, discussion of limitations, and ethical considerations are presented in \cref{sec:pb-conclusion,sec:pb-limitations,sec:pb-ethical}, respectively.
+
+
+\section{Related Work}%
+\label{sec:pb-related-work}
+For a general overview of deep learning-based emergent language see \citet{lazaridou2020emergentmultiagentcommunicationdeep}.
+Generally speaking, this work builds on top of the morphological investigations into the structure of emergent language presented in \citet{boldt2025csar} and ties in with other approaches, including \citet{ueda2023on,lipinski2024speaking,carmeli-etal-2024-concept,gilberti2025discoveringpropertiesinflectionalmorphology}.
+
+\citet{levy2025unsupervisedtranslationemergentcommunication} addresses the task machine translation of emergent communication into human language; namely, they employ unsupervised neural machine translation to translate image captions between emergent and human language.
+This is analogous to how we translate between emergent language messages and semantics, although we focus on white-box algorithms instead of deep learning methods.
+The morpheme induction and phrasebook algorithms assume compositionality in the emergent languages, and as such, intersect with prior work discussing the link between compositionality and generalization in emergent language \citep{chaabouni-etal-2020-compositionality,kharitonov-baroni-2020-emergent,xu2022compositionalgeneralizationunsupervisedcompositional}.
+\citet{galke2024easy} discusses the relationship between compositionality in emergent language and its learnability by deep learning techniques analogous to our study of the learnability by statistical and rule-based methods.
+
+% \cmt{Background citation? Discusses how emergent languages can be used as a compositional representations vaguely similar to what we are doing with the rule based agents. \url{https://proceedings.neurips.cc/paper_files/paper/2022/file/9f9ecbf4062842df17ec3f4ea3ad7f54-Paper-Conference.pdf}}
+
+The phrasebook-based agents we propose are, in effect, a rule-based machine translation (RBMT) system (e.g., \citet{forcada2011apertium}) where the language pair is the message and observation spaces of an emergent language, although the comparative simplicity of emergent language and its divergence from human language admit limited applicability of prior approaches from RBMT techniques with human language.
+
+% \begin{itemize}\item Complexity theory and compositionality: Related paper? \url{https://arxiv.org/pdf/2410.14817}\end{itemize}
+% \item Gilberti, Storks, et al.: Setting which tries to force double-articulation would be a good example to show CSAR strengths (or at least where it is intended to work) \url{https://arxiv.org/html/2508.05843v1}.
+% \item One of the main citation for iterated learning in DL-based emergent communication, although it needs to be noted that what we are doing is not iterated learning proper. \url{https://ar5iv.labs.arxiv.org/html/2002.01365}
+% \item Short paper applying iterated learning DL-based EC. \url{https://arxiv.org/pdf/1910.05291}
+% \item Nots sure if this is related to this paper, but it might contain a way to discretize a continuous meaning space \url{https://www.ifaamas.org/Proceedings/aamas2025/pdfs/p1235.pdf}.

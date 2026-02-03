@@ -1,0 +1,10 @@
+shape: (3, 4)
+┌─────────────────────────┬───────────────┬─────────────┬───────────────┐
+│ variant_name            ┆ variant_value ┆ Pair        ┆ Test Accuracy │
+│ ---                     ┆ ---           ┆ ---         ┆ ---           │
+│ str                     ┆ str           ┆ str         ┆ f64           │
+╞═════════════════════════╪═══════════════╪═════════════╪═══════════════╡
+│ Repeat morpheme, sender ┆ No            ┆ PB Sender   ┆ 0.6           │
+│ Repeat morpheme, sender ┆ Yes*          ┆ PB Receiver ┆ 1.0           │
+│ Repeat morpheme, sender ┆ Yes*          ┆ PB Sender   ┆ 1.0           │
+└─────────────────────────┴───────────────┴─────────────┴───────────────┘
