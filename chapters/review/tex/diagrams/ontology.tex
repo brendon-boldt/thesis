@@ -31,18 +31,20 @@
     level 1 concept/.append style={
       font=\bfseries,
       sibling angle=120,
-      text width=7.0em,
-      level distance=16em,
+      text width=6.0em,
+      level distance=12.5em,
     },
     level 2 concept/.append style={
       font=\small,
-      level distance=9em,
+      level distance=8em,
       text width=5em,
+      sibling angle=60,
     },
     level 3 concept/.append style={
       font=\scriptsize,
-      level distance=9em,
+      level distance=8.0em,
       text width=4em,
+      sibling angle=33,
     },
     level 4 concept/.append style={
       font=\scriptsize,
@@ -50,7 +52,7 @@
       text width=3em,
     },
   ]
-  node[root] {Applications of Emergent Communication} [rotate=-120]
+  node[root] {Applications of Emergent Language} [rotate=-120]
     child[
       concept color=color1!40,
       level distance=13em
@@ -83,8 +85,8 @@
         child { node (morph) {Mor\-phol\-ogy} }
         child { node (syn) {Syntax} }
         child {
-          node (sem) {Se\-man\-tics} [clockwise from=60]
-          child[level distance=8em] { node (comp) {Com\-position\-ality} }
+          node (sem) {Se\-man\-tics} [clockwise from=40]
+          child[level distance=5.5em] { node (comp) {Com\-position\-ality} }
         }
         child { node (parg) {Pragmatics} }
         child { node (soc) {Sociology} }
@@ -92,7 +94,7 @@
     };
     \info{knowledge.north west}{anchor=center}{\Cref{sec:rev-knowledge}}
     \info{lingvar.south west}{anchor=east}{\Cref{sec:rev-linguistics}}
-    \info{acquisition.north}{anchor=center}{\Cref{sec:rev-acquisition}}
+    \info{acquisition.south}{anchor=center}{\Cref{sec:rev-acquisition}}
     \info{evolution.south}{anchor=center}{\Cref{sec:rev-evolution}}
     \info{cogsci.north west}{anchor=east}{\Cref{sec:rev-cognition}}
     \info{internal.south east}{anchor=center}{\Cref{sec:rev-internal}}
