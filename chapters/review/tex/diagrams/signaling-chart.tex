@@ -1,0 +1,35 @@
+\tikzstyle{blockStyle}=[
+  draw=black!50,
+  text width=2.7cm,
+  minimum width=2cm,
+  text centered,
+  rounded corners,
+  font=\scriptsize,
+]
+
+\newcommand\blocktext[2]{\textsc{#1}\\{\color{black!70}#2}}
+
+\begin{tikzpicture}
+  [node distance=3mm, outer sep=0mm, inner xsep=-1mm]
+
+  \node (obs) [blockStyle] {\blocktext{Observation}{vector}};
+  \node (sender) [blockStyle,below=of obs.south] {\blocktext{Sender}{RNN conditioned on observation}};
+  \node (message) [blockStyle,below=of sender.south] {\blocktext{Message}{sequence of one-hot vectors}};
+  \node (distobs) [blockStyle,right=of message.east] {\blocktext{Candidate\\Observations}{set of vectors}};
+  \node (n0) at ({$(message)!.5!(distobs)$} |- {message.south}) {};
+  \node (receiver) [blockStyle,below=of n0] {\blocktext{Receiver}{RNN conditioned on message and observations}};
+  \node (pred) [blockStyle,below=of receiver.south] {\blocktext{Prediction}{prob.\@ dist.\@ over observations}};
+  \node (reward) [blockStyle,below=of pred.south] {\blocktext{Reward}{real value}};
+
+  \draw [-stealth] (obs) to (sender);
+  \draw [-stealth] (sender) to (message);
+  \draw [-stealth] (message) to (receiver);
+  \draw [-stealth] (distobs) to (receiver);
+  \draw [-stealth] (receiver) to (pred);
+  \draw [-stealth] (pred) to (reward);
+  \draw [-stealth, bend left, dashed] (obs.east) to (distobs);
+  \draw [-stealth, dashed, inner sep=0mm] (reward.west) to[looseness=0.8, out=135, in=225] (sender.south west);
+  \draw [-stealth, dashed] (reward.west) to[looseness=1, out=135, in=225] (receiver.west);
+
+  \clip (obs.west |- obs.north) rectangle (distobs.east |- reward.south);
+\end{tikzpicture}

@@ -1,0 +1,294 @@
+\section{Internal Goals}%
+\label{sec:rev-internal}
+
+Internal goals are not what we would typically consider applications at all since they are focused on issues internal to the field of emergent communication.
+Nevertheless, these applications are important because they are (1) prerequisites for applying emergent communication to other areas and (2) the primary contributions of many papers that reference these goals.
+While, in a sense, any contribution could be considered an internal goal,
+  we choose to address the internal goals which represent the clearest and most salient waypoints within emergent communication research.
+
+
+\subsection{Rederiving human language}%
+\label{sec:rev-rederiving}
+
+\paragraph{Description}
+Aiming to create emergent communication that resembles human language is a central characteristic of emergent communication and drives much of the research on the topic.
+This resemblance can include everything from low-level traits like compositional semantics and tree-like syntax to high-level traits like implicature (pragmatics) and sociolects (sociolinguistics), although how exactly to define this resemblance is an open question within linguistics.
+Aiming for resemblance does not necessitate exact replication of human language (or even having an exact definition of it):
+  within human language we see a large amount of variation upon fundamental commonalities (e.g., distinguishing between nouns and verbs, having distinct units of meaning which appear in many contexts).
+\emph{Rederiving human language}, then, is the process of developing the conditions (e.g., environment, agent architecture, games) which produce emergent communication which resembles human language.
+
+Rederiving human language distinct from, although related to, \fullref{sec:rev-evolution} and \fullref{sec:rev-acquisition}.
+Research into the origin and acquisition of language has a primary interest in the specific historical, environmental, and cognitive contexts of humans and their use of language.
+In contrast, rederivation is only concerned with these contexts for their instrumental value in developing emergent communication which is similar to human language.
+
+\paragraph{Applicability}
+The resemblance of emergent communication to human language is the nexus of most other goals in the field:
+  other goals will either work toward resemblance in some respect or derive their effectiveness from resemblance to human language (or both).
+This resemblance to human language need not be perfect---even a partial rederivation of human language could still support many important downstream applications.
+
+\fullref{sec:rev-internal} primarily work toward the rederivation of human language, while the task- and knowledge-based applications primarily derive their effectiveness from the rederivation.
+In particular, \fullref{sec:rev-task} rely on emergent communication having:
+  structural similarities to human language (\fullref{sec:rev-synthetic}),
+  generalizability to new situations (\fullref{sec:rev-multi-agent}),
+  discourse structure (\fullref{sec:rev-interacting-humans}),
+  and the capacity to externally represent internal states (\fullref{sec:rev-explainable-models}).
+\fullref{sec:rev-knowledge}, for example, rely on emergent communication resembling human language in terms of:
+  cognitive processes influencing linguistic behavior (\fullref{sec:rev-cognition}),
+  macro-scale social processes (\fullref{sec:rev-evolution} and \fullref{sec:rev-diachronic}),
+  mechanism of learning and acquisition (\fullref{sec:rev-acquisition}),
+  and general structure at every level (\fullref{sec:rev-linguistics}).
+
+
+\paragraph{Current state}
+No work in the current body of literature has explicitly pursued the rederivation of human language.
+There are a large number of papers that study aspects of making emergent communication more human language-like in isolation (almost any paper in \fullref{sec:rev-linguistics} does this in some capacity), but no papers have made steps towards rederivation holistically.
+While studying just one aspect of emergent communication at a time yields more tractable research questions,
+  the risk is that isolating individual aspects misses the ways in which emergent communication is truly an \emph{emergent} phenomenon within a complex system \citep[Sec.\@ 1.3]{bar2002general}.
+Complex systems are characterized by non-obvious interactions among the many moving parts, and taking away single elements of the system might change the behavior in significant, unpredictable ways.
+To the extent to which this is true, studying isolated phenomena in simple environments has limited potential.
+
+For example, \citet{ren2020compositional} show, in line with established experiments with mathematical models \citep{kirby2007innateness} and human subjects \citep{Kirby2008CumulativeCE}, that the imperfect transmission of language from generation to generation (i.e., \emph{iterated learning}) can explain a bias toward compositionality in communication system without further agent-internal biases.
+Yet empirical investigation of compositionality in emergent communication literature often uses fixed-population environments\footnotemark.
+\footnotetext{I.e., environments where the set of agents remains constant throughout the training process.  Contrast this with dynamic populations where newly-initialized agents enter the population and older agents leave the population.}
+The fact that iterated learning has diverse support as an explanation for compositionality calls into the question the results of compositionality research which does \emph{not} take iterated learning into account, since iterated learning could be a sufficient driver for compositionality in emergent communication, outweighing other potential sources like model capacity \citep{Resnick2020CapacityBA} or perception \citep{lazaridou2018emergence}.
+
+
+\paragraph{Next steps}
+The rederivation of human language in full is a massively complex task which may be impossible in practice or even in principle.
+Yet even if it is possible only to a limited degree, emergent communication can still fulfill many of its applications.
+The first step toward rederiving human language is laying down the theoretical foundations: identifying the most salient properties of human language and using these to develop a concrete problem definition of ``rederiving human language''.
+The field of linguistics will be especially important for formulating precise notions of ``rederiving human language''.
+Such formulations will provide the groundwork for identifying the technical issues with rederiving human language through emergent communication techniques.
+For example, we speculate that:
+  language will need to be processed by larger neural networks with parameter counts in the billions;
+  agents will also need to have realistic cognitive constraints on producing and understanding language;
+  populations of agents will have to number in the hundreds to mimic even the smallest human language communities;
+  environments will need to be scaled up in terms of both sensory input (e.g., 3-dimensional environments, embodiment) as well as task complexity (e.g., involving multi-step planning);
+  and many advanced techniques from deep reinforcement learning will need to incorporated into the optimization process in order to learn from richer environments (e.g., efficiently learning representations, planning, multi-agent cooperation).
+
+
+\subsection{Metrics for emergent communication}%
+\label{sec:rev-measuring}
+
+\paragraph{Description}
+A metric, for our purposes, is a well-defined method for quantifying a property of or notion about an emergent communication system.
+Some properties in emergent communication are fairly concrete and are naturally quantitative such as vocabulary size or task success rate.
+Other properties are more abstract and there is not single, obvious way to quantify them (i.e., they are underspecified in some capacity).
+For example, compositionality often refers to the idea that ``the meaning of a composite message is a function of the meanings of individual parts'', but this definition is underspecified.
+It does not specify if ``meaning'' rests in the interpretation of the speaker, listener, or both, nor does it specify what limits might exist on functions used to combine meaning---each interpretation would be quantified differently and may be useful in different contexts.
+Finally, \emph{evaluation} metrics are even more abstract as they try to directly measure how \emph{good}, \emph{useful}, or \emph{desirable} something is in a general sense.
+For example, F-score is an evaluation metric for classifiers; that is, a better classifier should have a higher F-score (insofar as F-score is an effective evaluation metric), and generally speaking, a classifier with higher F-score will be more useful than one with a lower F-score.
+
+Thus, developing metrics within emergent communication comprises a number of different tasks, including:
+  designing precise formulations of abstract properties,
+  developing practical computational methods for implementing these formulations,
+  and demonstrating mathematically and empirically that they accurately quantify the particular property.
+
+
+\paragraph{Applicability}
+Metrics, in general, are a ubiquitous part of research in most any area of science or engineering.
+They are integral to formulating testable hypotheses since they delineate precisely what is being considered empirically (or theoretically).
+They are also what enables effective summarization and statistical analysis of the results of experiments beyond mere qualitative analysis.
+Together, these two factors make principled comparison with prior work possible.
+Evaluation metrics, in particular, help identify approaches to a given problem are most effective.
+These are especially important for the long-term development of a field as they help gauge overall progress and direct efforts towards the most promising approaches.
+
+
+\paragraph{Current state (compositionality)}
+Metrics for compositionality and generalizability comprise the lion's share of literature on this goal while only a few have been developed for other properties.
+This corresponds with the most common goals of emergent communication papers which are to develop emergent communication which has compositional semantics and generalizes beyond the scenarios seen during training.
+
+Compositionality (or compositional semantics) refers to the general principal that utterances with complex meaning derive their meaning from a combination of the meaning of the components of the utterance (e.g., a ``red car'' is a car that is red).
+This is in contrast to ``holistic'' communication where there is no relationship between the meaning of an utterance and its components.
+\unskip\footnote{For example, a ``black swan'' can refer (idiomatically) to a rare event---something that is neither black nor a swan.}
+The most popular metric for compositionality is topographic similarity \citep{brighton2006UnderstandingLE,lazaridou2018emergence}, which quantifies compositionality as the degree of correlation between distances in the referent feature space and distances in the message space (illustrated in \Cref{fig:rev-toposim}).
+Specifically, \citet{lazaridou2018emergence} use the Spearman's rank correlation coefficient ($\rho$) on the pairwise distances between objects in the feature space (quantified with cosine similarity) and their corresponding messages (quantified with Levenshtein distance).
+In this sense, toposim is more of a family of metrics since the precise methods of computing correlation and distance in the object and message spaces have a number of concrete realizations.
+
+\newif\iftoposimhigh
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.45\linewidth}
+    \centering
+    \toposimhighfalse
+    \inputreview{tex/diagrams/toposim}
+    \caption{Mapping with low topographic similarity; low correlation between spaces.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.45\linewidth}
+    \centering
+    \toposimhightrue
+    \inputreview{tex/diagrams/toposim}
+    \caption{Mapping with high topographic similarity; high correlation between spaces.}
+  \end{subfigure}
+  \caption{%
+    Illustration of two spaces with different topographic similarities (\emph{toposims}).
+    $\mathcal O$ and $\mathcal M$ represent embedding spaces for the observations and messages, respectively.
+    A high toposim means that distances between any two points in the observation space correlates well with distances between corresponding points in the message space.
+  }
+  \unskip\label{fig:rev-toposim}
+\end{figure}
+
+Representation similarity analysis \citep{kriegeskorte2008rsa,rodriguez2020internal} takes a similar approach to quantifying compositionality but measures the correlation in the feature space and agents' internal representations.
+A handful of other metrics fall under the umbrella of \emph{disentanglement}, where components of the message specify single attributes and do so independent of context.
+Such metrics include
+    positional and bag-of-words disentanglement \citep{chaabouni2020compositionality},
+    context independence \citep{bogin2018emergence},
+    and conflict count \citep{kucinski2020emergence}.
+Tree reconstruction error takes a deeper look at the compositionality of language by measuring how closely an explicitly compositional model of semantics can approximate what the emergent communication agents produce \citep{andreas_measuring_2019}.
+
+In response to the amount of research into measuring compositionality, some papers have provided deeper analyses of metrics of compositionality.
+\citet{korbak2020measuring} provide a meta-analysis of the above compositionality metrics, showing that while many are sensitive to basic types of compositionality, most fail to recognize more sophisticated methods of composition.
+\citet{kharitonov2020emergent,chaabouni2020compositionality} provide evidence against the claims that standard measures of compositionality are also measuring the ability of the language to generalize to describing novel objects.
+
+\paragraph{Current state (other)}
+Generalizability, as in other areas of machine learning, generally refers to the ability to perform well outside of the training conditions.
+Generalizability is most often operationalized as agents successfully describing objects previously unseen combinations of attributes (i.e., generalizing from training data to test data) \citep{korbak2019developmentally,chaabouni2020compositionality,denamganai2020on,Kharitonov2020EmergentLG,Resnick2020CapacityBA,perkins2021neural}.
+Apart from this type of generalization, other work has looked at
+    generalizing to new communication partners \citep{bullard2021quasi},
+  generalizing over different environments \citep{guo2021expressivity,Mu2021EmergentCO},
+  and generalizing across linguistic structures (e.g., disentangled syntax and semantics) \citep{Baroni_2020}.
+
+\citet{yao2022linking} introduce an evaluation metric, that is, one which measures the \emph{overall} quality of an emergent language using data-driven methods.
+The metric equates the quality of an emergent language with the quality of machine translation from the emergent language to human language.
+The underlying intuition here is that the more human-like an emergent language is, the more effective substituting it for human language will be in machine learning tasks (i.e., using it as synthetic data, see \Cref{sec:rev-synthetic}).
+
+
+\paragraph{Next steps}
+With regard to metrics of phenomena like compositionality, it is critical to incorporate knowledge from linguistics as to how similar notions apply to human language.
+For example, with compositionality, emergent communication research often use to simple notions of compositionality, focusing individual units of meaning combining arbitrarily to form composite meanings.
+On the other hand, human language's relationship with compositionality is far more complicated, sometimes exhibiting it while sometimes being non-compositional (e.g., idioms, irregular word forms, grammatical rules limiting ``acceptable'' sentences).
+While this cross-disciplinary approach more difficult to incorporate into the research process, it is critical to the long-term trajectory of emergent communication research.
+
+Evaluation metrics, on the other hand, are mostly absent in the emergent communication literature despite their importance to other fields of machine learning like reinforcement learning and natural language processing.
+Thus, it would be fruitful to develop true evaluation metrics which can determine what emergent languages are ``best'' or ``most human language-like''.
+As these notions are more abstract than ``compositionality'' or ``generalizability'', there is more theoretical groundwork that must go with the motivation of evaluation metrics in addition to the engineering efforts in actually designing and implementing them.
+
+
+\subsection{Theoretical models}%
+\label{sec:rev-theoretical-models}
+
+\paragraph{Description}
+A theoretical model of emergent communication is a mathematical or formal system which describes the behavior of an emergent communication system.
+Generally speaking, a theoretical model will describe a relationship between two or more variables in an emergent communication system.
+Theoretical models are developed in conjunction with empirical work and represent a refinement and systematization of the knowledge gained from these experiments.
+Most importantly, their formal representation allows rigorously reasoning about the behavior of a systems without needing to directly run experiments.
+
+\paragraph{Applicability}
+Theoretical models benefit emergent communication research primarily in two ways: they clarify research methods and can predict a system's behavior in compute-intensive situations.
+For research methods, using a theoretical model to phrase a research question results in a hypothesis which is clear and testable.
+As a result, the empirical evaluation has a clear relationship with the assumptions and structure of the model, allowing subsequent research to more easily build on previous work.
+In the absence of theoretical models and their hypotheses, papers must often rely on qualitative hypotheses which are difficult to empirically verify or result in merely pointing out ``interesting'' observations from the experiments.
+For this reason, employing theoretical models can move emergent communication research towards systematically scientific investigation instead of less organized trial-and-error.
+
+Second, theoretical models provide a way to predict the behavior of emergent communication systems in situations where directly running the system is computationally expensive.
+The applicability of theoretical models on this front is discussed in the context of GPT-4 \citep{openai2023gpt4} and its scaling laws where the extreme computational cost of training the model made it critical that the designers could predict the behavior of the full-scale model ahead of time.
+In particular, they fit a mathematical equation predicting the loss based on computational input using smaller models.
+This gave the developers a way to accurately predict the final loss of the full-scale model at a fraction of the computational cost.
+As emergent communication environments get more complex with more design choices, hyperparameters, and computational cost, it will also be important to be able to predict the behavior of the system without having to run the full environment in every situation.
+
+\begin{figure}
+  \centering
+  \newcommand\incplot[1]{\includegraphicsreview[width=3cm]{assets/filex/#1}}
+  \begin{tikzpicture}[inner sep = 0pt, outer xsep=-1em, outer ysep=-1.5em]
+    \node (alpha) [] {\incplot{model-n_iters}};
+    \node (beta) [right=of alpha] {\incplot{model-n_params}};
+    \node (gamma) [below=of alpha] {\incplot{nav_timesteps}};
+    \node (delta) [below=of beta] {\incplot{nav_lexicon_size}};
+    \node [left=2em of alpha.west, text width=6em, anchor=east, align=center] {Theoretical model};
+    \node [left=2em of gamma.west, text width=6em, anchor=east, align=center] {EC game};
+    \node [above=3em of alpha.north, anchor=south] {Time Steps};
+    \node [above=3em of beta.north, anchor=south] {Lexicon Size};
+  \end{tikzpicture}
+  \caption{%
+    Plots of lexicon entropy ($y$-axis) versus time steps and lexicon size ($x$-axes) comparing a theoretical model against empirical measurements on navigation game with emergent communication (from \citet{boldt2022modeling}).\protect\footnotemark{}
+    Theoretical models can help predict the outcomes of emergent communication games much more efficiently than simply running the environment while also providing a conceptual understanding the environment's behavior.
+  }
+\end{figure}
+\footnotetext{$\tau$ is the Kendall correlation coefficient of the points.}
+
+
+\paragraph{Current state}
+Only a handful of papers in the literature use theoretical models, and these models are usually not employed in any subsequent papers.
+\citet{khomtchouk2018modeling} study the transition between two degenerate ``phases'' of language: single-symbol systems and full one-to-one systems, with the synonymy and ambiguity found in human language lying in the middle.
+This model is then tested with a pair of simple reinforcement learning-based agents.
+\citet{ren2020compositional} apply the iterated learning model \citep{Smith_Kirby_Brighton_2003} to deep learning-based emergent communication; they use a formal probabilistic model of an iterated learning algorithm to express hypotheses which are empirically tested.
+\citet{boldt2022modeling} formulate a stochastic process which describes the entropy of an emergent language's lexicon based on a handful of hyperparameters of the agent's neural network; the predictions of this model are also empirically tested in four simple emergent communication environments.
+\citet{rita2022emergent} analyze emergent communication environments based on the Lewis signalling game by providing a mathematical decomposition of the loss function.
+This decomposition explains the different overfitting pressures hidden in the loss function; from this, they suggest measures to counteract such pressures which result in more compositional emergent communication.
+
+Finally, the model presented in \citet{Resnick2020CapacityBA} is a good representative of theoretical models in emergent communication and their attendant difficulties.
+The model describes the relationship between the capacity of an agent's neural networks and the compositionality of the learned emergent language:
+  if the capacity is too low to capture the regularities in the language (i.e., grammatical rules) the agents ``underfit'',
+  and if the capacity is too high, the agents ``overfit'' by simply memorizing individual utterances in the language.
+The model predicts the compositionality to be low in both the under- and overfitting regimes and higher between them where the neural network learns regularities without memorizing individual examples.
+The model could then be formalized as follows
+\begin{equation}
+  \text{Capacity}(M_X) \in \left[C_L, C_U\right)
+    \wedge \text{Capacity}(M_Y) \not\in \left[C_L, C_U\right)
+    \Rightarrow \text{Comp}(M_X) > \text{Comp}(M_Y)
+\end{equation}
+where
+  $M_X$ and $M_Y$ are the agents' underlying models,
+  $\text{Capacity}(\cdot)$ quantifies a model's capacity,
+  $C_L$ and $C_U$ are the under- and overfitting thresholds respectively,
+  and $\text{Comp}(\cdot)$ quantifies the compositionality of the model's emergent language.
+\unskip\footnote{This is a summarization of the model which is more precise in its original formulation.
+The particular formalization is not used in the original paper and is instead derived from \citet{boldt2022recommendations}.}
+
+The precise formulation of the model results in a clear hypothesis based on the predictions of the model, allowing the experiments to more directly test the underlying principles of the model.
+The difficulties that persist, though, are that the model's formulation and its predictions still lack precision.
+In the formulation, \citet{Resnick2020CapacityBA} do not fully articulate what constitutes ``capacity''; a notion of capacity though would be extremely difficult if not impossible to formulate precisely for deep learning models.
+In the predictions, the paper is only able to articulate general trends and correlations rather than predicting exact values or distributions.
+These issues, though, are representative of more general issues with theoretical models in emergent communication the use of deep neural networks and reinforcement learning make precision inherently difficult (although approximation is not impossible as shown by the GPT-4 scaling case above).
+Finally, despite the fact that the model in \citet{Resnick2020CapacityBA} addresses compositionality, the most popular topic within emergent communication, it does not see reuse subsequent papers.
+
+
+\paragraph{Next steps}
+Theoretical models are difficult to apply deep learning-based emergent communication since deep neural networks themselves are difficult to formalize.
+Part of this difficulty is inherent while some of it stems from the sparsity of formalization in the applications of deep neural networks.
+Thus, an important next step would be to address these difficulties with archetypical examples of how theoretical models can be applied to emergent communication as well as recommendations for best practices, taking inspiration from existing work on the theoretical foundations of deep learning and complex systems.
+
+Even given these difficulties, one-off instances of simple theoretical models can be helpful in clarifying the contributions, hypotheses, and results of a given paper.
+For example, instead of hypothesizing simply that changing $X$ will improve $Y$, it could be stated instead that there will be a positive correlation between $x$ and $y$, where $x$ and $y$ are quantitative metrics of $X$ and $Y$ respectively, and correlation is mathematically defined (e.g., Spearman's rank correlation coefficient).
+This would facilitate experiments which more clearly refute or a support a hypothesis and its underlying claims.
+
+
+\subsection{Tooling}%
+\label{sec:rev-tooling}
+
+\paragraph{Description}
+The central aim of tooling within emergent communication is to develop apparatus that can be used to ease the process of implementing and running experiments.
+Since emergent communication is under the broad category of computer science, the experimental apparatus are most often programs, their source code, and sometimes datasets.
+Although any codebase used for an emergent communication experiment can be reused and repurposed by other researchers for new experiments, codebases which are designed to be reused for a broad range of experiments are the focus of this application.
+
+\paragraph{Applicability}
+The most obvious benefit of shared and standardized tooling is that it saves time for researchers as less time needs to be spent reimplementing the basic features of emergent communication experiments.
+Furthermore, the incidence of bugs decreases, implementation efforts can be spent improving existing tooling, and comparison across papers is more reliable since more implementation details will be the same.
+Special care must be taken, though, that the implementation details do not lead to systematic biases in experiments;
+  emergent communication is especially susceptible to this concern since it is difficult to distinguish between effects of structure of the environment (abstractly speaking) and effects of implementation details.
+Finally, well-designed and easy-to-use tooling is a significant help to emergent communication researchers who do not have a strong software development background.
+The task of putting ideas into code is much more difficult for such researchers, and decreasing the amount of unnecessary reimplementation can greatly improve their ability to contribute to the field of emergent communication.
+
+\paragraph{Current state}
+Tooling for emergent communication has a small degree of standardization, although the high degree of variety in problems and approaches in the field decrease the practicality of a one-size-fits-all framework.
+EGG (Emergence of lanGuage in Games) \citep{Kharitonov2019EGGAT} is the most widely used framework for deep learning-based emergent communication; it provides a simple Python programming interface for some of the most common emergent communication games, agent architectures, and metrics.
+Papers which implement new games using EGG further expand the range of games and metrics which are easily accessible through the framework including:
+  \citet{chaabouni2019anti,dessì2019focus,chaabouni2020compositionality,auersperger2022defending,kharitonov2020entropy}.
+ReferentialGym \citep{denamganaï2020referentialgym} is similar to EGG in scope, although it has seen less reuse within the literature.
+Other tooling may target more specific aspects of experiments in emergent communication.
+For example, TexRel \citep{perkins2021texrel} is a synthetic dataset designed specifically for use in emergent communication games; in this case, data (images) are constructed such that \emph{compositional} language could aptly describe them.
+Additionally, \citet{Ikram2021HexaJungleAM} introduce HexaJungle, a suite of environments for studying emergent communication.
+For papers which explore beyond the typical environments (which is a significant portion), it is common to implement the emergent communication game and agents from scratch using more general purpose tools like PyTorch \citep{pytorch} \citep{evtimova2017emergent,Mu2021EmergentCO,Noukhovitch2021EmergentCU}.
+
+
+\paragraph{Next steps}
+The next steps for tooling in emergent communication largely depends on what tasks, problems, and methods receive the most attention going forward.
+If the field continues to study similar environments, EGG could continue to support such work, but if radically new environments or experimental paradigms appear, current tooling might prove insufficient.
+In part, this is due to an inherent trade-off between the flexibility of a framework and its convenience; while emergent communication is rapidly changing, the required flexibility often does not provide much convenience, but as the field focuses on fewer problems, frameworks could play a greater role.
+A possible middle way between these two issues would be developing an interface (in the sense of object-oriented programming) for emergent communication environments similar to OpenAI Gym \citep{openaigym}, which can provide some standardization and interoperability while not impeding novel environments and implementations.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main.tex"
+%%% End:

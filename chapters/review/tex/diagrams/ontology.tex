@@ -1,0 +1,108 @@
+\newcommand*{\info}[3]{%
+  \node [
+    #2,
+    draw=black,
+    fill=white,
+    rounded corners=4pt,
+    inner sep=2mm,
+    opacity=.7,
+    text opacity=1,
+    font=\normalsize,
+  ] at (#1) {#3};
+}
+\begin{tikzpicture}[
+  grow cyclic,
+  every annotation/.style = {
+      draw,
+    }
+  ]
+  \path[
+    mindmap,
+    concept color=black!20,
+    every node/.style={
+      concept,
+      circular drop shadow
+    },
+    root/.style = {
+      concept color=black!20,
+      font=\large\bfseries,
+      text width=8em,
+    },
+    level 1 concept/.append style={
+      font=\bfseries,
+      sibling angle=120,
+      text width=7.0em,
+      level distance=16em,
+    },
+    level 2 concept/.append style={
+      font=\small,
+      level distance=9em,
+      text width=5em,
+    },
+    level 3 concept/.append style={
+      font=\scriptsize,
+      level distance=9em,
+      text width=4em,
+    },
+    level 4 concept/.append style={
+      font=\scriptsize,
+      level distance=9em,
+      text width=3em,
+    },
+  ]
+  node[root] {Applications of Emergent Communication} [rotate=-120]
+    child[
+      concept color=color1!40,
+      level distance=13em
+    ] {
+      node (internal) {Internal}
+      child { node (tooling) {Tooling} }
+      child { node (rederiving) {Rederiving Human Language} }
+      child { node (metrics) {Metrics} }
+      child { node (theoretical) {Theoretical Models} }
+    }
+    child[concept color=color2!50,level distance=12.5em] {
+      node (task) {Task-Driven} []
+      child { node (synthetic) {Synthetic Data} }
+      child { node (mac) {Multi-Agent Communication} }
+      child { node (humans) {Interacting with Humans} }
+      child { node (explainable) {Explainable ML Models} }
+    }
+    child[concept color=color3!50] {
+      node (knowledge) {Knowledge-Driven}
+      child {
+        node (cogsci) {Cognitive Science}
+        child { node (perception) {Perception} }
+        child { node (repr) {Rep\-re\-sen\-ta\-tions} }
+      }
+      child { node (evolution) {Evolution of Language} }
+      child { node (acquisition) {Language Acquisition} }
+      child {
+        node (lingvar) {Linguistic Variables}
+        child { node (phon) {Phonology} }
+        child { node (morph) {Mor\-phol\-ogy} }
+        child { node (syn) {Syntax} }
+        child {
+          node (sem) {Se\-man\-tics} [clockwise from=60]
+          child[level distance=8em] { node (comp) {Com\-position\-ality} }
+        }
+        child { node (parg) {Pragmatics} }
+        child { node (soc) {Sociology} }
+      }
+    };
+    \info{knowledge.north west}{anchor=center}{\Cref{sec:rev-knowledge}}
+    \info{lingvar.south west}{anchor=east}{\Cref{sec:rev-linguistics}}
+    \info{acquisition.north}{anchor=center}{\Cref{sec:rev-acquisition}}
+    \info{evolution.south}{anchor=center}{\Cref{sec:rev-evolution}}
+    \info{cogsci.north west}{anchor=east}{\Cref{sec:rev-cognition}}
+    \info{internal.south east}{anchor=center}{\Cref{sec:rev-internal}}
+    \info{rederiving.east}{anchor=west,xshift=-2mm}{\Cref{sec:rev-rederiving}}
+    \info{metrics.south}{anchor=center}{\Cref{sec:rev-measuring}}
+    \info{theoretical.south east}{anchor=south west}{\Cref{sec:rev-theoretical-models}}
+    \info{tooling.south}{anchor=center}{\Cref{sec:rev-tooling}}
+    \info{task.north east}{anchor=center}{\Cref{sec:rev-task}}
+    \info{synthetic.north east}{anchor=west}{\Cref{sec:rev-synthetic}}
+    \info{mac.south}{anchor=center}{\Cref{sec:rev-multi-agent}}
+    \info{humans.east}{anchor=north west,xshift=-2mm}{\Cref{sec:rev-interacting-humans}}
+    \info{explainable.north}{anchor=west}{\Cref{sec:rev-explainable-models}}
+\end{tikzpicture}

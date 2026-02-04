@@ -18,13 +18,13 @@
 
 \input{src/introduction}
 
+\chapter{A Review of the Applications of Emergent Language}
+\unskip\label{ch:review}
+\input{chapters/review/tex/main}
+
 \chapter{Building a Library of Emergent Languages}
 \unskip\label{ch:elcc}
 \input{chapters/elcc/src/main}
-
-\chapter{Adding Semantic Annotations to Corpora \note{proposed}}
-\unskip\label{ch:rich-corpora}
-\input{chapters/elcc-plus/src/main}
 
 \chapter{Evaluation of Emergent Languages with Deep Transfer Learning}
 \unskip\label{ch:xferbench}
@@ -52,10 +52,16 @@
   chapters/elcc/src/sg-arxiv,
   chapters/hpo/src/main,
   chapters/morphemes/src/main,
-  chapters/phrasebook/src/main}
+  chapters/phrasebook/src/main,
+  chapters/review/bib/custom,
+  chapters/review/bib/arxiv,
+  chapters/review/bib/semantic-scholar}
 
 \appendix
 \addtocontents{toc}{\setcounter{tocdepth}{0}}
+
+\chapter{A Review of the Applications of Emergent Language}
+\input{chapters/review/tex/appendix}
 
 \chapter{ELCC}
 \input{chapters/elcc/src/appendix}

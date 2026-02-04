@@ -1,0 +1,152 @@
+% \appendix
+
+\section{Review Methods}\label{sec:rev-methods}
+
+In this section, we give a brief account of the methods used for obtaining the papers referenced in this review.
+As a considerable amount of the content in this review will draw from the authors' background knowledge, describing the methods does not imply that this paper is ``fully reproducible''.
+Nevertheless, presenting the process used for producing this paper can aid in understanding its context and origin.
+
+\subsection{Collecting papers}
+
+To collect papers we searched arXiv (\surl{https://arxiv.org/}) and Semantic Scholar (\surl{https://www.semanticscholar.org/}) for:
+  ``emergent language'',
+  ``emergent communication'',
+  ``language emergence'',
+  and ``communication emergence''.
+Any paper that had a title plausibly related to emergent communication was passed along to annotation stage.
+Occasionally, the abstract would be skimmed at this stage, but here we aired on the side of recall and not precision.
+
+We selected arXiv because (1) a majority of emergent communication papers are posted on arXiv and (2) the \emph{Computer Science} archive provides a good signal to noise ratio due to the type of research that tends to be posted on arXiv.
+We supplemented arXiv with Semantic Scholar primarily to collect emergent communication papers that come from sources outside typical computer science discipline (as well as any CS papers which simply were not posted to arXiv).
+Additionally, we collected papers from all years of EmeCom\footnotemark{}, a series of workshops on (primarily deep learning-based) emergent communication.
+\footnotetext{EmeCom URLs
+  \url{https://sites.google.com/site/emecom2017/accepted-papers},
+  \url{https://sites.google.com/site/emecom2018/accepted-papers},
+  \url{https://sites.google.com/view/emecom2019/accepted-papers},
+  \url{https://sites.google.com/view/emecom2020/accepted-papers},
+  and \url{https://openreview.net/group?id=ICLR.cc/2022/Workshop/EmeCom\#all-submissions}.
+}
+With very few (${<}5$) exceptions, we gathered all of the emergent communication papers through this method.
+This was done primarily because it provided a good balance between overall coverage, principled methodology, and labor intensity.
+
+
+\paragraph{arXiv}
+We searched arXiv with a disjunction of the aforementioned queries starting with the year 2015 up until present.
+This search was originally performed around July 1, 2022 and then again around May 4, 2023.
+\unskip\footnote{Search URL for arXiv:
+  \url{https://arxiv.org/search/advanced?terms-0-operator=AND&terms-0-term=emergent+language&terms-0-field=all&terms-1-operator=OR&terms-1-term=language+emergence&terms-1-field=all&terms-2-operator=OR&terms-2-term=emergent+communication&terms-2-field=all&terms-3-operator=OR&terms-3-term=communication+emergence&terms-3-field=all&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2015-01-01&date-to_date=2023-05-04&date-date_type=submitted_date_first&abstracts=hide&size=100&order=-announced_date_first}.}
+The result is approximately $4\,500$ entries of which $157$ were selected for the next stage.
+
+\paragraph{Semantic Scholar}
+The search process of Semantic Scholar was a bit more complicated because the results could not be reviewed exhaustively.
+This was in part because the results were sorted by relevance and also because a wider range of topics were searched.
+Thus, the first $100{-}400$ results were inspected, until further results seemed largely irrelevant to emergent communication.
+Similarly to arXiv, the searches were performed in two batches with the first one spanning 2015 to July 28, 2022:
+\begin{itemize}[itemsep=0pt]
+  \item ``emergent language'': all fields; $100$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year%5B0%5D=2015&year%5B1%5D=2022&fos%5B0%5D=computer-science&fos%5B1%5D=engineering&fos%5B2%5D=linguistics&fos%5B3%5D=philosophy&fos%5B4%5D=psychology&fos%5B5%5D=sociology&fos%5B6%5D=mathematics&fos%5B7%5D=biology&fos%5B8%5D=economics&q=emergent%20language&sort=relevance}}
+  \item ``emergent language'': computer science; $220$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year[0]=2015&year[1]=2022&fos[0]=computer-science&fos[1]=engineering&fos[2]=mathematics&q=emergent%20language&sort=relevance&page=1}}
+  \item ``emergent communication'': all fields; $370$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year[0]=2015&year[1]=2022&fos[0]=computer-science&fos[1]=engineering&fos[2]=mathematics&q=emergent%20communication&sort=relevance&page=1}}
+  \item ``emergent communication'': computer science: $260$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year%5B0%5D=2015&year%5B1%5D=2022&fos%5B0%5D=computer-science&fos%5B1%5D=engineering&fos%5B2%5D=mathematics&fos%5B3%5D=biology&fos%5B4%5D=economics&fos%5B5%5D=linguistics&fos%5B6%5D=philosophy&fos%5B7%5D=psychology&fos%5B8%5D=sociology&q=emergent%20communication&sort=relevance&page=26}}
+  \item ``language emergence'': computer science; $400$ pages reviewed:
+   {\footnotesize\url{https://www.semanticscholar.org/search?year[0]=2015&year[1]=2022&fos[0]=computer-science&fos[1]=engineering&fos[2]=mathematics&q=language%20emergence&sort=relevance}}
+  \item ``language emergence'': biology, economics, linguistics, philosophy, psychology, sociology; $110$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year%5B0%5D=2015&year%5B1%5D=2022&fos%5B0%5D=biology&fos%5B1%5D=economics&fos%5B2%5D=linguistics&fos%5B3%5D=philosophy&fos%5B4%5D=psychology&fos%5B5%5D=sociology&q=language%20emergence&sort=relevance&page=1}}
+\end{itemize}
+The second pass was performed on May 8, 2023, spanning 2022 and 2023:
+\begin{itemize}[itemsep=0pt]
+  \item ``emergent language'': all fields; $300$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year%5B0%5D=2022&year%5B1%5D=2023&fos%5B0%5D=computer-science&fos%5B1%5D=engineering&fos%5B2%5D=linguistics&fos%5B3%5D=philosophy&fos%5B4%5D=psychology&fos%5B5%5D=sociology&fos%5B6%5D=mathematics&fos%5B7%5D=biology&fos%5B8%5D=economics&q=emergent%20language&sort=relevance&page=2}}
+  \item ``emergent communication'': computer science, engineering; $250$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year[0]=2022&year[1]=2023&fos[0]=computer-science&fos[1]=engineering&fos[2]=mathematics&q=emergent%20communication&sort=relevance&page=1}}
+  \item ``emergent communication'': computer science, egineering, linguistics, philosophy, psychology, mathematics, biology, economics; $100$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year%5B0%5D=2015&year%5B1%5D=2022&fos%5B0%5D=computer-science&fos%5B1%5D=engineering&fos%5B2%5D=linguistics&fos%5B3%5D=philosophy&fos%5B4%5D=psychology&fos%5B5%5D=sociology&fos%5B6%5D=mathematics&fos%5B7%5D=biology&fos%5B8%5D=economics&q=emergent%20language&sort=relevance}}
+  \item ``language emergence'': all fields; $300$ titles reviewed:
+    {\footnotesize\url{https://www.semanticscholar.org/search?year[0]=2022&year[1]=2023&fos[0]=computer-science&fos[1]=engineering&fos[2]=linguistics&fos[3]=philosophy&fos[4]=psychology&fos[5]=sociology&fos[6]=mathematics&fos[7]=biology&fos[8]=economics&q=language%20emergence&sort=relevance}}
+\end{itemize}
+These searches yielded $214$ papers which were selected for the next stage.
+
+\subsection{Goal categorization}
+Given these papers from our initial search, we reviewed the papers first to determine if they are in-scope (as described by \Cref{sec:rev-scope}) and second to categorize them according to the goals they pursued.
+The number of papers included and excluded is given in \Cref{tab:inclusion}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{lr}
+    \toprule
+    Category & Number of Papers \\
+    \midrule
+    \emph{Initial Search} & $443$ \\
+    \midrule[0.02em]
+    Duplicate & $84$ \\
+    Out-of-scope & $106$ \\
+    Not a research paper & $5$ \\
+    No access & $16$ \\
+    \midrule[0.02em]
+    \emph{Included} & $232$ \\
+    \bottomrule
+  \end{tabular}
+  \caption{Number of papers excluded from initial search for various reasons. Duplicate papers were either overlaps between different sources or papers that were substantially similar and by the same authors.}
+  \unskip\label{tab:inclusion}
+\end{table}
+
+
+The following categories were used for the annotation of the included papers.
+They do not precisely line up with the section ultimately used for the paper largely because the annotation categories were determined largely \emph{a priori} while the paper sections were determined \emph{a posteriori}.
+\begin{itemize}[itemsep=0pt]
+    \item Internal
+        \begin{itemize}[itemsep=0pt]
+        \item measure properties of emergent communication
+        \item produce some property in emergent communication
+        \item other emergent communication improvement (e.g., efficiency, robustness)
+        \item tooling
+        \item theoretical frameworks
+        \end{itemize}
+    \item Task-driven
+        \begin{itemize}[itemsep=0pt]
+        \item artificial general intelligence, better NLP
+        \item replication of natural language
+        \item alternative data source/paradigm
+        \item robust multiagent communication
+        \item explainable models
+        \item synthetic data for evaluation
+        \item communicating with humans
+        \end{itemize}
+    \item Knowledge-driven
+        \begin{itemize}[itemsep=0pt]
+        \item increase understanding of language in general
+        \item evolution of language:
+        \item fundamentals of language (e.g., phonology, lexicon, syntax)
+          \begin{itemize}[itemsep=0pt]
+          \item phonology
+          \item syntax
+          \item semantics
+          \item compositionality
+          \item morphology
+          \item pragmatics
+          \item sociolinguistics
+          \end{itemize}
+        \item language acquisition
+        \item cognitive science and language
+          \begin{itemize}
+          \item perception
+          \end{itemize}
+        \end{itemize}
+\end{itemize}
+Some of these categories were eventually discarded since they either did not receive much attention in the literature or the category itself was too vague to productively discussed.
+A quantitative summary of the categorization after remapping them to section in the paper is for each paper is presented in \Cref{sec:rev-quantiative}.
+
+For the majority of papers, we would read the abstract, introduction, and conclusion in order to assign the proper categories; this would take, on average, $6$ minutes to complete per paper.
+These sections are the most common places for describing the broader applications and contributions of the papers.
+Paper were reviewed more thoroughly as needed to determine the proper categories.
+Determining which papers to highlight in the body of this paper depended on the application.
+For applications with a small number of papers, we were able to exhaustively discuss the applicable papers.
+For applications with many papers, we highlighted a representative sample of the papers which best illustrated that application.
+
+\section{Complete List of Reviewed Papers}
+\unskip\label{sec:rev-list}
+
+\inputreview{tex/categories_to_papers}

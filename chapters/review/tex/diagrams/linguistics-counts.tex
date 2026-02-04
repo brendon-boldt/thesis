@@ -1,0 +1,41 @@
+\def\datafile{chapters/review/assets/linguistics-counts.csv}
+
+\pgfplotstableread[col sep=comma]{\datafile}\countsdata
+
+\hspace*{-1.5em}
+\begin{tikzpicture}
+\begin{axis}[
+  xbar stacked,
+  enlarge x limits={value=0.01, upper},
+  enlarge y limits=0.1,
+  bar shift=0pt,
+  bar width=10pt,
+  xmin=0,
+  y tick label style={rotate=30,anchor=east},
+  xlabel={Number of Papers},
+  ytick=data,
+  ytick style={draw=none},
+  yticklabels from table={\countsdata}{label},
+  nodes near coords,
+  tick label style={font=\footnotesize},
+  legend style={font=\footnotesize},
+  y dir=reverse,
+  width=8cm,
+  y=0.5cm,
+  legend entries={Ling.-Focused,Ling.-Related},
+]
+
+\addplot [
+  color3!20!black,
+  pattern=crosshatch,
+  pattern color=color3!30,
+] table [y expr=\coordindex, x=narrow] {\countsdata};
+\addplot [
+  black,
+  pattern color=black!30,
+  pattern=crosshatch dots,
+] table [y expr=\coordindex, x=broad] {\countsdata};
+
+\end{axis}
+\end{tikzpicture}
+\hspace*{-1em}

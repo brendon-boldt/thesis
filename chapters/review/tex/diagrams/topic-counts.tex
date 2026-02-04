@@ -1,0 +1,61 @@
+\def\datafile{chapters/review/assets/topic-counts.csv}
+
+\pgfplotstableread[col sep=comma]{\datafile}\countsdata
+\pgfplotstablegetrowsof{\countsdata}
+\edef\numberofrows{\pgfplotsretval}
+
+\pgfplotsset{
+  discard if not/.style 2 args={
+    x filter/.code={
+      \edef\tempa{\thisrow{#1}}
+      \edef\tempb{#2}
+      \ifx\tempa\tempb
+      \else
+        \def\pgfmathresult{inf}
+      \fi
+    }
+  }
+}
+
+\hspace*{-2.5em}
+
+\begin{tikzpicture}
+\begin{axis}[
+  xbar,
+  enlarge x limits={value=0.15, upper},
+  enlarge y limits=0.05,
+  bar shift=0pt,
+  xmin=0,
+  xlabel={Number of Papers},
+  ytick={0,...,\numberofrows},
+  ytick style={draw=none},
+  yticklabels from table={\countsdata}{label},
+  tick label style={font=\footnotesize},
+  nodes near coords,
+  width=6cm,
+  y=0.5cm,
+  y tick label style={rotate=30,anchor=east},
+]
+
+\addplot [
+  color1!50!black,
+  pattern color=color1!50,
+  pattern=crosshatch dots,
+  discard if not={section}{intermediate}
+] table [col sep=comma,y=index, x=count] {\datafile};
+\addplot [
+  color2!50!black,
+  pattern=north east lines,
+  pattern color=color2!50,
+  discard if not={section}{task}
+] table [col sep=comma,y=index, x=count] {\datafile};
+\addplot [
+  color3!50!black,
+  pattern=crosshatch,
+  pattern color=color3!50,
+  discard if not={section}{knowledge}
+] table [col sep=comma,y=index, x=count] {\datafile};
+
+\end{axis}
+\end{tikzpicture}
+\hspace*{-1em}

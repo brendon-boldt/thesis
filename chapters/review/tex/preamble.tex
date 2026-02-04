@@ -1,0 +1,85 @@
+% \documentclass[10pt]{article} % For LaTeX2e
+
+% %\usepackage{style/tmlr}
+% % If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{style/tmlr}
+% % To de-anonymize and remove mentions to TMLR (for example for posting to preprint servers), instead use the following:
+% %\usepackage[preprint]{tmlr}
+
+% \usepackage[accepted]{tmlr-style-file-main/tmlr}
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xurl}
+\usepackage{latexsym,amsmath}
+\usepackage{booktabs}
+\usepackage{algorithm,listings}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[nameinlink]{cleveref}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage[export]{adjustbox}
+
+\usepackage{dingbat}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,shadows,calc,fit,positioning,mindmap,patterns,scopes}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+
+% \title{A Review of the Applications of Deep Learning-Based\\Emergent Communication}
+% 
+% \author{%
+%   \name Brendon Boldt \email bboldt@cs.cmu.edu
+%   \\
+%   \addr Language Technologies Institute \\
+%     Carnegie Mellon University, Pittsburgh, PA, USA
+%   \AND
+%   \name David Mortensen \email dmortens@cs.cmu.edu
+%   \\
+%   \addr Language Technologies Institute \\
+%     Carnegie Mellon University, Pittsburgh, PA, USA
+% }
+
+% \author{Brendon Boldt, David Mortensen \\
+% Language Technologies Institute \\
+% Carnegie Mellon University\\
+% Pittsburgh, PA 15213, USA \\
+% \texttt{\{bboldt,dmortens\}@cs.cmu.edu} \\
+% }
+
+% \def\month{02}
+% \def\year{2024}
+% \def\openreview{\url{https://openreview.net/forum?id=jesKcQxQ7j}}
+
+%%% Commands %%%
+
+% \newcounter{comment}
+% \newcommand\bjb[1]{{\stepcounter{comment}\color{purple}[BJB\@: #1]}}
+% \newcommand\cmt[1]{{\stepcounter{comment}\color{gray}[#1]}}
+% \newcommand\drm[1]{{\stepcounter{comment}\color{blue}[DRM\@: #1]}}
+\newcommand\citev[1]{\citet{#1} ({\ttfamily\small #1})}
+
+\newcommand\sentspace{\spacefactor\sfcode`.{}}
+
+\newenvironment{customlist}{%
+  \begin{description}[left=1em,itemindent=0em,labelsep=1em]%
+}{\end{description}}
+
+\newcommand\surl[1]{{\small\url{#1}}}
+
+\newcommand\fullref[1]{\textit{\nameref{#1}} (\Cref{#1})}
+
+\definecolor{color1}{HTML}{D81B60}
+\definecolor{color2}{HTML}{1E88E5}
+\definecolor{color3}{HTML}{FFC107}
+
+%%% End Commands %%%
+

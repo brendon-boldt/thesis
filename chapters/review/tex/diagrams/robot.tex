@@ -1,0 +1,56 @@
+\def\cubeoffset{0.25}
+\tikzset{
+  boxface/.pic={
+    \fill
+      (0,0)
+        edge (1,0)
+        edge (0,1)
+        edge (0-\cubeoffset,0+\cubeoffset)
+      (1,1)
+        edge (1,0)
+        edge (0,1)
+        edge (1-\cubeoffset,1+\cubeoffset)
+      (0-\cubeoffset,1+\cubeoffset)
+        edge (0-\cubeoffset,0+\cubeoffset)
+        edge (1-\cubeoffset,1+\cubeoffset)
+        edge (0,1)
+      ;
+
+    \fill (0.3, 0.7) circle [radius=0.03];
+    \fill (0.7, 0.7) circle [radius=0.03];
+
+    \path [] (0.3, 0.3) edge (0.7, 0.3);
+  }
+}
+
+\begin{tikzpicture}[scale=0.8, transform shape]
+
+  \node (t1) at (-4, 0.5) {\large$T_1$};
+  \draw (-\cubeoffset,0) pic [xscale=-1] {boxface};
+  \fill [orange!60] (-3, 0.5) circle [radius=0.4];
+  \node at (-1.9, 0.5) {\Large\eye};
+  \draw (3,0) pic {boxface};
+  \draw [gray] (-3.5, -0.4) to (4.8, -0.4);
+
+  { [yshift=-2cm]
+    \node (t2) at (-4, 0.5) {\large$T_2$};
+    \draw (-1,0) pic {boxface};
+    \node[rectangle callout, draw, callout absolute pointer={(0.1,0.5)}] at (1.3,1) {3 14 1 59 2};
+    \draw (4-\cubeoffset,0) pic [xscale=-1] {boxface};
+    \draw [gray] (-3.5, -0.4) to (4.8, -0.4);
+  }
+
+  { [yshift=-4cm]
+    \node (t3) at (-4, 0.5) {\large$T_3$};
+    \draw (-1,0) pic {boxface};
+    \draw (3,0) pic {boxface};
+    \node (opt1) [fill=orange!60,regular polygon, regular polygon sides=4, inner sep=0.25cm] at (5.5, 1.5) {};
+    \node (opt2) [fill=blue!60,below=0.5cm of opt1,circle,inner sep=0.25cm,anchor=center] {};
+    \node (opt3) [fill=orange!60,below=0.5cm of opt2,circle,inner sep=0.25cm,anchor=center] {};
+    \node [left=0.0cm of opt3,anchor=east,yshift=-1.5mm] {\Large\leftpointright};
+  }
+
+  \draw [-stealth, black!50, dashed] (t1) to (t2);
+  \draw [-stealth, black!50, dashed] (t2) to (t3);
+
+\end{tikzpicture}

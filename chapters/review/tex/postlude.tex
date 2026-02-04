@@ -1,0 +1,112 @@
+\section{Discussion}%
+\label{sec:rev-discussion}
+
+\subsection{Quantitative summary of results}
+\unskip\label{sec:rev-quantiative}
+
+In \Cref{fig:summary}, we present a quantitative summary of the categorization of papers covered in our survey.
+\Cref{fig:summary-all} shows at the number of paper falling within the scope of each application, and \Cref{fig:summary-ling} further breaks the down \fullref{sec:rev-linguistics} into the different fields of linguistics.
+Note that there is not a one-to-one correspondence between papers and applications, a paper may have no applications if its contributions are not properly applications or more than one application if its contribution touches on multiple areas.
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t][9cm][c]{0.4\textwidth}
+    \centering
+    \inputreview{tex/diagrams/topic-counts}
+    \caption{Number of papers corresponding to each section of this review.}
+    \unskip\label{fig:summary-all}
+  \end{subfigure}
+  \begin{subfigure}[t][9cm][c]{0.5\textwidth}
+    \centering
+    \inputreview{tex/diagrams/linguistics-counts}
+    \caption{%
+      Breakdown of linguistic variables papers;
+      ``Linguistic-Focused'' refers to papers discussed in \Cref{sec:rev-linguistics}, while ``Linguistic-Related'' includes anything more loosely related to that area of linguistics.
+    }
+    \unskip\label{fig:summary-ling}
+  \end{subfigure}
+  \caption{%
+    Quantitative summary of paper topics in this survey.
+    Abbreviations:
+      \emph{MAC\@}: multi-agent communication,
+      \emph{HCI\@}: human--computer interaction,
+      \emph{Expl.\@ ML\@}: explainable machine learning,
+      and \emph{Comp.\@}: compositionality.
+  }
+  \unskip\label{fig:summary}
+\end{figure}
+
+
+\subsection{Internal goals}
+The internal goals of emergent communication prove tricky for this survey since they both make up the majority of contributions in emergent communication papers but only loosely qualify as applications.
+Many of the papers we surveyed listed contributions along the lines of ``introducing an environment where we can observe $X$ phenomenon'' or ``demonstrating a relationship between variable $X$ in the environment and variable $Y$ in the emergent language''.
+The second of these was by the most common in the $245$ emergent communication papers surveyed: it appeared $116$ times whereas the next highest category was ``related to compositionality'' with only $46$ papers.
+This is not to say that these contributions are unimportant or unnecessary, but they fail to be true applications in the sense of being a focused ``goal'' which a line of research can pursue.
+Thus, such contributions were omitted from this survey.
+
+Aside from these non-application contributions, the topic of \emph{metrics} was the most common.
+Many of these metrics, though, are not treated as applications or goals in themselves as they are introduced for the needs of the paper and do not see reuse in subsequent papers.
+Nevertheless, some papers do explicitly aim towards better metrics, comparing the quality of metrics in an effort to refine the tools researchers have for analyzing emergent communication \citep{Lowe2019OnTP,korbak2020measuring}.
+
+Finally, \fullref{sec:rev-rederiving} was one goal which we included in this paper, functioning more like a position paper than a survey paper.
+This goal did was not explicitly pursued by any of the papers we reviewed, although it is implicit in a large number of papers, namely those which seek to align emergent communication with some human language-like quality (e.g., compositionality, Zipf's Law of Abbreviation).
+Nevertheless, we argue that rederiving human language should receive more attention which addresses it holistically.
+This is because
+  (1) it is critical to making possible the downstream task- and knowledge-driven applications
+  and (2) it is an effective way to interpret the other contributions falling under the ``internal'' umbrella.
+
+
+\subsection{Task-driven applications}
+Within the task-driven applications we find that multi-agent communication has received the most attention.
+This is generally expected as it is one the most natural applications of emergent communication, given its foundation in deep multi-agent reinforcement learning.
+Although some papers have addressed using emergent communication for synthetic data, it is somewhat surprising that the number is not higher since it is probably the application with the most potential for near-term success, especially in low-resource domains as a replacement for traditional synthetic data.
+Interacting with humans, while an important long-term goal, does not hold as much short-term promise because it is more difficult to conduct scientific studies with humans and anything short of near-human language-like emergent communication is not going to surpass other methods for interfacing with humans through natural language.
+
+\subsection{Knowledge-driven applications}
+Within the knowledge-driven the applications, we find the cognitive and core linguistic aspects of emergent communication to the most addressed.
+The number shown for ``Cognition'' in \Cref{fig:summary-all} includes paper using a broader sense of ``cognition'' and ``cognitive science'' including topics like perception, internal representations, and neural architectures.
+\unskip\footnote{Although we did not perform the same focused-versus-related breakdown with cognition as was done with linguistic variables, we expect we would have found a similar divide with many cognition-related papers and only a handful of papers which focus on issues directly relevant to cognitive science (as illustrated in \Cref{fig:summary-ling}).}
+As shown in \Cref{fig:summary-ling}, core linguistics, when given this broader interpretation is far more prevalent with over $100$ in total.
+By comparison, language change and language acquisition of language are more niche and have fewer papers associated with them.
+
+Within the umbrella of linguistic variables, we can see a handful of trends.
+First, we see generally in \Cref{fig:summary-ling} that the number of papers which address variables directly relevant to linguistics is dwarfed by the number of papers which take only a loose inspiration from linguistics.
+Compositionality is especially interesting in this regard as it is, by far, the most written-about topic under the broad umbrella of linguistics, yet we did not find any papers addressing it from a strongly linguistic and human language-oriented perspective.
+
+This may be due, in part, to the fact that human languages are universally compositional and generally have similar methods of composing meaning at a broad level in comparison to many ways in which emergent communication may or may not be compositional.
+Aside from compositionality, semantics and pragmatics are the most studied topics.
+These areas of linguistics naturally line up with the most foundational aspects of emergent communication, namely figuring out what emergent languages are actually communicating (semantics) and how this meaning derives from communication strategies and environmental pressures (pragmatics).
+Finally, phonology and morphology have the least amount of work focused on them.
+One potential reason for this is that emergent communication systems are typically structured in a way to preclude phonology by using discrete communication channels and morphology by assuming discrete symbols to already be individual units of meaning (i.e., morphemes) without investigating potential subword structure further.
+
+
+\section{Conclusion}
+\unskip\label{sec:rev-conclusion}
+
+In this paper, we have given a comprehensive summary of the goals and applications of deep learning-based emergent communication research.
+The applications of emergent communication can roughly be categorized into those which aim at:
+  improving emergent communication techniques themselves (internal);
+  solving well-defined, practical problems (task-driven);
+  and expanding human knowledge of the natural world (knowledge-driven).
+Each of these applications has been accompanied by
+  a description of its scope,
+  an explication of emergent communication's unique role in addressing it,
+  a summary of the extant literature working towards the application,
+  and brief recommendations for near-term research directions.
+Finally, we identify general trends observed in the course of surveying the applications of emergent communication.
+
+This work has three primary goals.
+First, it is meant to inspire future emergent communication research by compiling the most salient areas of research into a single document with relevant work cited.
+Second, this work is meant to accessibly illustrate the potential applications of emergent communication to practitioners who are not as familiar with the multi-agent reinforcement learning or deep learning in general.
+Finally, defining the ultimate aims of emergent communication is critical to guiding the field of research itself through practices like evaluation metrics and benchmarks.
+Evaluation metrics require explicitly defining what a \emph{good} or \emph{desirable} emergent language is, and understanding what emergent communication can be used for is a foundational step.
+While this paper does not come close to exhausting the nuances of each of these applications, it highlights the nature and importance of applications as a whole in order to serve the future of emergent communication research.
+
+
+% \subsubsection*{Acknowledgements}
+%  We would like to thank that anonymous reviewers for their painstaking, thorough, and very constructive comments. Responding to their insightful feedback has made this article much better.
+% This material is based on research sponsored in part by the Air Force Research Laboratory under agreement number FA8750-19-2-0200. The U.S.  Government is authorized to reproduce and distribute reprints for Governmental purposes notwithstanding any copyright notation thereon. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies or endorsements, either expressed or implied, of the Air Force Research Laboratory or the U.S. Government.
+
+% \bibliography{bib/custom,bib/arxiv,bib/semantic-scholar}
+% \bibliographystyle{iclr2022_conference}
+

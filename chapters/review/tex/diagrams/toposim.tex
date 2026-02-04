@@ -1,0 +1,80 @@
+\def\sz{4.0}
+\def\osfac{0.25}
+\tikzset{
+  plane/.pic={
+    \draw
+      (0,0)
+        -- (\sz,0)
+        -- (\sz+\sz*\osfac,0+\sz*\osfac)
+        -- (0+\sz*\osfac,0+\sz*\osfac)
+        -- (0,0)
+      ;
+    \fill
+      [fill=black!10, opacity=0.5]
+      (0,0)
+        -- (\sz,0)
+        -- (\sz+\sz*\osfac,0+\sz*\osfac)
+        -- (0+\sz*\osfac,0+\sz*\osfac)
+        -- (0,0)
+      ;
+  }
+}
+\newcommand\projx[2]{#1*\sz+#2*\sz*\osfac}
+\newcommand\projy[1]{#1*\sz*\osfac}
+\def\planesep{3cm}
+\def\indices{0,...,99}
+
+\pgfdeclarelayer{top layer}
+\pgfdeclarelayer{rest layer}
+\pgfsetlayers{rest layer, top layer}
+
+\pgfmathsetseed{9}
+\begin{tikzpicture}[minimum size=0]
+  \begin{pgfonlayer}{top layer}
+    \node at (\sz+\sz*\osfac*1.5, \osfac*\sz/2) {\large $\mathcal O$};
+    \foreach \i in \indices {
+      \pgfmathrandominteger\x{500}{9500}
+      \pgfmathrandominteger\y{500}{9500}
+      \node
+        (o\i)
+        [ellipse, inner xsep=0.2mm, inner ysep=0.1mm, fill=black]
+        at (\projx{\x/10000}{\y/10000},\projy{\y/10000}) {};
+    }
+    \draw pic {plane};
+  \end{pgfonlayer}
+
+  \begin{pgfonlayer}{rest layer}
+  \begin{scope}[yshift=-\planesep]
+    \draw  pic {plane};
+    \node at (\sz+\sz*\osfac*1.5, \osfac*\sz/2) {\large$\mathcal M$};
+    \foreach \i in \indices {
+      \iftoposimhigh
+        \pgfmathrandominteger\x{-300}{300}
+        \pgfmathrandominteger\y{-300}{300}
+      \else
+        \pgfmathrandominteger\x{500}{9500}
+        \pgfmathrandominteger\y{500}{9500}
+      \fi
+        \iftoposimhigh
+          \def\p{($(o\i) + (0,-3cm) + ({(\projx{\x}{\y}) * 0.002mm}, {(\projy{\y})*0.002mm})$)}
+        \else
+          \def\p{(\projx{\x/10000}{\y/10000},\projy{\y/10000})}
+        \fi
+      \node
+        (m\i)
+        at \p
+        [ellipse, inner xsep=0.2mm, inner ysep=0.1mm, fill=black,
+          anchor=center,
+          ]
+        {};
+    }
+  \end{scope}
+
+  \foreach \i in \indices {
+    \draw [opacity=0.4] (o\i) edge (m\i);
+  }
+
+  \end{pgfonlayer}
+
+
+\end{tikzpicture}

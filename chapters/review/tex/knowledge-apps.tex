@@ -1,0 +1,342 @@
+\section{Knowledge-Driven Applications}\label{sec:rev-knowledge}
+
+The knowledge-driven applications of emergent communication center around the scientific fields of linguistics and cognitive science and typically concern gaining a deeper understanding of phenomena in the natural world.
+These applications have tend to have more remote impacts than the task-driven applications, but they also present the opportunity to gain novel insights into how humans think and use language.
+The primary challenges in this area come from creating emergent communication which is realistic enough to legitimately provide insight in areas where there are gaps left by more traditional techniques in linguistics and cognitive science.
+The first subsection below (\Cref{sec:rev-general-knowledge-apps}) provides a summary of common themes in the ``Description'' and ``Applicability'' subsections throughout knowledge-driven applications (i.e., it is not itself an application).
+
+\subsection{General paradigm of knowledge-driven applications}%
+\label{sec:rev-general-knowledge-apps}
+
+\paragraph{Description}
+
+Some of the most persistent debates in linguistics are about the degree to which language and its characteristics are the product of very specific biology (the ``Chomskyan'' nativist position that dominated North American linguistics in the second half of the twentieth century) or can be derived from very general mechanisms of learning (the behaviorist position that dominated North American linguistics in the first half of the twentieth century).
+This conflict reflects a broader debate within the social and behavioral sciences about the relative importance of ``nature'' (the inductive biases of the human brain) and ``nuture'' (operant conditioning from parents, caregivers, and other aspects of the environment) in the cognitive development of human children.
+Such debates are difficult to resolve because of limited access to the necessary data: the ingredients of language (nature and nuture) are largely fixed, meaning we cannot (ethically) vary them in order to determine their effects on language.
+This is to say, the relevant data in these debates come largely from observation and only extremely limited experimentation.
+The lack of true experimentation hinders the type of scientific investigation which would yield more definitive answers to these questions.
+
+\paragraph{Applicability}
+
+Emergent communication can address these unsolved problems by serving as a proxy for human language whose ingredients can be manipulated and experimented with.
+Emergent communication makes a suitable proxy because
+  (1) it aims at being a faithful reconstruction of human language,
+  and (2) this reconstruction is a reflection of its ingredients.
+For example, we can see the ``nature vs.\@ nurture'' distinction paralleled in the distinction between the systems inside of an agent and the interaction that takes place with other agents.
+
+Deep learning-based emergent communication is uniquely poised to serve as a proxy for human language for two reasons.
+First, deep learning methods are by far the closest methods to replicating human proficiency in language (as well as vision, planning, and so on).
+Hence, it would seem a model class of comparable power is necessary to support the emergence of a language with enough complexity to be useful for the most relevant linguistic problems.
+Second, deep neural networks also introduce minimal inductive bias when compared with traditional simulations and mathematical models.
+The behaviorist or ``nurture'' position can only be validated if language learning can take place without language-specific inductive biases and this is only possible in a context in which learning according to very general principles is possible, so deep learning is a natural fit for testing hypotheses about the necessity of language-specific learning mechanisms.
+
+
+\subsection{Language, cognition, and perception}%
+\label{sec:rev-cognition}
+\paragraph{Description}
+This goal refers to the two-way relationship between language and cognitive (and perceptive) processes in the human brain: how language is shaped by the cognitive capacities of humans and what goes on in the brain to enable the use of language.
+By extension, this also includes behavior which proceeds from cognitive phenomena of interest (e.g., adjusting communication strategies based on a theory of mind).
+Aside from not being able to experimentally modify the brain, a major barrier in studying cognition is being able to merely \emph{observe} the brain.
+
+The primary way of studying language and cognition has been through laboratory experiments with humans.
+While we do have easy access to humans using language, the observation of the actual cognitive processes we are interested has limitations in both its direct and indirect forms.
+Direct observation includes using apparatus like an EEG, MEG, or fMRI\@;
+  its primary disadvantages are that it requires specialized instruments, often cannot be done \emph{in situ} and is still limited with what it can observe.
+Indirect observation includes methods which infer cognitive processes from external observations; for example, we might infer a limit to working memory by seeing how many digits in a long number a person can recall.
+The primary restrictions with indirect methods is that they, too, are very limited in what they can observe.
+
+Some approaches to simulation for this application investigate the similarity of language models to humans in the cognitive domain \citep{Schrimpf2020ArtificialNN,Misra2021DoLM,mahowald2023dissociating}.
+These neural networks, though, are typically trained in a standard supervised or self-supervised manner (i.e., not the embodied reinforcement learning of emergent communication).
+Even if the model is trained with multi-modal data, the relationship between the modalities is more rigid insofar as it is restricted \emph{a priori} by the way the model is optimized;
+  this limits the ability to draw conclusions about human linguistic behavior where relationship between modalities is flexible and dynamic.
+
+
+\paragraph{Applicability}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphicsreview[height=5cm]{assets/fmri}
+    \caption{Visualization of fMRI scans of the human brain in response to visual stimuli \citep{bracci2023representational}.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphicsreview[height=5cm]{assets/cnn-filters}
+    \caption{Visualization of image classification CNN layers \citep{olah2017feature}.}
+  \end{subfigure}
+  \caption{Measurements and visualizations of artificial neural networks are easier to make and far more flexible compared to biological networks in the human brain. This makes ANNs an attractive proxy for studying the human brain.}
+\end{figure}
+
+Observing neural networks is easier that observing the results of human-subject experiments.
+This is because the state and processes of artificial neural networks are completely accessible, even if they are not always easy to interpret.
+Furthermore, any individual aspect of an artificial neural network can be manipulated, which allows for a far higher granularity in experimentation than human subjects.
+Compared to using language models, emergent communication agents have a more natural integration of language capabilities with other capabilities such as perception or interpersonal communication goals.
+This is due to the automatically learned neural-to-neural interface between between language, cognition, and perception, allowing the resulting use of language to be shaped by embodiment and pressures for useful communication.
+
+
+\paragraph{Current state}
+The current literature in this area focuses on observing high-level principles from cognitive science and perception in the context of emergent communication systems.
+While these abstract facts do relate to cognitive science, they are more directly aimed at improving emergent communication techniques themselves (i.e., like an \emph{internal} goal).
+Work directly applying emergent communication-trained models to particular questions within cognitive science (along the lines of \citet{Misra2021DoLM}) is largely absent.
+
+The subtopic with the most attention in this application is the relationship between emergent communication and the agents' perception of the environment.
+\citet{bouchacourt2018how} establish a simple but important point regarding perception: neural-network based agents may successfully communicate with degenerate perceptual strategies.
+Namely, they show how agents which learn to play an image discrimination game with natural images are just as successful when playing with random noise images, demonstrating that we cannot simply assume that agents will learn intuitive or interpretable perceptual representations without further investigation.%
+\footnote{This is closely related, both technically and methodologically, to adversarial inputs in computer vision research.}
+Nevertheless, \citet{dessì2021interpretable} counter this pessimism by demonstrating that it is still possible for emergent communication agents to develop interpretable visual representations on their own.
+
+\citet{choi2018multiagent,Portelance2021TheEO} study how the balance of visual attributes in training data directly influences what attributes are actually perceived.
+\citet{feng2023learning} look specifically at \emph{relations} between visual elements in a referential game.
+More generally, \citet{lazaridou2018emergence,Ohmer2021WhyAH,ohmer2021mutual} study how the emergent communication is sensitive, in general, to the perception of the environment.
+While most papers address \emph{visual} perception, \citet{khorrami2019can} looks at the emergent perception of units of sound.
+
+Deeper than perception, some work studies the agents' internal representations themselves.
+\citet{Sabathiel2022SelfCommunicatingDR} look at how agents can represent numbers to themselves by interacting with their environment (e.g., an abacus).
+\citet{SantamariaPang2019TowardsSA} compare representations learned with supervised methods (e.g., a convolutional neural network trained on image classification) with those learned with self-supervised learning; supervised learning yields better representations, generally, but self-supervised learning can be augmented to approach the same performance.
+\citet{Garcia2022DisentanglingCI} discuss how a mismatch in internal representation severely reduces the effectiveness of communication.
+
+Finally, a handful of papers have addressed cognitive strategies themselves and specifically how human-inspired inductive biases can be beneficial both for task success and for learning intuitive representations.
+\citet{Todo2020ContributionOR} find that agents restricting their own learning process lead to languages with more interpretable structure;
+  specifically, agents would discard training examples which diverged more than certain threshold from their own representations.
+\citet{yuan2020emergence,piazza2023theory} encourage agents to develop a theory of mind by explicitly modeling the internal states of other agents.
+This leads to more effective communication by introducing pragmatics into the emergent communication since agents can explicitly infer meaning from the communicative context.
+\citet{masquil2022intrinsically} propose adding intrinsic motivations to agents to improve communication.
+Finally, \citet{cowenrivers2020emergent} explore the use of world models \citep{ha2018worldmodels} to improve agents' ability to handle environments with longer episodes.
+
+
+\paragraph{Next steps}
+The next steps for this area of emergent communication are to bring the research which already explores abstract principles of cognition in emergent communication closer to the more concrete questions already present in cognitive science.
+This would entail using emergent communication techniques in the same vein as \citet{Misra2021DoLM} and the other papers mentioned in the ``Description'' section.
+In particular, it would be especially important to identify the differences between traditional language models and emergent communication agents in terms of their cognitive realism.
+This would include both ways in which language models should be limited (e.g., language models having super-human recall) as well as ways in which they need to improve (e.g., discourse coherence, factuality).
+Incorporating cognitive science will better illuminate where emergent communication techniques diverge from human cognition and behavior and how that might influence the resulting emergent communication.
+
+
+\subsection{Origin of language}%
+\label{sec:rev-evolution}
+
+\paragraph{Description}
+The origin of human language, as a task, comprises studying the environment and processes under which human language, as we recognize it today, emerged from pre-linguistic communication (e.g., methods animals use to communicate, see \Cref{fig:bandwidth}).
+In particular, one of the biggest questions surrounding the origin of human language is whether it occurs gradually or through saltations (discussed in \citet{lacroix2019biology}).
+The gradualist position holds that there was no clear boundary or and no clear discontinuities between pre-linguistic communication and true human language while the saltationist position holds that, at some point, pre-linguistic communication underwent a sudden transition into human language.
+Addressing this particular question is major step in determining the nature of the processes explaining the origin of human language.
+
+\begin{figure}
+  \centering
+  \includegraphicsreview[width=0.98\textwidth]{assets/bandwidth}
+  \caption{%
+    Illustration of the continuum of pre-linguistic communication from simple, low-bandwidth communication (e.g., ants leaving pheromone trails) to more complex, high-bandwidth systems (e.g., the vocalizations of Rhesus monkeys)
+    (examples and figure taken from \citet{Grupen2020LowBandwidthCE}).
+    Pre-linguistic communication systems, such as these, are an important component of studying the origin of human language.
+  }
+  \unskip\label{fig:bandwidth}
+\end{figure}
+
+Since language was originally only spoken, there are no direct data which describe what happened when it evolved.
+Thus, any data for research come from inferential data from animal communication,
+  and contemporary examples of language invention (e.g., creolization, Nicaraguan Sign Language).
+These are relatively sparse, leaving the origin of language very difficult to study.
+As a result, simulation is, in a way, the closest source of data to direct observation.
+Yet critical factors in the origin of language include complex non-linguistic elements such as perception, internal representation, and social dynamics which traditional simulations have difficulty representing.
+
+\paragraph{Applicability}
+Simulation is a natural way to address processes, such as the origination of language, for which we have no (or limited) direct observations.
+Simulations permit not only observing these processing but counterfactually experimenting with them as well (e.g., answering ``If I change variable $X$, how does $Y$ respond?'').
+Such experiments are necessary for scientifically distinguishing causation from mere correlation.
+Yet, the dependence of the origin of language on non-linguistic factors like perception, internal representations, and social dynamics indicates a significant need for simulations which integrate learning methods with a high capacity and flexibility, that is, deep neural networks.
+Furthermore, learning these linguistic and non-linguistic skill jointly (as opposed to, for example, using a pre-trained vision network) is also an important point of realism which emergent communication provides as it mirrors the fact that humans learn language and other cognitive skills jointly.
+Additionally, using neural networks allows the simulation to reflect the evolutionary pressures in the environment instead of the stipulations of a handcrafted mathematical model.
+
+\paragraph{Current state}
+Work on language evolution and change comprises a few empirical papers which have used small-scale, simple environments to test specific hypotheses as well as a few position papers.
+The empirical papers typically use environments and tasks from prior work with the added element of transmission of language from generation to generation.
+For example, \citet{Grupen2021CurriculumDrivenML} look specifically at pre-linguistic communication (e.g., between animals) with emergent communication techniques as a foundation for the emergence of fully linguistic communication.
+\citet{li2019ease,ren2020compositional} test the effects of \emph{iterated learning} in emergent communication environments.
+Iterated learning is a framework introduced by \citet{Smith_Kirby_Brighton_2003} as a way to reason about and explain the origin of compositionality (among other things) in human language from an evolutionary perspective on language \citep{kirby2002lingstruct,Kirby2008CumulativeCE}.
+The core feature of iterated learning is that when language users transmit only a subset of the language to language learners, the learners have to generalize what they have heard in order to infer the rest of the language, leading to greater systematicity and compositionality over generations.
+
+The position papers on this topic all specifically incorporate relevant work from the linguistics side of language evolution and try to square it with the contemporary approaches of emergent communication.
+\citet{lacroix2019biology} compares the relative merits of gradualist and saltationist approaches to the origin of language and what bearing they have on emergent communication research, specifically arguing that the focus on compositionality might not align with gradualism.
+\citet{moulinfrier2020multiagent} highlight the opportunities and challenges of using recent advancements in multi-agent reinforcement learning for studying the origin of language.
+\citet{galke2022emergent} specifically identify the elements of current emergent communication research that must change in order to better apply to linguistically-grounded study of the origin of language.
+
+
+\paragraph{Next steps}
+Achieving realism in emergent communication-based simulations of the origin of language must focus on closing the gap between the two data points we do actually possess:
+  animal communication and behavior (pre-origin of language)
+  and contemporary human language (post-origin).
+Thus, the pre-origin side of this entails aligning emergent communication settings with what we can currently observe in the more sophisticated varieties of animal communication, along the lines of what \citet{Grupen2021CurriculumDrivenML} study.
+Subsequently, changes to the setting would be made to elicit more sophisticated forms of communication which would ideally result in communication bearing the traits of human language (i.e., rederivation as described in \Cref{sec:rev-rederiving}).
+Since the origin of language depends heavily on the aforementioned non-linguistic concepts, simulations will have to take into account the relevant literature in cognitive science and behavioral psychology.
+
+Additionally, empirical implementations of the principled, interdisciplinary recommendations of the position papers \citep{lacroix2019biology,moulinfrier2020multiagent,galke2022emergent} also present concrete opportunities for quickly advancing emergent communication's relevance to studying the origin of language.
+
+\subsection{Language change}%
+\label{sec:rev-diachronic}
+
+\paragraph{Description}
+
+Languages are perpetually changing, sometimes above and sometimes below the level of conscious awareness.
+Language change refers to the processes which govern how language changes and develops over time in human populations.
+In a groundbreaking paper in language change, Weinreich, Labov, and Herzog identified five problems regarding how languages change over time \cite{weinreich1968empirical}:
+\begin{customlist}
+\item[constraints] What constrains the transition of a language from a state $s_{t-1}$ to a successor state $s_t$? In particular, are there impossible languages that no change could produce?
+\item[transition] What intervening stages must exist between states $s_{t-1}$ and $s_t$? For example, do the two language varieties coexist for a time?
+\item[embedding] How are the observed changes embedded in the matrix of linguistic and extralinguistic concomitants of the forms in question? What other changes co-occur with the change non-accidentally?
+\item[evaluation] How do members of the language community subjectively evaluate the change that is underway or has occurred?
+\item[actuation] Why does a particular change occur at a particular point in time and space?
+\end{customlist}
+While human laboratory experiments have been useful in addressing some of these problems \citep{roberts2017linguists}, as have field studies and other social-scientific methodologies, emergent communication simulations provide an unprecedented means of addressing all of these problems except \emph{evaluation}.
+
+\paragraph{Applicability}
+
+Emergent languages in multi-agent simulations change over time.
+If they did not---in some respect---change, they would never develop language-like properties in the first place.
+Thus we can ask if they reach stable equilibria and, if so, where and why do changes occur, if at all.
+In answering this question, emergent communication simulations can address the \emph{actuation problem} (one of the most difficult problems in language change).
+These simulations allow us to dissect the relationships between language changes and changes in the ``social'' and ``physical'' environment as well, addressing the \emph{embedding problem}.
+But because emergent communication simulations give us a kind of omniscience, they also allow us to characterize the stages between stable equilibria, providing a window onto the \emph{transition problem}.
+Finally, because emergent communication researchers are free to add and remove constraints on possible languages at will, such simulations allow us to address questions about whether human-like language change requires constraints on what languages are ``legal'' (addressing the \emph{constraints} problem in a way that bears upon the behaviorism-nativism debate).
+
+\paragraph{Current state}
+Language change has not received much attention in the literature; only two papers were found in the survey which approached the topic specifically.
+First, \citet{graesser2019emergent} study language contact, where two or more populations of agents who have developed their own language in relative isolation subsequently start communicating with each other.
+In particular, the experiments replicated a handful of general language contact phenomena that are known to occur with human language.
+First, while dialects start out as mutually unintelligible, interaction between subsets of to populations can cause convergence of all agents to a mutually intelligible language.
+Second, when this contact occurs, either the larger population's language will dominate and take over the smaller population's or a type of creole will form with a lower overall complexity.
+Finally, when there is a linear chain of populations, a continuum of mutual intelligibility emerges where populations with fewer degrees of separation develop more similar dialects.
+These findings primarily address the \emph{embedding problem} mentioned above.
+
+\citet{dekker2020contact} propose a set of of emergent communication experiments studying a historical instance of language change, namely morphological simplification in Alorese, a language of Eastern Indonesia.
+Specifically, the experiments look to determine if adult language contact can explain the loss of verb inflection in the whole language over time.
+The proposed approach is based on deep neural networks and proposes leveraging cognitive two cognitive mechanisms: Ullman's declarative/procedural model of language learning \citep{ullman_2001,Ullman2001ANP} and Lindblom's H\&H model \citep{Lindblom1990}.
+
+
+\paragraph{Next steps}
+Emergent communication studies of the transition problem have the most potential near-term progress.
+In particular, studies could investigate quantitatively and at scale how transition between two stable states $s_{t-1}$ and $s_t$ takes place.
+Specifically, one could investigate whether two languages coexist within a community of agents, with one gradually gaining currency or first dominating a subgraph of the social network, or whether changes happen abruptly across the whole population.
+Such studies with emergent communication could then be compared to historical examples of the transition program to verify and improve the effectiveness of emergent communication approaches.
+
+\subsection{Language acquisition}%
+\label{sec:rev-acquisition}
+\paragraph{Description}
+Language acquisition is the process by which a human acquires the ability to use a new language.
+For this application, we will focus on first language acquisition because it has weightier scientific implications than second language acquisition and stands to gain more from emergent communication techniques due to how it co-occurs with the acquisition of important non-linguistic behaviors like reasoning and memory.
+Compared to the origin of language (\Cref{sec:rev-evolution}), observational data of first language acquisition data is readily available as it always occurring in a population of humans.
+Compared to the cognitive and perceptual aspects of language (\Cref{sec:rev-cognition}), there is more to be learned from direct observation of external behavior, making the data easier to collect.
+Nevertheless, data on first language acquisition is predominantly \emph{observational}, that is, not derived from controlled, randomized experiments.
+Experiments which test anything more than superficial aspects of language acquisition could have drastic negative effects on human subjects and would be wholly unethical.
+Thus, data from more involved experimental methods on first language acquisition has to come from other sources such as neural networks trained on language data.
+Neural networks trained purely on \emph{text} language data, though, fall far short of human performance given a similar amount of language data, suggesting the non-linguistic inputs might be key to replicating human language acquisition \citep{warstadt2022artificial}.
+
+\paragraph{Applicability}
+Emergent communication naturally integrates non-linguistic inputs into language (e.g., embodiment, interaction) into the acquisition of language by the neural network agents instead of stipulating ahead of time how such inputs will impact the emergent communication \citep{warstadt2022artificial,bisk-etal-2020-experience}.
+Furthermore, the ease of observing and experimenting with neural networks vastly surpasses doing so with human subjects.
+These advantages of using emergent communication as a simulation technique for studying language acquisition are generally similar to those discussed in \fullref{sec:rev-evolution} and \fullref{sec:rev-cognition} (see those sections for further details).
+While many of the advantages of emergent communication techniques in studying language acquisition could be derived from more traditional machine learning methods used on multi-modal data, these traditional methods are only ever \emph{mimicking} the acquisition process that a human goes through to acquire that human language (as a first language).
+On the other hand, with emergent language acquisition, we can observe the selfsame acquisition process that has formed the language in the first place and not just an approximation thereof.
+This direct connection is important since every step in empirical reasoning which involves approximations brings with it more uncertainty in the conclusions.
+
+
+\paragraph{Current state}
+
+Current literature has not often investigated language acquisition, so we will address the collected work exhaustively.
+At the level of individuals, current work has mainly looked at how the process of language acquisition interacts with the emergence of compositionality and other properties of language.
+\citet{korbak2019developmentally,Korbak2021InteractionHA} propose a developmentally-inspired curriculum which breaks down language learning into multiple phases; they then show that this method results in more compositional emergent communication.
+\citet{cope2022joining} present a method by which a new agent could acquire a pre-existing emergent language purely through observation by inferring the intentions of the observed agents.
+\citet{Kharitonov2020EmergentLG} investigate a relationship in the opposite direction, looking at how the degree of compositionality of a language factors into the ease and speed of language acquisition.
+At a population level, \citet{li2019ease} investigate the same relationship between ease of acquisition and compositionality in a generationally transmitted setting, arguing (in line with \citet{Smith_Kirby_Brighton_2003}) that the pressure to acquire language from incomplete data can translate to a pressure towards compositional language.
+Leaving aside compositionality, \citet{Portelance2021TheEO} study the origin of shape bias, arguing that it can be explained with communicative efficiency pressures rather than inductive biases in the human or machine agents.
+
+\paragraph{Next steps}
+The next steps for studying language acquisition are to demonstrate how emergent communication techniques build directly on prior work studying deep neural network-based models of language acquisition.
+\citet{warstadt2022artificial} mention that neural networks hold potential for studying language learning but also present a number of difficulties; thus future work in emergent communication would do well to follow existing work on the topic closely (at least for the near term).
+For example, \citet{warstadt2020neural} determine that a neural network (namely BERT) is able to make structural generalizations in natural language but only after a observing more data than is developmentally realistic.
+Similarly, \citet{chang2022word} compare word acquisition in children and language models.
+In both cases, emergent communication could help determine if the lack of embodiment and interactivity in standard language model training explains part of why language models require significantly more data than humans to acquire the same proficiency with language.
+
+
+\subsection{Linguistic variables}
+\unskip\label{sec:rev-linguistics}
+\paragraph{Description}
+
+Linguistic variables are the particular phenomena in language and its use which are the subject of scientific study in linguistics.
+This is a catch-all application which includes all studies seeking to determine the relationships between linguistic and other linguistic/non-linguistic variables.
+These variables span all of the various subfields of linguistics, forming a rough low- to high-level hierarchy:
+\begin{customlist}
+  \item[phonology] patterns of individual units of sound
+  \item[morphology] patterns of individual units of meaning at the word and sub-word level
+  \item[syntax] organization of words into meaningful structures (e.g., phrases, clauses, sentences)
+  \item[semantics] the inherent meaning of utterances in a language
+  \item[pragmatics] meaning derived from context cues in conjunction with semantics
+  \item[sociolinguistics] properties of language in the context of group and social dynamics
+\end{customlist}
+
+Beyond identifying individual relationships, broader questions within linguistics concern patterns across relationships.
+In particular, a central question across all of the above fields, has been the degree to which linguistic variables are the product of formal properties of cognition (formalism) and to what extent they are the emergent result of language use in a communicative context (functionalism).
+For example, is the tendency of vowel systems to be more-or-less maximally dispersed with the formant space a result of formal universals such as a categorical phonological features that impose a straitjacket on the realization of the vowels or a result---in language evolution---of vowel distinctions that are not well-dispersed collapsing (leaving only the well-dispersed vowels behind) \citep{blevins2004evolutionary}.
+ \unskip\footnote{Or, perhaps, due to a human drive to communicate as clearly as possible, given the same investment of effort \citep{flemming2013auditory}.}
+
+Likewise, it has been observed that prefixes and suffixes (in words that have more than one) are ordered so that those with the greatest relevance to the meaning of the root are closest to the root.
+This has been attributed to a formal constraint in which morphological scope mirrors syntactic scope (the Mirror Principle) \cite{baker1985mirror} or as a functional tendency based on a motivation, on the part of speakers, to distribute information predictably so that units of language are closest to the other units to which they are most relevant (the Relevance Principle) \citep{Bybee1985MorphologyAS}.
+This distribution is argued to be the result of evolutionary processes emerging from attempts of language users to communicate with one another \citep{Bybee1985MorphologyAS}.
+
+The evolution of pragmatics is even less-well understood.
+Is contextual meaning a result of inherent principles of inference or is it an emergent property of communicative interaction? Linguists have not been able to resolve these issues experimentally because they involve simulating conversations between speakers over decades and centuries---not interactions that can be observed during an afternoon in the lab.
+
+\paragraph{Applicability}
+In addition to the aforementioned applicable traits of emergent communication, there are two ways in which emergent communication is particularly applicable to studying linguistic variables.
+First, studying variables in any scientific discipline requires isolating these variables from confounding factors.
+Within emergent communication, it is possible to strip away confounding factors in ways that are often not possible when studying humans directly.
+
+Secondly, the holistic way in which emergent communication simulates linguistic processes makes it particularly suitable to studying phenomena that span multiple levels of the linguistic hierarchy.
+For example, the variables relevant to the distinction between ``who'' and ``whom'' in modern English span morphology (``-m'' as an affix), syntax (``who'' functioning as a subject or object and ``whom'' as solely an object), and sociolinguistic (``whom'' being perceived as formal, dated, etc.).
+Emergent communication, by design, allows for the interaction between many of the levels in the hierarchy without stipulating a particular way in which they interact.
+On the other hand, more traditional methods of modeling linguistic variables tend to be limited to just the micro or macro scale, and any interaction between these has to be determined ahead of time through handcrafted schemata, limiting the range of potential outcomes.
+
+\paragraph{Current state}
+
+Linguistic variables, broadly construed, show up frequently in the literature as almost any property of emergent communication can be considered a ``linguistic variable''.
+For example, papers studying compositionality or grounding are addressing a relationship between \emph{syntax} and \emph{semantics} while papers looking at how to leverage extra-linguistic context for better communication are addressing \emph{pragmatics}.
+Nevertheless, we mention papers here which directly tie into the study of human language and ``linguistics'' in the narrower sense.
+Given that emergent communication is in the stage of trying to look more like human language (cf.\@ \Cref{sec:rev-rederiving}), the current literature in this application primarily focuses on recreating established linguistic phenomena in emergent communication settings.
+The following is list of summarizing the existing literature:
+\begin{customlist}
+  \item[phonology]
+    In contrast to most emergent communication environments which have discrete communication channels, \citet{geffen2020on,eloff2021towards} look at continuous channels and discretization pressures analogous to the relationship between phones and phonemes.
+  \item[syntax]
+    \citet{chaabouni2019word} study whether or not emergent communication displays word-order biases akin to many human languages.
+    \citet{van2020the} analyze the output of unsupervised grammar induction applied to emergent communication.
+  \item[semantics]
+    \citet{Chaabouni2021CommunicatingAN,rita2020lazimpa,rodriguez2020internal} study the conditions under which Zipf's Law of Abbreviation \citep{Zipf1949HumanBA} is present in emergent communication.
+    \citet{Kgebck2018DeepColorRL,Chaabouni2021CommunicatingAN} study the way emergent communication divides up color spaces as compared to human languages.
+    Finally, \citet{steinert2019paying} looks at the emergence of function words in emergent communication as opposed to the exclusively content-based words in most other settings.
+  \item[sociolinguistics]
+    \citet{graesser2019emergent,Kim2021EmergentCU,fulker2022spontaneous} look at the formation of dialects under different conditions in networks of interacting agents.
+    See ``Current State'' of \Cref{sec:rev-diachronic} for \citet{dekker2020contact}.
+\end{customlist}
+
+\paragraph{Next steps}
+Phonology and morphology are relatively understudied in this area since most emergent communication environments assume a one-to-one correspondence between discrete symbols and ``words''.
+The paradigm of discrete symbols-as-words precludes analyzing sub-word components since a discrete symbol has no structure.
+Thus, breaking away from this paradigm would open new avenues for research into the phonological and morphological aspects of emergent communication.
+This could be done either be simply analyzing discrete symbols as sub-word units (requiring some other definition for what constitutes a word in an emergent language), or by using a continuous communication channel with some sort of discretization pressure (such that clusters of continuous signals can be analyzed as discrete units).
+
+Syntax and semantics are already studied in emergent communication, although this research needs to be more tightly coupled with thoroughly linguistic accounts of these phenomena instead of relying on looser, higher-level analogies with linguistics.
+This is a non-trivial task insofar as the definitions and models from linguistics will need to be adapted to the unique difficulties of emergent communication.
+For example, emergent communication can have radically different forms compared human language (or no organization at all);
+  this means that linguistic accounts may make assumptions about the language being studied that do not necessarily hold for emergent communication (e.g., languages are, at most, mildly context sensitive).
+Thus, operationalizing linguistic definitions for emergent communication will require expanding their scope to account for the numerous edge cases that emergent communication presents.
+
+For pragmatics and sociolinguistics, emergent communication environments will generally have to incorporate more agents, temporality, and embodiment.
+This is because these linguistic phenomena operate across many instances of language use with a common context across time and among speakers (e.g., conversational, spatial, and cultural context).
+In contrast, many emergent communication environments currently use single-step, simple observation, two-agent environments which preclude observing almost all pragmatic and sociolinguistic phenomena.
+The above point about linguistic definitions syntax and semantics requiring adaptation to emergent communication holds true for pragmatics and sociolinguistics as well since many behavior biases and heuristics we observe in humans emergent communication agents may not possess at all.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

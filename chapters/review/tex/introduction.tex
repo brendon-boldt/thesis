@@ -1,0 +1,215 @@
+\begin{abstract}
+Emergent communication, or emergent language, is the field of research which studies how human language-like communication systems emerge \emph{de novo} in deep multi-agent reinforcement learning environments.
+The possibilities of replicating the emergence of a complex behavior like language have strong intuitive appeal, yet it is necessary to complement this with clear notions of how such research can be applicable to other fields of science, technology, and engineering.
+This paper comprehensively reviews the applications of emergent communication research across machine learning, natural language processing, linguistics, and cognitive science.
+Each application is illustrated with
+  a description of its scope,
+  an explication of emergent communication's unique role in addressing it,
+  a summary of the extant literature working towards the application,
+  and brief recommendations for near-term research directions.
+\end{abstract}
+
+\section{Introduction}
+
+Deep learning-based methods in natural language processing and multi-agent reinforcement learning provide a powerful way simulate how human language-like communication systems emerge \emph{de novo}.
+This area of research is called \emph{emergent communication} or \emph{emergent language}.
+Multi-agent reinforcement learning-based systems like AlphaZero \citep{silver2017mastering} and OpenAI's hide-and-seek agents \citep{baker2020emergent} have leveraged self-play to exhibit convincing examples of complex behavior emerging from basic environment dynamics.
+Such deep reinforcement learning techniques were applied to discrete communication systems starting in 2016 and 2017 with papers like \citet{Foerster2016LearningTC,lazaridou2016multi,havrylov2017emergence,Mordatch2018EmergenceOG}.
+Although replicating as complex a behavior as human language is intuitively important, it is necessary to complement such notions with clear directives as to how it could apply to other areas of science, technology, and engineering.
+
+Thus, this work is a review of the most salient goals and applications of deep learning-based emergent communication research.
+We illustrate each of the applications by providing
+  a description of its scope,
+  an explication of emergent communication's unique role in addressing it,
+  a summary of the extant literature working towards the application,
+  and brief recommendations for near-term research directions.
+This work has three primary goals.
+(1) This work is meant to inspire future emergent communication research by compiling the most salient areas of research into a single document with relevant work cited.
+(2) It illustrates to practitioners outside of emergent communication the potential ways that emergent communication can be used in an easily-referenced format.
+(3) It define the ultimate aims of emergent communication, which is critical to guiding the field of research through practices like establishing evaluation metrics and benchmarks.
+Evaluation metrics require explicitly defining what a \emph{good} or \emph{desirable} emergent language is, and understanding what emergent communication can be used for is a foundational step in their development.
+
+% \newpage
+% \null
+% \vfill
+% \begin{figure}[h]
+%   \centering
+%   \caption{Structure of the applications discussed in this review.}
+%   \inputreview{tex/diagrams/ontology}
+% \end{figure}
+% \vfill
+% 
+% {%
+%     \newpage
+%     \setlength\parskip{5pt}
+%     \setcounter{tocdepth}{2}
+%     \tableofcontents
+%     \newpage
+% }
+
+
+% \subsection{Example of emergent communication system}
+% 
+% \begin{figure}
+%   \centering
+%   \begin{subfigure}[b]{0.53\textwidth}
+%     \centering
+%     \setlength\fboxsep{0pt}
+%     \inputreview{tex/diagrams/robot}
+%     \vspace{1cm}
+%     \caption{%
+%       $T_1$: The sender (left) observes an object.
+%       $T_2$: The sender passes a message to the receiver (right).
+%       $T_3$: The receiver chooses from a handful of candidate objects.
+%     }
+%     \unskip\label{fig:boxface}
+%   \end{subfigure}
+%   \hfill
+%   \begin{subfigure}[b]{0.45\textwidth}
+%     \centering
+%     \inputreview{tex/diagrams/signaling-chart}
+%     \caption{Illustration of the technical architecture of the signaling game.}
+%     \unskip\label{fig:signaling-chart}
+%   \end{subfigure}
+%   \caption{%
+%     An illustration of the discrimination variant of the signaling game, one of the simplest and most common environments in emergent communication research.
+%   }
+% \end{figure}
+% 
+% In this section, we briefly illustrate a canonical example of an emergent communication game, namely discrimination variant of the signaling game \citep{Lewis1970ConventionAP}.
+% The signaling game is one of the simplest and most common emergent communication games in the literature, and many further games and environments can be conceptualized as extensions of the signaling game.
+% As seen in \Cref{fig:boxface}, the basic signaling game involves two agents, a sender and receiver.
+% In a single round of the game, the sender first observes an object,
+%   then sends a message to the receiver,
+%   and finally the receiver chooses an object after observing a set of candidate objects along with the message from the sender.
+% The round is successful if the receiver chooses the object which corresponds to the original observation made by the sender.
+% 
+% The technical architecture of the signaling game is illustrated in \Cref{fig:signaling-chart}.
+% The initial observation made by the sender is represented by a real-valued vector which which is an input for the neural network.
+% The sender is a sequence generation model conditioned on the observation vector;
+%   RNNs are a common choice of architecture, but a number of other architectures can also be used.
+% The sender generates a sequence of one-hot vectors which will serve as the ``message'' sent to the receiver.
+% The receiver, typically an encoder RNN, then takes as input both the message and the set of candidate observations.
+% The set of candidate observations contains both the correct observation made by the sender as well as ``distractor'' observations which differ from the correct one (i.e., like wrong answers on a multiple-choice question).
+% Finally, the sender and receiver receive a reward based on whether or not the receiver selected the correct observation.
+% This reward is then used to optimize the sender and receiver (e.g., with gradient descent\footnotemark).
+% \footnotetext{Since the message, which is a sequence of one-hot vectors, is discrete, it is typically required to optimize the sender with some additional technique like REINFORCE \citep{williams1992simple} or Gumbel-Softmax \citep{jang2017categorical,maddison2017the}.}
+% 
+% In the beginning, there is no pre-established communication protocol;
+%   that is, the messages produced by the sender do not ``mean'' anything.
+% It is only through the repeated trials and optimization that messages begin to take on meaning such that the sender can effectively communicate the correct observation to the receiver.
+% The protocol after training is considered the ``emergent language'' since it is a communication system which is the result of the functional pressure to succeed provided by the optimization of the sender and receiver.
+
+
+\subsection{Scope}
+\unskip\label{sec:rev-scope}
+
+In order to effectively select papers for the review, we need to define particular scope of ``emergent communication'' that we are dealing with.
+We are not claiming that work excluded by these criteria is unimportant or unrelated to the included work, nor are we arguing that these criteria should be viewed as normative.
+Rather, these criteria are merely intended to be sufficient for conducting a complete, coherent review of a field of research.
+The scope of this review specifically comprises the following criteria:
+\begin{itemize}
+    \item \emph{Necessarily}, the topic is an agent-based computer model, that is, the simulation of individual computer agents in an environment.
+        \begin{itemize}
+            \item \emph{Typically}, it uses reinforcement learning.
+            \item \emph{Necessarily}, it is not simply the result of training a model on human language data (e.g., emergent properties of pre-trained language models do \emph{not} qualify).
+            \item \emph{Typically}, the system contains multiple agents (e.g., an agent talking to itself could still qualify).
+        \end{itemize}
+    \item \emph{Necessarily}, the agents have a communication channel.
+        \begin{itemize}
+            \item \emph{Necessarily}, the communication is analogous to human language in some way.
+            \item \emph{Typically}, the communication channel is discrete symbols (i.e., analogous to words or subword units).
+            \item \emph{Sometimes}, the communication channel may be continuous (e.g., analogous to speech sounds), but the structure of the channel or the resulting protocol must be of interest (i.e., an unconstrained, unstudied continuous channel does \emph{not} count.)
+        \end{itemize}
+    \item \emph{Necessarily}, the exact nature of communication (e.g., the structure or content of the protocol) is not determined ahead of time; it ``emerges'' from simpler characteristics of the environments and agents.
+    \item \emph{Necessarily}, the approach uses deep learning methods.
+        \begin{itemize}
+            \item \emph{Typically}, methods use neural networks optimized by gradient descent.
+            \item \emph{Typically}, work is associated with the communities of ICLR\footnote{\url{https://iclr.cc/}}, NeurIPS\footnote{\url{https://neurips.cc/}}, and ICML\footnote{\url{https://icml.cc/}} conferences and the EmeCom workshop\footnote{\url{https://sites.google.com/view/emecom2022}}.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Related work}
+
+This section briefly discusses some closely related areas of research that fall outside of the scope of this paper.
+Although the goals and applications of these research areas are relevant to those discussed in this paper, we do not incorporate these into this paper in the interests of length.
+While their applications are very similar to those of deep learning-based emergent communication, the particular issues, methods, and possibilities which deep learning techniques present are quite different from these related areas.
+
+
+\paragraph{Emergent communication}
+\citet{lazaridou2020emergent} offer a general review of emergent communication research.
+It covers the same body of literature as this paper but with a general scope.
+Readers unfamiliar with the field of emergent communication would benefit greatly by reading this review first as it covers the essential elements of the field (background, methods, results, related work, etc.).
+This paper, on the other hand, focuses specifically on the goals and applications of emergent communication research.
+
+A few other position papers have been published on emergent communication and share this paper's goal of guiding future work through a direct analysis and discussion of the literature.
+\citet{lacroix2019biology,moulinfrier2020multiagent,galke2022emergent} synthesize linguistic research on the evolution of language with contemporary methods in emergent communication, highlighting what aspects do not line up and how emergent communication research might change its approach.
+Finally, \citet{zubek2023models} provide a more robust critique of current methods in emergent communication from various linguistic perspectives.
+
+
+\paragraph{NLP and multi-agent RL}
+Some areas of natural language processing focus on learning human language by leveraging deep multi-agent reinforcement learning in a way similar to emergent communication.
+This includes approaches like \citet{lee-etal-2019-countering,cogswell2020dialog} which use multi-agent dialog grounded with visual referents
+  or \citet{lu2020sil} which uses iterated learning framework for tuning dialog agents.
+Although the methods are similar, these approaches typically do not care about communication systems that are emerging from scratch and instead focus directly on improving performance with human languages.
+
+\paragraph{Emergent language without deep learning}
+Computer simulations of the emergence of language are also possible without recourse to deep learning methods.
+Simulations along these lines might use other forms of machine learning or simply mathematical models of agents and environments.
+For example, \citet{werner_Dyer_1991} simulate the emergence of a communication system in a population of mating animals.
+Female animals guide the male animals towards them by emitting discrete messages.
+Each agent is implemented as a connectionist artificial neural network which is optimized with a genetic algorithm.
+Another instance is \citet{kirby_2000}, which verifies the possibility of compositional communication emerging without biological evolution.
+Specifically, it presents a mathematical model of an agent population where new members must learn to communicate from older members (who eventually die off).
+This is implemented as a computer program which can empirically verify the hypothesis.
+
+Although this research area has significant overlap in terms of goals, the methods have significantly different challenges.
+In particular, methods not based on deep learning tend to have strong inductive biases which constrain the range of languages that can emerge.
+In contrast, one of the main challenges of deep learning-based emergent communication is
+  trying to find the environmental pressures and functional advantages which shape language in place alongside the weaker inductive biases of deep neural networks.
+
+
+\paragraph{Emergent communication with humans}
+Research on the emergence of human language also takes place outside the context of computer simulation altogether.
+Experimentally, small-scale studies can be done with humans in the laboratory.
+For example, \citet{Kirby2008CumulativeCE} test the emergence of structure in language from language transmission dynamics by having humans serve as the agents in a laboratory experiment.
+Observationally, there are recorded instances of a full human language emerging as in the case of Nicaraguan Sign Language, where deaf children with minimal prior linguistic knowledge developed language when placed together in a school environment \citep{kegl1999creation}.
+Despite the relevance of this research to deep learning-based emergent communication, the challenges of human-base studies diverge significantly from those based on machine learning.
+
+
+\paragraph{Symbol emergence in robotics}
+\citet{taniguchi2015symbol} survey a research area called ``symbol emergence in robotics'' (SER).
+SER is concerned with developing autonomous robots with the ability to discover meaning and communication skills from sensory-motor experiences with humans and other robots.
+In this way, both SER and emergent communication study ``bottom-up'' methods of autonomous agents acquiring the ability to use language in a deep, embodied way.
+SER is more concerned with the development of robotic agents which can dynamically learn to interact like humans through pragmatic and social facets of language.
+In contrast, emergent communication is more concerned with observing the entire process of language creation in virtual environments through agents interacting with other agents.
+
+\subsection{Structure of review}
+
+We divide the applications of emergent communication into three broad categories:
+\begin{itemize}
+    \item \emph{Internal goals} (\Cref{sec:rev-internal})
+        aim towards improving the technique in its own right.
+        In a sense, these goals are the ``basic research'' of emergent communication.
+    \item \emph{Task-driven applications} (\Cref{sec:rev-task})
+        aim at solving a well-defined problem.
+        These goals generally correlate with goals in the domain of engineering such as those found in NLP.\spacefactor\sfcode`.{}
+    \item \emph{Knowledge-driven applications} (\Cref{sec:rev-knowledge})
+        aim at increasing the knowledge of some phenomenon.
+        These goals generally correlate with the goals of sciences such as linguistics.
+\end{itemize}
+
+We illustrate each application with four sections which each answer a question:
+\begin{itemize}
+    \item ``Description'':
+        What exactly is the problem being solved?
+    \item ``Applicability'':
+        How do the techniques of emergent communication (in practice or in theory) uniquely address this problem?
+    \item ``Current state'':
+        What progress has been made in the literature toward addressing this problem?
+    \item ``Next steps'':
+        What does the next important research paper towards this application look like?
+\end{itemize}
+
+We give a brief of analysis of the trends we found in reviewing the literature in \Cref{sec:rev-discussion} before concluding in \Cref{sec:rev-conclusion}.
+Details of the review process are presented in \Cref{sec:rev-methods}, and a complete list of works surveyed is given in \Cref{sec:rev-list}.

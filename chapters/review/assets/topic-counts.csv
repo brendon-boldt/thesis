@@ -1,0 +1,14 @@
+index,topic_id,count,label,section
+0,linguistics,16,Linguistics,knowledge
+1,acquisition,6,Acquisition,knowledge
+2,change,2,Change,knowledge
+3,origin,11,Origin,knowledge
+4,cogsci,29,Cognition,knowledge
+5,xml,4,Expl.\@ ML,task
+6,hci,6,HCI,task
+7,mac,16,MAC,task
+8,synthetic,7,Synthetic,task
+9,tooling,3,Tooling,intermediate
+10,theory,8,Theory,intermediate
+11,metrics,21,Metrics,intermediate
+12,rederivation,0,Rederiv.,intermediate
