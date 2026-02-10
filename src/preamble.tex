@@ -6,7 +6,28 @@
 % \usepackage{kpfonts}
 
 \usepackage{hyperref}
-\usepackage{natbib}
+% \usepackage{natbib}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage[
+  natbib=true,
+  style=authoryear,
+  maxcitenames=2,
+]{biblatex}
+
+
+\addbibresource{src/main.bib}
+\addbibresource{chapters/xferbench/src/main.bib}
+\addbibresource{chapters/elcc/src/main.bib}
+\addbibresource{chapters/elcc/src/sg-arxiv.bib}
+\addbibresource{chapters/hpo/src/main.bib}
+\addbibresource{chapters/morphemes/src/main.bib}
+\addbibresource{chapters/phrasebook/src/main.bib}
+\addbibresource{chapters/review/bib/custom.bib}
+\addbibresource{chapters/review/bib/arxiv.bib}
+\addbibresource{chapters/review/bib/semantic-scholar.bib}
+
+
 \usepackage[table]{xcolor}
 % \usepackage{url}
 % \usepackage{xurl}
