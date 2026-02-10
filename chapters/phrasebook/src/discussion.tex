@@ -78,7 +78,8 @@ First, it is more predictive of phrasebook agent performance than toposim (\cref
 And second, it can be computed with only the annotated corpus, not needing access to the original emergent language environment.
 
 
-\paragraph{Compositionality without generalization}
+\paragraph{Compositionality without generalization}%
+\label{sec:pb-comp-res}
 An ancillary finding of the experiments across different environments is that they provide further evidence for the notion that neural network agents do not need to use concatenative compositionality to in order to generalize \citep{kharitonov-baroni-2020-emergent}.
 Indeed, in the majority of our settings, we see that the performance of the online and phrasebook agents are relatively matched, suggesting that compositionality corresponds with generalization performance.
 But in certain settings (e.g., cross-entropy loss, Elman and LSTM RNN cells, and a small vocabulary size of $4$; \cref{fig:env-ab1,fig:env-ab2}), there is a clear bifurcation: the online agents generalize well while the phrasebook agents do not (and even have trouble fitting the training data).
