@@ -72,7 +72,7 @@ Such tools help to discern order among the often chaotic output of these simulat
 
 \paragraph{Agent-based models of language evolution}
 The origin of human language has been a perennial question of human inquiry from ancient mythology to contemporary linguistics.
-While much of the history of this question is relevant to this work, I will limit this discussion to the most salient approach: namely that of computer simulations investigating of the origin and evolution of human language.
+While much of the history of this question is relevant to this work, I will limit this discussion to the most salient approach: namely that of computer simulations investigating the origin and evolution of human language.
 This intersection between linguistics and computer science gained momentum in the 1990's with the advances in computational power enabling the use of \emph{agent-based modeling} for simulations of communication systems \citep{steels1997synthetic}.
 Agent based models are simulations which model systems at the level of \emph{individuals} and their interactions in an environment;
   such models allow us to see how ``global properties emerge by local interactions'' in order to better understand complex systems like language \citep{steels1997synthetic}.
@@ -94,19 +94,19 @@ The work mentioned above I term \emph{classical} emergent language (CEL) insofar
 The learning behaviors employed by the agents are relatively simple and constrained, drawing from classical AI and machine learning techniques (e.g., symbolic methods, Bayesian learning).
 In short, CEL builds computer models to test formal models.
 
-Deep learning-based emergent language (DEL)---the body of literature in which this thesis is most directly situated---is the rebellious child of CEL and the deep reinforcement learning boom of the late 2010's (cf.\@ \hyperref[ch:prologue]{the Prologue}).
-It applies the techniques of deep neural networks and multi-agent reinforcement learning to the same questions presented by CEL\footnote{In theory, DEL is concerned with the same questions, but in practice, the bulk of investigation is limited to the emergence of semantics and syntax, as mentioned above.}
+Deep learning-based emergent language (DEL)---the body of literature in which this thesis is most directly situated---it is the rebellious child of CEL and the deep reinforcement learning boom of the late 2010's (cf.\@ \hyperref[ch:prologue]{the Prologue}).
+It applies the techniques of deep neural networks and multi-agent reinforcement learning to the same questions presented by CEL.\footnote{In theory, DEL is concerned with the same questions, but in practice, the bulk of investigation is limited to the emergence of semantics and syntax, as mentioned above.}
 I say rebellious here because, rather than being a harmonious union of the two,
-  (1) DEL diverges from deep reinforcement learning by being more concerned with the byproducts of the learning process (viz.\@ the communication protocols) than with effectively solving the relevant tasks (communicative success),
+  (1) DEL diverges from deep reinforcement learning by being more concerned with the byproducts of the learning process (viz.\@ the communication protocols) than with effectively solving the particular tasks (communicative success),
   and (2) DEL diverges from CEL by a relative absence of grounding in the broader linguistics literature, often starting nearly from scratch in the formulation of hypotheses and experimental approaches.
     Furthermore, implementing any such formal models from CEL in DEL is made difficult by the complexity of deep learning approaches.
 
 Nevertheless, the intention of applying deep learning to emergent language is founded in improving the realism of the agent-based models which are key to the classical approach.
 In fact,
   just as Simon Kirby argues for agent-based modelling\footnote{Referred to ``artificial life'' in the cited work.} approaches for studying the evolution of language beyond ``the classical alternative---analytic mathematical modeling---[which] may require the kinds of idealization that will necessitate the removal of the very network of interactions that give rise to the target of explanation'' \citep{kirby2002alife},
-  DEL intends to double down on removing such idealizations still present in CEL to further extend the range of observable phenomena.
+  DEL takes the next step on the path of removing such idealizations still present in CEL to further extend the range of observable phenomena.
 Specifically, deep learning exhibits two features towards this end:
-First, it has a greater representational capacity insofar as the complexity and nuance of phenomena it can represent exceeds what is possible with classical approaches (cf.\@ the ubiquity of deep learning in contemporary natural language processing).
+First, it has a greater representational capacity insofar as the complexity and nuance of phenomena it can represent exceeds what is possible with classical approaches (cf.\@ the ubiquity of deep learning in contemporary computer vision and natural language processing).
 Second, it also offers the prospect of introducing fewer inductive biases into the model of language evolution (via its generally-applicable learning processes), leading to fewer assumptions being built into the simulation.
 Finally, the shift to deep learning methods also opens up further possible applications to engineering challenges such as creating realistic synthetic language data at scale or developing robust multi-agent communication protocols.
 % ``In complex dynamical systems, verbal theorizing often leads to incorrect predictions because our intuitions about the links between local interactions and global behavior are notoriously unreliable. Furthermore, the classical alternative---analytic mathematical modeling---may require the kinds of idealization that will necessitate the removal of the very network of interactions that give rise to the target of explanation.'' \cmt{cite Kirby}
@@ -114,7 +114,7 @@ Finally, the shift to deep learning methods also opens up further possible appli
 
 \paragraph{Deep learning-based emergent language}
 Turning our attention now fully to deep learning-based emergent language,
-  this has its genesis in 2016 with seminal papers such as
+  this subfield has its genesis in 2016 with seminal papers such as
   ``Learning to communicate with deep multi-agent reinforcement learning'' \citep{foerster2016learning}
   and ``Multi-Agent Cooperation and the Emergence of (Natural) Language'' \citep{lazaridou2016multiagent}.
 These were some of the first papers to applying deep multi-agent reinforcement learning to developing discrete token-based communication systems \emph{de novo} in a way analogous to human language.
@@ -125,17 +125,17 @@ With deep learning, agents could observe pixel-based images with convolutional n
 
 The prototypical emergent communication experiment consists two or more deep neural network-based agents situated in some kind of environment or game where they must cooperate in order to succeed.
 The agents are equipped with a communication channel consisting of discrete tokens with no \emph{a priori} meaning; it is only through the reinforcement learning-based optimization that messages passed between agents begin to take on meaning.
-The resulting behavior, most especially the communication protocol, is the typically the object analysis, addressing question such as:
+The resulting behavior, most especially the communication protocol, is typically the object of analysis, addressing question such as:
   Did an effective communication protocol emerge at all?
   What structural features characterize it?
   Do these features align at all to human language?
   What can we infer about language formation more generally from the above?
 
-In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication (jointly and separately)
+In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication
   \citep{havrylov2017sequence,mordatch2018grounded,chaabouni2022emergent}.
-The signalling game was introduced in the context of game theory by David Lewis \citep{lewis1970ConventionAP}.
-The signalling game is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
-It consists of only two agents: a sender and a receiver.
+The signalling game itself was introduced in the context of game theory by David Lewis \citep{lewis1970ConventionAP};
+  it is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
+The game consists of only two agents: a sender and a receiver.
 The sender makes on observation (e.g., an orange circle) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was an orange circle, not a blue circle).
 A visualization of the signalling game is provided in \cref{fig:signaling-game}.
 The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
@@ -174,7 +174,7 @@ Other environments do appear in the literature such as navigation tasks or dialo
   \citep{unger2020GeneralizingEC,brandizzi2022rlupus}.
 In addition to compositionality, other phenomena have been the subject of investigation such as pragmatics, transfer learning, and the information theoretic properties of emergent language
   \citep{kang2020incorporatingpragmaticreasoningcommunication,yao2022linking,tucker2021discrete}.
-While there are too many papers to summarize comprehensively here, I estimate that there are on the order of $200$ papers directly related to emergent communication.\footnote{Figure based on finding ${\sim}150$ papers during a comprehensive literature review in 2023.}
+% While there are too many papers to summarize comprehensively here, I estimate that there are on the order of $200$ papers directly related to emergent communication.\footnote{Figure based on finding ${\sim}150$ papers during a comprehensive literature review in 2023.}
 For a general review of the emergent communication literature, I recommend \citet{lazaridou2020review}.
 
 \section{Motivation}
