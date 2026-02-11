@@ -9,11 +9,11 @@ The selected emergent language environments span three different observation spa
   one-hot vectors,
   synthetic images of shapes,
   and natural images of birds.
-Within each of the environments, further signalling game variations are described below.
+Within each of the environments, further signaling game variations are described below.
 
 
 \paragraph{Vector observations}
-In the vector observation signalling game (based on the EGG framework \citep{egg}) the agents directly observe one-hot vectors without having to further extract representations.
+In the vector observation signaling game (based on the EGG framework \citep{egg}) the agents directly observe one-hot vectors without having to further extract representations.
 Specifically, we use two variants of the observation space:
   (1) the standard attribute--value setting where each of $4$ attributes can take on $4$ distinct values
   and (2) the ``sparse'' setting where there are $8$ binary attributes which are either present or absent.
@@ -21,7 +21,7 @@ During the training of the emergent language agents, the sparse variant is ident
   % and only attributes which are ``true'' are included in the meanings given to CSAR\@.
 Hyperparameters for both environments are given in \cref{app:el-hparams}.
 
-For both observation spaces, we also test two variations of the signalling game.
+For both observation spaces, we also test two variations of the signaling game.
 The first is the \emph{discrimination game}, where the receiver must answer a multiple-choice question where the correct observation is accompanied by multiple (incorrect) distractors.
 The second is the \emph{reconstruction game}, where the receiver must recreate the original observation similar to the decoding segment of an autoencoder.
 

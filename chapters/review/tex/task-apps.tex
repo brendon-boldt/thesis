@@ -37,7 +37,7 @@ That being said,
   experiments only cover a narrow selection of datasets/tasks and do not rigorously compare against alternative methods (e.g., traditional synthetic data, cross-lingual transfer).
 As a result, is difficult to gauge the practical impact of the proposed methods.
 
-\citet{Li2020EmergentCP} pretrain encoder-decoder few-shot machine translation models with an emergent communication signalling game;
+\citet{Li2020EmergentCP} pretrain encoder-decoder few-shot machine translation models with an emergent communication signaling game;
   in addition to finding improvements in very low-resource settings, the experiments showed that the task success rate in the emergent communication game was well-correlated with the downstream BLEU score.
 \citet{downey2022learning} also tackle machine translation, but instead use an emergent communication game to fine tune a multi-modal model for unsupervised machine translation, finding that emergent communication is more effective than the back-translation baseline.
 \citet{yao2022linking} take a slightly different approach by using the emergent communication game only to generate a synthetic corpus (instead of training the models directly);
@@ -121,7 +121,7 @@ Finally, elements like communication channel noise or constantly cycling out age
 Work on developing multi-agent communication protocols has experimented with a handful of environments and scenarios but has not established any one task as being definitively helped by emergent communication.
 Many of the explored environments are a variation on
     navigation \citep{mul2019mastering,Li2022LearningED,masquil2022intrinsically}
-    or the signalling game \citep{bullard2021quasi,cope2021learning,wang2022emergence,Tucker2021EmergentDC},
+    or the signaling game \citep{bullard2021quasi,cope2021learning,wang2022emergence,Tucker2021EmergentDC},
     although some include more abstract environments like a coalition-based voting game \citep{Li2022LearningED} or semantic communication \citep{thomas2022neuro}.
 Emergent communication for multi-agent communication has been compared against competing methods, that is, handcrafted protocols \citep{Gupta2020NetworkedMR,Chen2022DeepRL} and learned continuous communication \citep{Li2022LearningED,wang2022emergence}.
   Although, these comparisons use the competing methods more as ``baseline points of reference'' rather than comparing them ``head-to-head'', where both methods are presented in their strongest forms so as to show the real-world superiority of emergent language-based communication.
@@ -185,7 +185,7 @@ One of the characteristic design choices of each paper is deciding how to struct
 For the direction of human-to-agent communication, \citet{Tucker2021EmergentDC} map natural language to a joint embedding space with the emergent language, making the embedded natural language understandable to the agents.
 \citet{Li2022LearningED} have humans select embeddings directly from a labelled visualization of the embeddings (i.e., t-SNE) of emergent language messages.
 For the direction of agent-to-human communication, \citet{Tucker2021EmergentDC} visualize the embedding of agent messages in a labelled embedding space, allowing a human to determine which cluster of messages an unlabelled message belongs to (shown in \Cref{fig:embed}).
-\citet{mihai2021learning} show the human directly with a ``message'' (i.e., sketch) in a sketch-based signalling game (shown in \Cref{fig:sketch}).
+\citet{mihai2021learning} show the human directly with a ``message'' (i.e., sketch) in a sketch-based signaling game (shown in \Cref{fig:sketch}).
 Apart from direct human-agent interaction, \citet{Tucker2022GeneralizationAT} demonstrate machine translation-based approach where human and emergent languages are aligned through an image captioning task.
 
 \paragraph{Next steps}
@@ -229,14 +229,14 @@ Furthermore, since the deliberation and communication among agents is critical i
 
 \paragraph{Current state}
 Using emergent communication for creating explainable machine learning models has only seen proof-of-concept exploration in one series of papers.
-Namely, \citet{santamaria2020towards,chowdhury2020escell,chowdhury2020symbolic,chowdhury2020emergent} implement and experiment with a medical image classification model which, internally, is a Lewis signalling game \citep{lewis1970ConventionAP}.
+Namely, \citet{santamaria2020towards,chowdhury2020escell,chowdhury2020symbolic,chowdhury2020emergent} implement and experiment with a medical image classification model which, internally, is a Lewis signaling game \citep{lewis1970ConventionAP}.
 This means that the internal representations are themselves the discrete messages of an emergent language.
 Messages-as-internal representations, here, are intended to be a more natural modality for human working with the system than, for example, the activations of intermediate layers in the neural network.
 
 
 \paragraph{Next steps}
-The first direction for using emergent communication for explainable machine learning models is exploring methods of generating explanations beyond the signalling game that we see in the current literature.
-The signalling game, while providing potentially interpretable messages, does not effectively exhibit the multi-step reasoning which
+The first direction for using emergent communication for explainable machine learning models is exploring methods of generating explanations beyond the signaling game that we see in the current literature.
+The signaling game, while providing potentially interpretable messages, does not effectively exhibit the multi-step reasoning which
     (1) is most suited to the complex decisions which we would want explained,
     (2) is how humans generally explain themselves,
     and (3) is where emergent communication has the greatest potential to surpass more established methods.

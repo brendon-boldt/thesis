@@ -53,7 +53,7 @@ In its most basic form, emergent language comprises a simulation using neural ne
 These agents are equipped with a communication channel of discrete tokens with no \emph{a priori} meaning---the meaning of the messages is established through the optimization process encouraging communication which is advantageous to completing the task, more analogous to humans' use of communication.
 % The communication protocol, then, is the ``emergent language'' since the meaningful system of communication as arisen organically from the environment and task.
 
-Emergent language differs from the more ``traditional'' approach to modelling language that LLMs use in that it does not try to mimic patterns in human language but instead tries to rederive such patterns from functional pressures analogous to those hypothesized to have guided human language's own evolution.
+Emergent language differs from the more ``traditional'' approach to modeling language that LLMs use in that it does not try to mimic patterns in human language but instead tries to rederive such patterns from functional pressures analogous to those hypothesized to have guided human language's own evolution.
 Since this process language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to contribute to the scientific understanding of human language.
 Furthermore, certain practical tasks might lie beyond the reach of the mimicry approach LLMs employ due to the often superficial ``understanding'' they have of language; these problems, too, can be addressed by emergent language which models not only the surface features of language but also its semantics and social context.
 Finally, generating language data through emergent communication avoids many of the ethical issues that crop up with LLMs' dependence on human language data from amplifying toxicity from the Web to freely (ab)using copyrighted and personal content \citep{weidinger2021ethicalsocialrisksharm,carlini2021extractingtrainingdatalarge}.
@@ -90,7 +90,7 @@ Such techniques have been applied to a number of closely related topics includin
 
 
 \paragraph{Deep learning vs.\@ classical approaches}
-The work mentioned above I term \emph{classical} emergent language (CEL) insofar as it uses more historically typical modelling techniques: namely, the behavior of the agents and the environment is largely hardcoded into the implementation as part of the design of the simulation.
+The work mentioned above I term \emph{classical} emergent language (CEL) insofar as it uses more historically typical modeling techniques: namely, the behavior of the agents and the environment is largely hardcoded into the implementation as part of the design of the simulation.
 The learning behaviors employed by the agents are relatively simple and constrained, drawing from classical AI and machine learning techniques (e.g., symbolic methods, Bayesian learning).
 In short, CEL builds computer models to test formal models.
 
@@ -103,7 +103,7 @@ I say rebellious here because, rather than being a harmonious union of the two,
 
 Nevertheless, the intention of applying deep learning to emergent language is founded in improving the realism of the agent-based models which are key to the classical approach.
 In fact,
-  just as Simon Kirby argues for agent-based modelling\footnote{Referred to ``artificial life'' in the cited work.} approaches for studying the evolution of language beyond ``the classical alternative---analytic mathematical modeling---[which] may require the kinds of idealization that will necessitate the removal of the very network of interactions that give rise to the target of explanation'' \citep{kirby2002alife},
+  just as Simon Kirby argues for agent-based modeling\footnote{Referred to ``artificial life'' in the cited work.} approaches for studying the evolution of language beyond ``the classical alternative---analytic mathematical modeling---[which] may require the kinds of idealization that will necessitate the removal of the very network of interactions that give rise to the target of explanation'' \citep{kirby2002alife},
   DEL takes the next step on the path of removing such idealizations still present in CEL to further extend the range of observable phenomena.
 Specifically, deep learning exhibits two features towards this end:
 First, it has a greater representational capacity insofar as the complexity and nuance of phenomena it can represent exceeds what is possible with classical approaches (cf.\@ the ubiquity of deep learning in contemporary computer vision and natural language processing).
@@ -131,13 +131,13 @@ The resulting behavior, most especially the communication protocol, is typically
   Do these features align at all to human language?
   What can we infer about language formation more generally from the above?
 
-In practice, much of the literature has focused on the signalling game and the emergence of compositionality in communication
+In practice, much of the literature has focused on the signaling game and the emergence of compositionality in communication
   \citep{havrylov2017sequence,mordatch2018grounded,chaabouni2022emergent}.
-The signalling game itself was introduced in the context of game theory by David Lewis \citep{lewis1970ConventionAP};
+The signaling game itself was introduced in the context of game theory by David Lewis \citep{lewis1970ConventionAP};
   it is one of the simplest possible environments for emergent communication contributing, in large part, to its popularity.
 The game consists of only two agents: a sender and a receiver.
 The sender makes on observation (e.g., an orange circle) and sends a message to the receiver who must, based on the message alone, determine the nature of the observation (e.g., it was an orange circle, not a blue circle).
-A visualization of the signalling game is provided in \cref{fig:signaling-game}.
+A visualization of the signaling game is provided in \cref{fig:signaling-game}.
 The question of compositionality arises when we look at how the communication protocol encodes compound meanings like a red square: A compositional protocol would encode ``red'' and ``circle'' with their own words which could be reused to express meanings like a red circle or a blue square.
 On the other hand, holistic communication sometimes emerges where a unique word refers to red square, bearing no relation to the word(s) for red circle.
 Compositional communication, generally, is seen as more desirable both for practical reasons (more efficient encoding of information) as well as for its resemblance to how humans tend to encode meaning in language.
@@ -290,7 +290,7 @@ The promise of analysis across diverse languages is borne out within this very t
 \label{sec:intro-xferbench}
 
 \Cref{ch:xferbench} introduces XferBench, an evaluation metric for emergent language corpora based on deep transfer learning.
-The intuition behind XferBench is that when a model is pretrained on emergent language data, its downstream performance on human language-based natural language processing tasks (e.g., language modelling, machine translation) is correlated with its similarity to human language, as far as a deep neural network is concerned.
+The intuition behind XferBench is that when a model is pretrained on emergent language data, its downstream performance on human language-based natural language processing tasks (e.g., language modeling, machine translation) is correlated with its similarity to human language, as far as a deep neural network is concerned.
 XferBench is \emph{environment-agnostic} insofar as it only requires and emergent language corpus as input, meaning that it can be applied to most any environment, and compare them on single quantitative scale.
 XferBench is \emph{principled} insofar as it is directly measuring how well emergent languages function in place of human languages in deep learning settings, a major component of the \emph{engineering} goals of emergent language.
 Furthermore, the type of realism which XferBench is measuring is complementary to the \emph{scientific} goals of emergent language which stand to benefit from higher-resolution simulations of linguistic phenomena.

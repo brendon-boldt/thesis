@@ -7,11 +7,11 @@
     \toprule
     Source & Type & Data source & Multi-agent & Multi-step & $n$ corp. \\
     \midrule
-    % \citet{kharitonov-etal-2019-egg}, discrim.         & signalling   & synthetic & $3$ \\
-    \citet{kharitonov-etal-2019-egg}                       & signalling   & synthetic & No & No & $15$ \\
-    \citet{yao2022linking}            & signalling   & natural   & No & No & $2$ \\
-    \citet{mu2021generalizations}     & signalling   & both      & No & No & $6$ \\
-    \citet{chaabouni2022emergent}     & signalling   & natural   & Yes & No & $5$ \\
+    % \citet{kharitonov-etal-2019-egg}, discrim.         & signaling   & synthetic & $3$ \\
+    \citet{kharitonov-etal-2019-egg}                       & signaling   & synthetic & No & No & $15$ \\
+    \citet{yao2022linking}            & signaling   & natural   & No & No & $2$ \\
+    \citet{mu2021generalizations}     & signaling   & both      & No & No & $6$ \\
+    \citet{chaabouni2022emergent}     & signaling   & natural   & Yes & No & $5$ \\
     \citet{unger2020GeneralizingEC}   & navigation   & synthetic & No & Yes & $18$ \\
     \citet{boldt2023mathmodel} & navigation   & synthetic & No & Yes & $20$ \\
     \citet{brandizzi2022rlupus}       & conversation & ---       & Yes & Yes & $7$ \\
@@ -33,7 +33,7 @@ With our selection we sought to capture variation across a three distinct dimens
 \Cref{tab:tax-sum} shows an overview of the taxonomy of \theLib{} based on the ECS-level metadata.
 In addition to this, \Cref{tab:quant-sum} provides a quantitative summary of the corpus-level metrics described in \Cref{elcc:sec:format}.
 % The following sections describe the individual ECSs in more detail.
-We separate the discussion of particular systems into two subsections: signalling games (\Cref{elcc:sec:signalling}) and its variations which represent a large proportion of system discussed in the literature and other games (\Cref{elcc:sec:other-games}) which go beyond the standard signalling framework.
+We separate the discussion of particular systems into two subsections: signaling games (\Cref{elcc:sec:signaling}) and its variations which represent a large proportion of system discussed in the literature and other games (\Cref{elcc:sec:other-games}) which go beyond the standard signaling framework.
 
 
 \subsection{Scope}
@@ -48,30 +48,30 @@ This excludes a small number of emergent communication papers have approached em
 Other systems use discrete communication but have episodes with only a single, one-token message (e.g., \citet{tucker2021discrete}), which would have limited applicability to many research questions in emergent communication.
 
 
-\subsection{Signalling games}
-\unskip\label{elcc:sec:signalling}
-The \emph{signalling game} (or \emph{reference game}) \citep{lewis1970ConventionAP} represents a plurality, if not majority, of the systems present in the literature.
-A brief, non-exhaustive review of the literature yielded $43$ papers which use minor variations of the signalling game, a large number considering the modest body of emergent communication literature (see \Cref{elcc:sec:sg-list}).
+\subsection{Signaling games}
+\unskip\label{elcc:sec:signaling}
+The \emph{signaling game} (or \emph{reference game}) \citep{lewis1970ConventionAP} represents a plurality, if not majority, of the systems present in the literature.
+A brief, non-exhaustive review of the literature yielded $43$ papers which use minor variations of the signaling game, a large number considering the modest body of emergent communication literature (see \Cref{elcc:sec:sg-list}).
 % \unskip\footnote{\protect\citet{mu2021generalizations, 2203.13176, yao2022linking, 2204.12982, 2112.14518, 2111.06464, 2109.06232, tucker2021discrete, 2106.04258, 2103.08067, 2103.04180, 2101.10253, 2012.10776, 2012.02875, li-etal-2020-emergent, 2010.01878, 2008.09866, 2008.09860, 2005.00110, 2004.09124, 2004.03868, 2004.03420, 2002.01365, 2002.01335, 2002.01093, 2001.08618, 2001.03361, 1911.05546, 1911.01892, 1910.05291, 1909.11060, li2019ease, 1905.13687, 1905.12561, 1812.01431, 1808.10696, lazaridou2018referential, 1705.11192, lazaridou2016multiagent, 2302.08913, 2211.02412, 2209.15342, 2207.07025}}
-The basic format of the signalling game is a single round of the \emph{sender} agent making an observation, passing a message to the \emph{receiver} agent, and the receiver performing an action based on the information from the message.
+The basic format of the signaling game is a single round of the \emph{sender} agent making an observation, passing a message to the \emph{receiver} agent, and the receiver performing an action based on the information from the message.
 The popularity of this game is, in large part, because of its simplicity in both concept and implementation.
 Experimental variables can be manipulated easily while introducing minimal confounding factors.
 Furthermore, the implementations can entirely avoid the difficulties of reinforcement learning by treating the sender and receiver agents as a single neural network, resulting in autoencoder with a discrete bottleneck which can be trained with backpropagation and supervised learning. 
 
-The two major subtypes of the signalling game are the \emph{discrimination game} and the \emph{reconstruction game}.
+The two major subtypes of the signaling game are the \emph{discrimination game} and the \emph{reconstruction game}.
 In the discrimination game, the receiver must answer a multiple-choice question, that is, select the correct observation from among incorrect ``distractors''.
 In the reconstruction game, the receiver must recreate the input directly, similar to the decoder of an autoencoder.
 
 \paragraph{Vanilla}
-For the most basic form of the signalling game, which we term ``vanilla'', we use the implementation provided in the Emergence of lanGuage in Games (EGG) framework \citep[MIT license]{kharitonov-etal-2019-egg}.
-It is vanilla insofar as it comprises the signalling game with the simplest possible observations (synthetic, concatenated one-hot vectors), a standard agent architecture (i.e., RNNs), and no additional dynamics or variations on the game.
+For the most basic form of the signaling game, which we term ``vanilla'', we use the implementation provided in the Emergence of lanGuage in Games (EGG) framework \citep[MIT license]{kharitonov-etal-2019-egg}.
+It is vanilla insofar as it comprises the signaling game with the simplest possible observations (synthetic, concatenated one-hot vectors), a standard agent architecture (i.e., RNNs), and no additional dynamics or variations on the game.
 Both the discrimination game and the reconstruction game are included.
-This system provides a good point of comparison for other ECSs which introduce variations on the signalling game.
+This system provides a good point of comparison for other ECSs which introduce variations on the signaling game.
 The simplicity of the system additionally makes it easier to vary hyperparameters: for example, the size of the dataset can be scaled arbitrarily and there is no reliance on pretrained embedding models.
 % both Gumbel-Softmax and REINFORCE \cmt{check} optimization methods are available,
 
 \paragraph{Natural images}
-``Linking emergent and natural languages via corpus transfer'' \citep[MIT license]{yao2022linking} presents a variant of the signalling game which uses embeddings of natural images as the observations.
+``Linking emergent and natural languages via corpus transfer'' \citep[MIT license]{yao2022linking} presents a variant of the signaling game which uses embeddings of natural images as the observations.
 In particular, the system uses embedded images from the MS-COCO and Conceptual Captions datasets consisting of pictures of everyday scenes.
 Compared to the uniformly sampled one-hot vectors in the vanilla setting,
   natural image embeddings are real-valued with a generally smooth probability distribution rather than being binary or categorical.
@@ -79,7 +79,7 @@ Furthermore, natural data distributions are not uniform  and instead have concen
 
 
 \paragraph{Concept-based observations}
-``Emergent communication of generalizations'' \citep[MIT license]{mu2021generalizations} presents a variant of the discrimination signalling game which they term the \emph{concept game}.
+``Emergent communication of generalizations'' \citep[MIT license]{mu2021generalizations} presents a variant of the discrimination signaling game which they term the \emph{concept game}.
 The concept game changes the way that the sender's observation corresponds with the receiver's observations.
 In the vanilla discrimination game, the observation the sender sees is exactly the same as the correct observation that the receiver sees.
 In the concept game, the sender instead observes a set of inputs which share a particular concept (e.g., red triangle and red circle are both red), and the correct observation (among distractors) shown to the receiver contains the same concept (i.e., red) while not being identical to those observed by the sender.
@@ -87,7 +87,7 @@ The rationale for this system is that the differing observations will encourage 
 This ECS also presents the vanilla discrimination game as well as the \emph{set reference game}, which is similar to the reference game except that the whole object is consistent (e.g., different sizes and locations of a red triangle).
 
 \paragraph{Multi-agent population}
-``Emergent communication at scale'' \citep[Apache 2.0-license]{chaabouni2022emergent} presents a signalling game system with populations of agents instead of the standard fixed pair of sender and receiver.
+``Emergent communication at scale'' \citep[Apache 2.0-license]{chaabouni2022emergent} presents a signaling game system with populations of agents instead of the standard fixed pair of sender and receiver.
 For each round of the game, then, a random sender is paired with a random receiver.
 This adds a degree of realism to the system, as natural human languages are developed within a population and not just between two speakers (cf.\@ idioglossia).
 More specifically, language developing among a population of agents prevents some degree ``overfitting'' between sender and receiver;
@@ -95,7 +95,7 @@ More specifically, language developing among a population of agents prevents som
 
 \subsection{Other games}
 \unskip\label{elcc:sec:other-games}
-Considering that the signalling game is close to the simplest possible game for an ECS, moving beyond the signalling game generally entails an increase in complexity.
+Considering that the signaling game is close to the simplest possible game for an ECS, moving beyond the signaling game generally entails an increase in complexity.
 There is no limit to the theoretical diversity of games, although some of the most common games that we see in the literature are
   conversation-based games (e.g., negotiation, social deduction) and navigation games.
 These games often introduce new aspects to agent interactions like:
@@ -112,10 +112,10 @@ Nevertheless, we have reason to believe that these complexities are critical to 
 
 
 \paragraph{Grid-world navigation}
-``Generalizing Emergent Communication'' \citep[BSD-3-clause license]{unger2020GeneralizingEC} introduces an ECS which takes some of the basic structure of the signalling game and applies it to a navigation-based system derived from the synthetic Minigrid/BabyAI environment \citep{chevalier2018babyai,MinigridMiniworld23}.
+``Generalizing Emergent Communication'' \citep[BSD-3-clause license]{unger2020GeneralizingEC} introduces an ECS which takes some of the basic structure of the signaling game and applies it to a navigation-based system derived from the synthetic Minigrid/BabyAI environment \citep{chevalier2018babyai,MinigridMiniworld23}.
 A sender with a bird's-eye view of the environment sends messages to a receiver with a limited view who has to navigate to a goal location.
 Beyond navigation, some environments present a locked door for which the receiver must first pick up a key in order to open.
-What distinguishes this system most from the signalling game is that it is multi-step and embodied such that the  utterances within an episodes are dependent on each other.
+What distinguishes this system most from the signaling game is that it is multi-step and embodied such that the  utterances within an episodes are dependent on each other.
 Among other things, this changes the distribution properties of the utterances.
 For example, if the receiver is in Room A at timestep $T$, it is more likely to be in Room A at timestep $T+1$; thus if utterances are describing what room the receiver is in, this means that an utterance at $T+1$ has less uncertainty given the content of an utterance at $T$.
 Practically speaking, the multiple utterances in a given episode are concatenated together to form a single line in the corpus in order to maintain the dependence of later utterances on previous ones.
@@ -132,4 +132,4 @@ On the other hand, the continuous nature of this environment provides built-in s
 In a given round, the discussion takes the form of all agents broadcasting a message to all other agents after which a vote is taken on whom to eliminate.
 As there are multiple rounds in a given game, this system introduces multi-step as well as multi-speaker dynamics into the language.
 Furthermore, the messages also influence distinct actions in the system (i.e., voting).
-These additional features in the system add the potential for communication strategies that are shaped by a variety of heterogeneous factors rather than simply the distribution of observations (as in the signalling game).
+These additional features in the system add the potential for communication strategies that are shaped by a variety of heterogeneous factors rather than simply the distribution of observations (as in the signaling game).

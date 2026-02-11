@@ -117,12 +117,12 @@ Emergent languages which have a corpus size smaller than the required size are s
 \fi
 
 
-\paragraph{Generic signalling game}
-The first set of emergent languages we test are generic versions of the of the signalling game (reference game) as implemented in EGG \citep{kharitonov-etal-2019-egg} (MIT license).
+\paragraph{Generic signaling game}
+The first set of emergent languages we test are generic versions of the of the signaling game (reference game) as implemented in EGG \citep{kharitonov-etal-2019-egg} (MIT license).
 These games use one-hot vectors to represent attribute--value observations, that is, observations are elements of the set $V^{|A|}$ where $V$ is the set of values and $|A|$ is the number of attributes.
-The signalling game is one of the simplest and most used games in emergent communication research.
+The signaling game is one of the simplest and most used games in emergent communication research.
 
-The first two language are \emph{Disc, small} and \emph{Disc, large} which are two configurations of the discrimination version of the signalling game.
+The first two language are \emph{Disc, small} and \emph{Disc, large} which are two configurations of the discrimination version of the signaling game.
 Here, the sender makes an observation and sends a message;
   then, the receiver must select the corresponding observation from a small set of potential observations (like a multiple-choice question).
 The \emph{small} configuration consists of $4$ attributes and $4$ values with a small vocabulary size and medium message length;
@@ -131,7 +131,7 @@ The \emph{large} configuration consists of $12$ attributes and $8$ values with a
 Both environments show $5$ distractor observations to the receiver (i.e., $6$-way multiple choice).
 Both settings converge to a success rate ${>}95\%$ compared to a random baseline of ${~}17\%$.
 
-The \emph{Recon, large} environment is based on the reconstruction version of the signalling game.
+The \emph{Recon, large} environment is based on the reconstruction version of the signaling game.
 In this version, the receiver does not make any observations and instead must recreate the sender's observation based on the message alone (similar to an autoencoder).
 The observation space has $8$ attributes and $8$ values with other settings identical to that of \emph{Disc, large}. 
 Since the reconstruction game considerably harder, the game does not converge but does reach an overall accuracy of $0.014\%$ and per-attribute accuracy of $24\%$ compared to a random baseline of $0.000006\%$ and $13\%$ random baseline, respectively.
@@ -139,7 +139,7 @@ For details, see \Cref{sec:hparams-egg}.
 
 \paragraph{\citet{mu2021generalizations}}
 present the second pair of emergent languages which we test XferBench on (code under MIT license).
-The emergent communication game is also a discriminative signalling game but with (1) richer observations and (2) more abstract information needing to be communicated.
+The emergent communication game is also a discriminative signaling game but with (1) richer observations and (2) more abstract information needing to be communicated.
 In one setting, the observations are images from ShapeWorld \citep{Kuhnle2017ShapeWorldA} (\emph{Mu+, SW}), a synthetic data of various geometric shapes, and the other setting is CUB \citep{WahCUB_200_2011} (\emph{Mu+, CUB}) which contains labeled images of birds;
   both settings encode features with a CNN which is the passed to the sender and receiver.
 In the basic discriminative game, the observation made by the sender is the exact same one seen by the receiver.

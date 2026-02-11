@@ -31,7 +31,7 @@ Mixed precision training was tested but not found to improve runtime.
 For learning rate scheduling, we found cosine annealing to be slightly more effective than no learning, but further schedules were not investigated.
 Weight decay was investigated in earlier experiment but found not to have a noticeable effect.
 
-The implementation of the signalling game we used could also be optimized using REINFORCE to handle the discrete message, but we only tested with a Gumbel-Softmax layer as it is faster and more stable to optimize with.
+The implementation of the signaling game we used could also be optimized using REINFORCE to handle the discrete message, but we only tested with a Gumbel-Softmax layer as it is faster and more stable to optimize with.
 We did not vary the neural architecture beyond altering the number of units in the hidden and embedding layers; for example, we did not add additional layers, try different RNN cells (e.g., LSTM), or use transformers.
 
 

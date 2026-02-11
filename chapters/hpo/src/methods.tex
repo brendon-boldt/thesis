@@ -3,16 +3,16 @@
 \subsection{Objective: XferBench}
 
 The ultimate objective that we are optimizing for is transfer learning performance on downstream human language tasks.
-This objective is quantified by XferBench \citep[MIT license]{xferbench}, which measures how much pretraining on an emergent language corpus decreases cross-entropy on a limited-data, downstream language modelling task on human languages (illustrated in the gray box of \Cref{hpo:fig:xb}).
+This objective is quantified by XferBench \citep[MIT license]{xferbench}, which measures how much pretraining on an emergent language corpus decreases cross-entropy on a limited-data, downstream language modeling task on human languages (illustrated in the gray box of \Cref{hpo:fig:xb}).
 Since the output of XferBench is mean cross-entropy across human languages, a lower score better.
 XferBench takes as input a corpus of $15$ million tokens, which is used for the pretraining stage and finetunes on $2$ million tokens of the (human) evaluation language.
 The language model used for XferBench is based on GPT-2 \citep{radford2019language} and has ${\sim}60$ million parameters.
 Since XferBench has a long runtime, we use a modified version only during hyperparameter search termed \emph{XferBench-da} which only evaluates on one human language (viz.\@ Danish) which we found to have high correlation ($R^2>0.95$) with the complete XferBench; see \Cref{hpo:sec:eval-corr} for details.
 
-\subsection{Environment: signalling game}
-The environment we use in our experiments is the signalling game.
-In particular we use the discrimination variant of the signalling game based on the implementation in EGG \citep[\url{https://github.com/facebookresearch/EGG}, MIT license]{kharitonov-etal-2019-egg}.
-The discrimination variant of the signalling game consists of two agents, a sender and a receiver interacting for a single round.
+\subsection{Environment: signaling game}
+The environment we use in our experiments is the signaling game.
+In particular we use the discrimination variant of the signaling game based on the implementation in EGG \citep[\url{https://github.com/facebookresearch/EGG}, MIT license]{kharitonov-etal-2019-egg}.
+The discrimination variant of the signaling game consists of two agents, a sender and a receiver interacting for a single round.
 In a given round, the sender observes an input, sends a message  to the receiver, and the receiver selects an observation out of a number of candidates based on the message.
 Of the candidate observations, one is correct (i.e., the same as the sender's input), and the rest are ``distractors''.
 In the implementation used in this paper:
@@ -38,7 +38,7 @@ The data is generated for the input corpus to XferBench by sampling from the dat
 \subsection{Variables: hyperparameters}
 The hyperparameters are the independent variable of the primary experiments presented in this paper;
   that is, the hyperparameters will be varied in order to optimize the system for the objective function.
-Some hyperparameters manipulated in this study are unique to the signalling game (e.g., how many attributes and values in the signalling game observations) while others come from deep learning-based architectures more generally (e.g., learning rate, neural network architecture).
+Some hyperparameters manipulated in this study are unique to the signaling game (e.g., how many attributes and values in the signaling game observations) while others come from deep learning-based architectures more generally (e.g., learning rate, neural network architecture).
 
 We primarily investigate the following hyperparameters:
 \begin{description}[nosep]

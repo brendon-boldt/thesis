@@ -17,7 +17,7 @@ Thus research focusing on a single or narrow range of emergent communication sys
 \end{table}
 
 The range of analyses ELCC enables is greatly multiplied by a resource like XferBench \citep{xferbench}, a deep transfer learning-based evaluation metric for emergent languages.
-This metric quantifies how good a corpus is as pretraining data for a human language-based downstream task, specifically language modelling (thus a lower score is better).
+This metric quantifies how good a corpus is as pretraining data for a human language-based downstream task, specifically language modeling (thus a lower score is better).
 XferBench proves to be particularly powerful for analyzing ELCC because it works in an environment-agnostic way, taking only a corpus of tokenized utterances as input.
 In fact, ELCC and XferBench permit the first large-scale comparison of emergent language systems with an \emph{evaluative} metric.
 
@@ -36,7 +36,7 @@ We run XferBench three times for each corpus since there inherent stochasticity 
 % Compared to the baseline of ``no pretraining'', we see that many of the emergent languages beat this 
 We see that most of the emergent languages occupy a band which slightly outperforms the baselines (i.e., no pretraining at all) while significantly underperforming human languages (exception discussed below).
 Notably, two of the environments with the worst-performing corpora
-  are the grid-world \citep{unger2020GeneralizingEC} and continuous \citep{boldt2023mathmodel} navigation environments, while the signalling games perform better consistently.
+  are the grid-world \citep{unger2020GeneralizingEC} and continuous \citep{boldt2023mathmodel} navigation environments, while the signaling games perform better consistently.
 
 \begin{figure}
   \newcommand\hang{\hangindent=0.2in}
@@ -50,7 +50,7 @@ Notably, two of the environments with the worst-performing corpora
       \hang {[3925, 3925, 3925, 3325, 1172, 2530, 3925, 1209, 3493, 665, 512, 3923, 2432, 309, 0]}\par
       \hang {[2128, 2128, 2371, 3925, 946, 512, 1962, 1288, 2250, 1722, 1722, 1962, 3755, 2695, 0]}
     \end{minipage}}
-    \caption{Best-performing: signalling game \citep{yao2022linking} with the COCO dataset.}
+    \caption{Best-performing: signaling game \citep{yao2022linking} with the COCO dataset.}
   \end{subfigure}
   \hfill
   \begin{subfigure}{0.45\linewidth}
@@ -120,12 +120,12 @@ On the other hand, success rate does not seem to be well-correlated with score o
 \end{figure}
 Finally, we are also able to use XferBench and ELCC to evaluate some of the innovations in emergent communication system design made by papers contributing to ELCC\@.
 Namely, we look at \citet{mu2021generalizations} and ``Emergent Communication at Scale'' \citep{chaabouni2022emergent}.
-\citet{mu2021generalizations} introduce (as discussed in \Cref{elcc:sec:signalling}) a more sophisticated, concept-focused version of the signalling game, comparing it against a vanilla signalling game (``reference'') and an intermediate form of the concept version (``set reference''), finding that the introduced games promote more systematic and interpretable emergent languages.
-On the other hand, \citet{chaabouni2022emergent} introduces multi-agent populations to the signalling game but does not find that larger populations have a beneficial effect on communication.
-Looking at the systems' performance XferBench (\Cref{elcc:fig:improvements}), we can see that the proposed improvements to the signalling game do not have an appreciable effect on XferBench performance in either case.
+\citet{mu2021generalizations} introduce (as discussed in \Cref{elcc:sec:signaling}) a more sophisticated, concept-focused version of the signaling game, comparing it against a vanilla signaling game (``reference'') and an intermediate form of the concept version (``set reference''), finding that the introduced games promote more systematic and interpretable emergent languages.
+On the other hand, \citet{chaabouni2022emergent} introduces multi-agent populations to the signaling game but does not find that larger populations have a beneficial effect on communication.
+Looking at the systems' performance XferBench (\Cref{elcc:fig:improvements}), we can see that the proposed improvements to the signaling game do not have an appreciable effect on XferBench performance in either case.
 These results do not detract from the original findings; instead, evaluating the design changes with XferBench better contextualizes work, highlighting to what degree certain desirable features of emergent languages (e.g., interpretability, robustness) correspond with suitability for deep transfer learning.
 
 % a\paragraph{Theoretical models}
 % a\phantom{}
-% a\cmt{nav-to-center experiments and mathematically modelling}
+% a\cmt{nav-to-center experiments and mathematically modeling}
 % a\cmt{To include or not?}

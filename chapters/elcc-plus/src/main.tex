@@ -53,22 +53,22 @@ Furthermore, this format is extensible since new adapters can be written to exte
 \end{figure}
 
 In order to illustrate the format of the enriched collection, we will use two environments.
-The first environment is the discrimination variant the signalling game where the observations are concatenations of one-hot vectors.
+The first environment is the discrimination variant the signaling game where the observations are concatenations of one-hot vectors.
 The second environment is a sender--receiver navigation based on Minigrid framework.
 In this game, the receiver is an embodied agent in a grid world environment who must navigate to the goal based on messages from the sender who can observe the whole environment (illustrated in \Cref{fig:minigrid}).
 Additionally, there is a one-to-many relationship between messages and actions the receiver takes, that is, the receiver may take multiple steps before the sender sends another message.
 
 
 \paragraph{Serialization}
-In \Cref{fig:serialization}, we present a simplified serialization of episodes in the signalling game and navigation environments.
-For the signalling game, the serialization is relatively straightforward since every episode consists of a single timestep with the same components;
+In \Cref{fig:serialization}, we present a simplified serialization of episodes in the signaling game and navigation environments.
+For the signaling game, the serialization is relatively straightforward since every episode consists of a single timestep with the same components;
   there are observations and actions made by the sender and the receiver, a reward given by the environment, and other metadata like the step in the optimization process.
 The navigation environment has more moving parts, and the serialization is, as a result, more complicated.
-The observations themselves have more information and structure compared to the single vector in the signalling game.
+The observations themselves have more information and structure compared to the single vector in the signaling game.
 More important to studying communication, though, is the fact that there are multiple time steps in the environment which themselves potentially contain utterances.
 
 Even in this simple example, it is evident that coming up with a strict data format for serializing emergent communications systems would difficult and cumbersome.
-The signalling game only consists trivially of one or two steps, and it is much more natural to represent as not having any steps at all.
+The signaling game only consists trivially of one or two steps, and it is much more natural to represent as not having any steps at all.
 Meanwhile the navigation environment requires being broken into a variable number of steps.
 If we were to try to serialize a multi-agent navigation environment, we would no longer able to simply refer to the {\small\texttt{utterance}} or {\small\texttt{receiver\_action}} of each step and instead would have to generalize the representation to multiple utterances and actions per step.
 This list of generalization can go on indefinitely, and so it is the best interest of the collection to keep this part of the representation flexible so as to not limit the future scope of the collection.
@@ -109,7 +109,7 @@ This list of generalization can go on indefinitely, and so it is the best intere
 
 
 \end{verbatim}
-    \caption{Basic signalling game}
+    \caption{Basic signaling game}
   \end{subfigure}
   \hfill
   \begin{subfigure}[t]{0.4\linewidth}
@@ -174,7 +174,7 @@ def semantics_receiver(episodes):
     idx = ep.receiver_action
     yield ep.observation.receiver[idx]
 \end{verbatim}
-    \caption{Signalling game}
+    \caption{Signaling game}
   \end{subfigure}
   \hfill
   \begin{subfigure}[t]{0.55\linewidth}
@@ -217,7 +217,7 @@ The interface we will introduce for illustration purposes will consist of three 
 While these elements are simple, the demonstrate nicely how the implementations adapt the variability in the serialization the uniformity required by the interface.
 We give Python pseudo-code for the implementation of this interface in \Cref{fig:interface}.
 
-The interface implementation for the signalling game is, again, relatively straightforward due to the simplicity of the environment and, in turn, serialization.
+The interface implementation for the signaling game is, again, relatively straightforward due to the simplicity of the environment and, in turn, serialization.
 On the other hand, the implementations for the navigation environment have to account for more variability and nuance.
 Firstly, the implementations for the utterances as well as utterances plus sender meaning requires that steps without utterances be filtered out.
 More interestingly, the receiver-side semantics implementation requires aggregating the actions the receiver takes over multiple timesteps as the interpretation of the sender's utterance may entail taking a sequence of actions.

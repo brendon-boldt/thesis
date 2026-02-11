@@ -1,6 +1,6 @@
 % TL;DR: We generate the most human language-like emergent language as measured by transfer learning performance.
 \begin{abstract}
-In this chapter, we design a signalling game-based emergent communication environment to generate state-of-the-art emergent languages in terms of similarity to human language.
+In this chapter, we design a signaling game-based emergent communication environment to generate state-of-the-art emergent languages in terms of similarity to human language.
 This is done with hyperparameter optimization, using XferBench as the objective function.
 XferBench quantifies the statistical similarity of emergent language to human language by measuring its suitability for deep transfer learning to human language.
 Additionally, we demonstrate the predictive power of entropy on the transfer learning performance of an emergent language as well as validate previous results on the entropy-minimization properties of emergent communication systems.
@@ -13,8 +13,8 @@ Emergent language has tremendous potential to generate realistic human language 
 This stems from the fact that emergent language aims to replicate the communicative pressures that drive the development of human language and are hypothesized to explain various patterns observed in linguistics \citep{sep-linguistics}.
 Yet little work has been done to date designing emergent communication systems to generate languages with high statistical similarity to human languages.
 Such languages could better serve as synthetic human language data for pretraining and evaluating NLP models.
-Thus, in this paper, we generate emergent languages with a signalling game that have a high degree of similarity to human languages, demonstrating state-of-the-art performance on emergent-to-human language deep transfer learning.
-Specifically, we use Bayesian hyperparameter search to optimize a signalling game on the XferBench benchmark \citep{xferbench}.
+Thus, in this paper, we generate emergent languages with a signaling game that have a high degree of similarity to human languages, demonstrating state-of-the-art performance on emergent-to-human language deep transfer learning.
+Specifically, we use Bayesian hyperparameter search to optimize a signaling game on the XferBench benchmark \citep{xferbench}.
 
 \begin{figure}
   \centering
@@ -53,7 +53,7 @@ We (1) introduce emergent communication environments which produce the most huma
 For a general overview of deep learning-based emergent communication research, see \citet{lazaridou2020review}.
 This paper shares the goal of producing emergent language corpora that are suitable for transfer learning to human languages with \citet{yao2022linking}, which also introduces the \emph{corpus transfer} method for applying emergent communication techniques to pretraining deep learning models used in this paper.
 \citet{boldt2023mathmodel}, similarly to this paper, investigate the effect of hyperparameters on emergent communication, although their study focuses primarily on the effects of individual hyperparameters on entropy instead optimizing an entire system for an evaluation metric.
-Finally, this paper scales up emergent communication game hyperparameters in a way that overlaps with \citet{chaabouni2022emergent}, although the latter focuses on addressing the practical challenges of scaling up certain facets of the signalling game (e.g., number of agents) rather than directly optimizing a particular objective.
+Finally, this paper scales up emergent communication game hyperparameters in a way that overlaps with \citet{chaabouni2022emergent}, although the latter focuses on addressing the practical challenges of scaling up certain facets of the signaling game (e.g., number of agents) rather than directly optimizing a particular objective.
 
 The task of generating emergent languages for pretraining NLP models falls within the broad category data augmentation with synthetic data  but differs from most other approaches due emergent language's unique nature as an \emph{emergent} phenomenon.
 First, emergent language differs from procedurally generating data from rules because emergent techniques preclude stipulating the exact process for generating the data; expert knowledge is incorporated into designing the system which generates the data, not generating the data itself.
