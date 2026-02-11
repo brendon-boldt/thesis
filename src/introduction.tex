@@ -256,14 +256,14 @@ Finally, from a practical standpoint, the engineering approach proved more tract
 \label{sec:intro-review}
 \Cref{ch:review} provides a comprehensive review on the goals and applications of emergent language research.
 This chapter is not a general review but review of the \emph{goals} of this field of research because it is imperative for any field of research to understand where it is going and why.
-While many of the goals of deep learning-based emergent language overlap with those of classical emergent language, it also opens up a new category of contributions to the machine learning world.
+While many of the goals of deep learning-based emergent language overlap with those of classical emergent language, others extend to the machine learning world.
 Beyond the general clarity that articulating directions provides, this chapter performs two specific functions for this thesis.
-First, by articulating the goals and, in many cases, the lack of progress towards achieving them, it motivates the paradigmatic changes which this thesis proposes in later chapters.
+First, by articulating the goals and, in many cases, the minimal progress towards achieving them, it motivates the paradigmatic changes which this thesis proposes in later chapters.
 Second, the articulated goals form the very basis of the analytical methods which are introduced in later chapters.
 Using emergent language to pretrain language models?
   Evaluate them against XferBench (\cref{ch:xferbench}).
 Trying to make claims about the morphology of emergent languages?
-  Produce a morpheme inventory with CSAR (\cref{ch:morphemes}).
+  Induce a morpheme inventory with CSAR (\cref{ch:morphemes}).
 Thus this chapter provides both the motivation and scaffold for the \emph{principled} analytical algorithms introduced the later chapters.
 
 \subsection{Towards unity in a diverse landscape}%
@@ -272,7 +272,7 @@ Thus this chapter provides both the motivation and scaffold for the \emph{princi
 \Cref{ch:elcc} introduces the Emergent Language Corpus Collection (ELCC), a diverse collection of emergent language corpora derived from free and open source implementations of emergent language environments.
 As stated above, emergent language research is often organized into little islands working with specific environments to test specific phenomena with considerably less work spanning even a small subset of the wide variety of emergent language environments.
 Introducing a collection of diverse emergent language corpora in a unified format (along with ready-to-run versions of the corresponding codebases) makes a significant step towards more comparative research yielding more \emph{environment-agnostic} contributions.
-Furthermore, making the corpora available in a simple JSON (and obviating running the environments in the first place) lowers the barrier of entry to studying emergent languages in general, especially for those coming from a non-technical background.
+Furthermore, making the corpora available in a simple JSON-based format (and obviating running the environments in the first place) lowers the barrier of entry to studying emergent languages in general, especially for those coming from a non-technical background.
 The promise of analysis across diverse languages is borne out within this very thesis as ELCC is employed both in XferBench (\cref{ch:xferbench}) and CSAR (\cref{ch:morphemes}).
 
 
@@ -290,11 +290,11 @@ The promise of analysis across diverse languages is borne out within this very t
 \label{sec:intro-xferbench}
 
 \Cref{ch:xferbench} introduces XferBench, an evaluation metric for emergent language corpora based on deep transfer learning.
-The intuition behind XferBench is that when a model is pretrained on emergent language data, its downstream performance on human language-based natural language processing tasks (e.g., language modeling, machine translation) is correlated with its similarity to human language, as far as a deep neural network is concerned.
-XferBench is \emph{environment-agnostic} insofar as it only requires and emergent language corpus as input, meaning that it can be applied to most any environment, and compare them on single quantitative scale.
+The intuition behind XferBench is that when a model is pretrained on emergent language data, its downstream performance on human language-based natural language processing tasks (e.g., language modeling, machine translation) correlates with its similarity to human language, as far as a deep neural network is concerned.
+XferBench is \emph{environment-agnostic} insofar as it only requires an emergent language corpus as input, meaning that it can be applied to most any environment, and compare differing environments on single quantitative scale.
 XferBench is \emph{principled} insofar as it is directly measuring how well emergent languages function in place of human languages in deep learning settings, a major component of the \emph{engineering} goals of emergent language.
-Furthermore, the type of realism which XferBench is measuring is complementary to the \emph{scientific} goals of emergent language which stand to benefit from higher-resolution simulations of linguistic phenomena.
-\Cref{ch:hpo} demonstrates XferBench in action by using it as an objective function for hyperparameter search over the hyperparameters of an emergent language environment, effectively finding measurably more human-like emergent languages (as far as neural networks are concerned) with minimal manual input.
+Furthermore, the type of realism which XferBench is measuring is complementary to the \emph{scientific} goals of emergent language which stand to benefit from more realistic simulations of linguistic phenomena.
+\Cref{ch:hpo} demonstrates XferBench in action by using it as an objective function for hyperparameter search over the hyperparameters of an emergent language environment, effectively finding measurably more human-like emergent languages with minimal manual input.
 
 % \cmt{Talk about the fact somewhere that we need these analytical algorithms because we cannot inspect emergent languages manually or presuppose structures in them.}
 
@@ -310,9 +310,9 @@ Furthermore, the type of realism which XferBench is measuring is complementary t
 \label{sec:intro-morph}
 
 While the previously mentioned chapters employ black-box techniques to measure engineering-centric progress in emergent language, \cref{ch:morphemes,ch:phrasebook} introduce good, old-fashioned algorithms (no neural networks) for uncovering morphosyntactic structures in emergent languages.
-This is motivated by the fact that \emph{scientific} goals of emergent language require understanding the patterns and regularities present in emergent language despite the largely cryptic output produced by the simulations in question.
+This is motivated by the fact that the \emph{scientific} goals of emergent language require understanding the patterns and regularities present in emergent language despite the largely cryptic output produced by the simulations in question.
 Specifically, \cref{ch:morphemes} introduces CSAR, an algorithm for inducing morphemes from emergent language corpora annotated with the individual utterances meanings.
-This approach is motivated by the fact that simply identifying the minimal units of meaning (i.e., morphemes) in emergent languages is critical to understanding most higher-level linguistic structures (e.g., morphology, syntax, pragmatics).
+This approach is motivated by the fact that simply identifying the minimal units of meaning (i.e., morphemes) in emergent languages is non-trivial and critical to understanding most higher-level linguistic structures (e.g., morphology, syntax, pragmatics).
 Furthermore, CSAR makes very few prior assumptions about what kind of structure is present in the emergent languages analyzed, making it suitable to handle the wide variety of patterns which could possibly emerge.
 \cref{ch:phrasebook} puts the morphemes CSAR induces to the test by measuring their effectiveness for synthesizing and analyzing emergent language utterances produced by the neural network-based agents.
 The patterns observed in synthesizing and analyzing emergent language at the morpheme-level present one of the most \emph{principled} investigations of the syntax of deep learning-based emergent languages to date.
