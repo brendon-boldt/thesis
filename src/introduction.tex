@@ -42,25 +42,26 @@ Read this thesis.
 \chapter{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%
 
-Large language models are good a mimicking human language.
+Large language models are good at mimicking human language.
 Some might even say they are good at \emph{using} human language, but this is either imprecise or inaccurate:
   LLMs' production of text is based the statistical likelihood of meaningless (so far as they are concerned) tokens, fine-tuned to humans' preferences.
-This is in contrast to humans' use---and event more so their acquisition---of language which is laden with meaning derived from the rich internal, physical, and social context which permeates language use.
-The end result is that LLMs' approximation of human language fails at a number of tasks but, more significantly, falls short in providing insights into the nature of human language itself.
+This is in contrast to humans' use---and even more so their acquisition---of language which is laden with meaning derived from the rich internal, physical, and social context which permeates language use.
+The end result is that LLMs' approximation of human language fails at a number of tasks but, more significantly, is limited in providing insights into the nature of human language itself.
 
-\emph{Emergent communication} (also known as \emph{emergent language}\footnote{I \emph{will} use these interchangeably.}) is an alternative paradigm to developing language-capable models that does not does not train on human language data but rather invents a communication system \emph{de novo}.
-In its most basic form, emergent communication comprises a simulation using neural network-based agents which are trained to cooperatively complete some task in a virtual environment.
-These agents are equipped with a communication channel of discrete tokens with no \emph{a priori} meaning---the meaning of communication is established through the optimization process encouraging communication which is advantageous to completing the task.
+\emph{Emergent language} (also known as \emph{emergent communication}\footnote{I \emph{will} use these interchangeably.}) is an alternative paradigm to developing language-capable models that does not train on human language data but rather invents a communication system \emph{de novo}.
+In its most basic form, emergent language comprises a simulation using neural network-based agents which are trained to cooperatively complete some task in a virtual environment.
+These agents are equipped with a communication channel of discrete tokens with no \emph{a priori} meaning---the meaning of the messages is established through the optimization process encouraging communication which is advantageous to completing the task, more analogous to humans' use of communication.
 % The communication protocol, then, is the ``emergent language'' since the meaningful system of communication as arisen organically from the environment and task.
 
-Emergent communication differs from the more ``traditional'' approach to language that LLMs use in that it does not try mimic human language but instead tries to rederive language from functional pressures analogous to those hypothesized to have guided human language's own evolution.
-Since the process language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to yield significant gains the scientific understanding of human language.
-Furthermore, certain practical tasks might lie beyond the reach of the mimicry approach LLMs employ due to surface-level operations; these problems, too, can be addressed by emergent communication which models not only the surface features of language but also its semantics and social context.
-Finally, generating language data through emergent communication avoids many of the ethical issues that crop up with LLMs dependence on human language data from amplifying toxicity from the Web to freely (ab)using copyrighted and personal content \citep{weidinger2021ethicalsocialrisksharm,carlini2021extractingtrainingdatalarge}.
+Emergent language differs from the more ``traditional'' approach to modelling language that LLMs use in that it does not try to mimic patterns in human language but instead tries to rederive such patterns from functional pressures analogous to those hypothesized to have guided human language's own evolution.
+Since this process language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to contribute to the scientific understanding of human language.
+Furthermore, certain practical tasks might lie beyond the reach of the mimicry approach LLMs employ due to the often superficial ``understanding'' they have of language; these problems, too, can be addressed by emergent language which models not only the surface features of language but also its semantics and social context.
+Finally, generating language data through emergent communication avoids many of the ethical issues that crop up with LLMs' dependence on human language data from amplifying toxicity from the Web to freely (ab)using copyrighted and personal content \citep{weidinger2021ethicalsocialrisksharm,carlini2021extractingtrainingdatalarge}.
 
-Here is the problem: the field of emergent communication has not made measurable progress toward its more revolutionary applications to scientific understanding or practical problems.
-This thesis, then, establishes methods in emergent communication that enable measurable progress in emergent language research, enabling practitioners to tackle the most significant applications of the field through cumulative contributions.
-It does this by first introducing emergent language data resources which permit empirical evaluation across a variety of emergent languages.
+Here is the problem: despite its potential, the field of emergent communication has not made measurable progress toward its more revolutionary applications to scientific understanding or practical problems.
+This thesis, then, introduces resources and algorithms for emergent language that enable measurable progress in the field, enabling practitioners to tackle its most significant applications through cumulative contributions.
+It accomplishes this first by reviewing the particular ways in which emergent communication can solve practical applications and improve scientific understanding.
+This is followed by introducing emergent language data resources which permit empirical evaluation across a variety of emergent languages.
 These resources are then used to develop environment-agnostic analytical algorithms centering on the key applications of emergent communication.
 Namely, this thesis introduces
   (1) a deep transfer learning-based evaluation metric for emergent communication to measure the practical applicability of emergent language
@@ -94,8 +95,7 @@ The learning behaviors employed by the agents are relatively simple and constrai
 In short, CEL builds computer models to test formal models.
 
 Deep learning-based emergent language (DEL)---the body of literature in which this thesis is most directly situated---is the rebellious child of CEL and the deep reinforcement learning boom of the late 2010's (cf.\@ \hyperref[ch:prologue]{the Prologue}).
-It applies the techniques of deep neural networks and multi-agent reinforcement learning to the same questions presented by CEL\footnotemark{}.
-  \footnotetext{In theory, DEL is concerned with the same questions, but in practice, the bulk of investigation is limited to the emergence of semantics and syntax, as mentioned above.}
+It applies the techniques of deep neural networks and multi-agent reinforcement learning to the same questions presented by CEL\footnote{In theory, DEL is concerned with the same questions, but in practice, the bulk of investigation is limited to the emergence of semantics and syntax, as mentioned above.}
 I say rebellious here because, rather than being a harmonious union of the two,
   (1) DEL diverges from deep reinforcement learning by being more concerned with the byproducts of the learning process (viz.\@ the communication protocols) than with effectively solving the relevant tasks (communicative success),
   and (2) DEL diverges from CEL by a relative absence of grounding in the broader linguistics literature, often starting nearly from scratch in the formulation of hypotheses and experimental approaches.
