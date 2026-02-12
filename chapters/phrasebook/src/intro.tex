@@ -12,9 +12,9 @@ Third, we find that the bijectivity of morphemes (measured via normalized pointw
 \section{Introduction}
 Deep learning-based emergent language (a.k.a.\@ emergent communication) presents a fascinating way to study the origins and development of human language by observing how the interplay of functional pressures and inductive biases produce communication systems.
 Yet a major challenge in studying emergent languages is interpreting how they convey meaning---neural networks may invent communication systems which lack features of human language.
-Thus, a primary goal of emergent language research has been to investigate the linguistic structures present in emergent languages from morphology to semantics to syntax and how they compare with those of human language \citep{van-der-wal-etal-2020-grammar,ueda2022categorial,boldt2024review}.
+Thus, a primary goal of emergent language research has been to investigate the linguistic structures present in emergent languages from morphology to semantics to syntax and how they compare with those of human language \citep[\cref{ch:review}]{van-der-wal-etal-2020-grammar,ueda2022categorial}.
 
-One technique introduced to discover the morphology of emergent language is CSAR \citep{boldt2025csar}, an algorithm which induces morphemes (minimal form--meaning pairs) from an emergent language corpus of messages and their accompanying semantics.
+One technique introduced to discover the morphology of emergent language is CSAR (\cref{ch:morphemes}), an algorithm which induces morphemes (minimal form--meaning pairs) from an emergent language corpus of messages and their accompanying semantics.
 CSAR was initially validated on human and procedurally generated languages, yet its effectiveness on emergent languages was not tested due the unavailability of ``ground truth'' morphemes in emergent languages.
 To address this shortcoming, we test the morphemes induced by CSAR \emph{in situ} by constructing algorithms to ``speak'' and ``hear'' emergent languages using the induced morpheme ``phrasebooks'' (illustrated in \cref{fig:diagram}).
 These phrasebook-based agents are built on the assumption that the emergent language is \emph{concatenatively compositional}, that is, that we can compose the meanings of morphemes by concatenating their forms into a message.
@@ -62,7 +62,7 @@ The conclusion, discussion of limitations, and ethical considerations are presen
 \section{Related Work}%
 \label{sec:pb-related-work}
 For a general overview of deep learning-based emergent language see \citet{lazaridou2020emergentmultiagentcommunicationdeep}.
-Generally speaking, this work builds on top of the morphological investigations into the structure of emergent language presented in \citet{boldt2025csar} and ties in with other approaches, including \citet{ueda2023on,lipinski2024speaking,carmeli-etal-2024-concept,gilberti2025discoveringpropertiesinflectionalmorphology}.
+Generally speaking, this work builds on top of the morphological investigations into the structure of emergent language presented in \cref{ch:morphemes} and ties in with other approaches, including \citet{ueda2023on,lipinski2024speaking,carmeli-etal-2024-concept,gilberti2025discoveringpropertiesinflectionalmorphology}.
 
 \citet{levy2025unsupervisedtranslationemergentcommunication} addresses the task machine translation of emergent communication into human language; namely, they employ unsupervised neural machine translation to translate image captions between emergent and human language.
 This is analogous to how we translate between emergent language messages and semantics, although we focus on white-box algorithms instead of deep learning methods.

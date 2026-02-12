@@ -9,12 +9,12 @@ Finally, we report generalizations regarding what hyperparameters produce more r
 \end{abstract}
 
 \section{Introduction}
-Emergent language has tremendous potential to generate realistic human language data for deep learning methods without the need to collect data directly (or indirectly) from humans \citep{boldt2024review}.
+Emergent language has tremendous potential to generate realistic human language data for deep learning methods without the need to collect data directly (or indirectly) from humans (\cref{ch:review}).
 This stems from the fact that emergent language aims to replicate the communicative pressures that drive the development of human language and are hypothesized to explain various patterns observed in linguistics \citep{sep-linguistics}.
 Yet little work has been done to date designing emergent communication systems to generate languages with high statistical similarity to human languages.
 Such languages could better serve as synthetic human language data for pretraining and evaluating NLP models.
 Thus, in this paper, we generate emergent languages with a signaling game that have a high degree of similarity to human languages, demonstrating state-of-the-art performance on emergent-to-human language deep transfer learning.
-Specifically, we use Bayesian hyperparameter search to optimize a signaling game on the XferBench benchmark \citep{xferbench}.
+Specifically, we use Bayesian hyperparameter search to optimize a signaling game on the XferBench benchmark (\cref{ch:xferbench}).
 
 \begin{figure}
   \centering
@@ -27,7 +27,7 @@ Specifically, we use Bayesian hyperparameter search to optimize a signaling game
 First and foremost, this moves the field of emergent language measurably closer to the goal of providing realistic, fully synthetic data for NLP.\spacefactor\sfcode`.{}
 On a methodological level, hyperparameters in emergent communication research are often selected arbitrarily or based on convenience.
 Instead, hyperparameters ought to be selected, we suggest, such that they maximize emergent language's similarity to human language.
-For example, vocabulary sizes in emergent languages are often very small (only one of eight emergent language environments surveyed in \citet{elcc} exceeds a vocabulary size of $70$) while our research suggests that the optimal vocabulary size is in the $1$k to $10$k range.
+For example, vocabulary sizes in emergent languages are often very small (only one of eight emergent language environments surveyed in \cref{ch:elcc} exceeds a vocabulary size of $70$) while our research suggests that the optimal vocabulary size is in the $1$k to $10$k range.
 Increasing vocabulary sizes, then, not only improves transfer learning performance but also makes it possible for emergent languages to replicate the long-tailed, Zipfian word distribution that is characteristic of human language \citep{zipf,piantadosi2014zipf}, for example.
 
 Our experiments also confirm a significant relationship between transfer learning performance and corpus entropy.
@@ -62,7 +62,7 @@ On the other hand, emergent language differs from using pretrained language mode
 \begin{figure*}
   \centering
   \inputHpo{src/figures/xb-chart}
-  \caption{Illustration of hyperparameter optimization with XferBench (adapted from \citet{xferbench} (CC BY 4.0 License)).}
+  \caption{Illustration of hyperparameter optimization with XferBench.}
   \unskip\label{hpo:fig:xb}
 \end{figure*}
 

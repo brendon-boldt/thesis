@@ -41,9 +41,9 @@ The irregular number of trials per search were due to executing as many trials a
 
 % For our primary evaluation of the success of hyperparameter search in finding the best emergent languages for transfer learning, we select from three categories of languages: human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC \citep[\smallish\url{https://huggingface.co/datasets/bboldt/elcc}, CC BY 4.0]{elcc}.
 We select three categories of languages to evaluate with XferBench:
-  human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC \citep[\smallish\url{https://huggingface.co/datasets/bboldt/elcc}, CC BY 4.0]{elcc}.
+  human languages, those generated with the hyperparameter search discussed above, and extant emergent language corpora from ELCC (\cref{ch:elcc}).
 The primary goal is for the search-derived languages to outperform all existing emergent languages and get as close to human language performance as possible.
-For the human languages, we use a subset of the baselines provided in \citet{xferbench}.
+For the human languages, we use a subset of the baselines provided in \cref{ch:xferbench}.
 In particular, we use Mandarin and Hindi because they were the best- and worst-performing human languages, respectively, and French and Arabic to round out the language families represented.
 
 For the search-derived languages, we selected the three best languages from the final primary run of hyperparameter search (Search 4) and evaluate them on the full set of evaluation languages in XferBench.

@@ -9,12 +9,12 @@
 \end{table}
 One of XferBench's chief weaknesses is its long runtime, taking $2$ to $6$ hours depending on the GPU used.
 Approximately $30\%$ of that time is spent on the initial pretraining with the emergent language corpus, with the other $70\%$ spent on finetuning and testing on the $10$ downstream languages.
-We observe from the XferBench scores on the emergent languages of ELCC and the human language baselines of \citet{xferbench} that $9$ out of the $10$ evaluation languages are highly correlated with each other, that is, the XferBench score on one language is highly predictive of the overall XferBench score.
+We observe from the XferBench scores on the emergent languages of ELCC and the human language baselines of \cref{ch:xferbench} that $9$ out of the $10$ evaluation languages are highly correlated with each other, that is, the XferBench score on one language is highly predictive of the overall XferBench score.
 In particular, test cross-entropy on Danish (da) alone can predict ${>}95\%$ of the variation of the overall XferBench score (i.e., the linear regression has an $R^2>0.95$).
 For this reason, in the hyperparameter optimization trials, we compute XferBench-da (XferBench evaluated on Danish only) which is around $3{\times}$ faster than the full XferBench; the final evaluation nevertheless uses the full set of evaluation language for XferBench.
 
 In \Cref{tab:target-corr}, we show the $R^2$ values derived from training a linear model on just one of the target language's XferBench scores to predict the overall XferBench score.
-The emergent languages are all of the corpora from ELCC \citep{elcc}, and the human language corpora are the baselines from the original XferBench paper \citep{xferbench}.
+The emergent languages are all of the corpora from ELCC (\cref{ch:elcc}), and the human language corpora are the baselines from the original XferBench paper (\cref{ch:xferbench}).
 $R^2$ value corresponds to the percent of the variance in the full XferBench score explained by just the score (i.e., cross-entropy) on that particular target language.
 We find, strikingly enough, that all of the target languages, with the exception of Basque, are highly correlated, having $R^2$ values above $0.95$ all languages, and greater than $0.80$ even when considering human languages alone.
 Danish, of all of the languages, has the highest $R^2$ value (${>}0.99$), which is the reason we select it as the sole target for a more time-efficient variant of XferBench (which we term XferBench-da).
