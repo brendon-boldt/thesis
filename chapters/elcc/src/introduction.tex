@@ -16,15 +16,22 @@ We provide some quantitative and qualitative analyses with ELCC to demonstrate p
 \section{Introduction}
 \unskip\label{elcc:sec:introduction}
 
-When \citet{xferbench} introduced the metric called XferBench, they raised a question that they apparently could not answer:
-how do emergent languages---communication systems that emerge from scratch in agent-based simulations---differ in their ``humanlikeness'' (as measured by their utility as pretraining data for NLP tasks).
-It seems likely that they were unable to answer this question because no representative collection of samples from emergent languages existed.
-The same problem plagues other research programs that seek to make generalizations about emergent languages, as a whole, rather than using a single type of environment as a proof of concept.
-These include the degree to which emergent languages display entropic patterns similar to those that characterize words in human languages \citep{ueda2023on} and the kind of syntax that can be detected in emergent languages through grammar induction \citep{van-der-wal-etal-2020-grammar}.
-We present an initial solution to this problem, namely the Emergent Language Corpus Collection (\theLib{}): a collection of 73 corpora generated from 7 representative emergent communication systems (ECSs).\footnotemark{}
-\footnotetext{Emergent communications systems are more commonly referred to as simply ``environments''; we choose to use the term ``system'' in order to emphasize that what goes into producing an emergent language is more than just an environment including also the architecture of the agents, optimization procedure, datasets, and more.}
-Prior to this work, comparing emergent languages entailed extensive work getting free and open source simulations to run---managing dependencies, manipulating output formats, etc.---before any data could even be generated.
-The current work allows investigators, even those with very limited software engineering knowledge, to analyze a wide range of emergent languages straightforwardly, plowing over a barrier that has held back comparative emergent language research from its inception.
+% When \citet{xferbench} introduced the metric called XferBench, they raised a question that they apparently could not answer:
+% how do emergent languages---communication systems that emerge from scratch in agent-based simulations---differ in their ``humanlikeness'' (as measured by their utility as pretraining data for NLP tasks).
+% It seems likely that they were unable to answer this question because no representative collection of samples from emergent languages existed.
+% The same problem plagues other research programs that seek to make generalizations about emergent languages, as a whole, rather than using a single type of environment as a proof of concept.
+% These include the degree to which emergent languages display entropic patterns similar to those that characterize words in human languages \citep{ueda2023on} and the kind of syntax that can be detected in emergent languages through grammar induction \citep{van-der-wal-etal-2020-grammar}.
+
+In a typical paper studying emergent language, one of the major components involves implementing a particular emergent language environment which will be used for empirically testing the properties of the emergent communication.
+This requires either creating a codebase from scratch or adapting a previously existing code, and in both cases, this requires a significant amount of time or may be out of reach for those without a background in computing.
+One result of the substantial effort required to even generate emergent languages is that many studies only look at a handful of emergent languages with little diversity in environment design.
+This, in turn, obscures whether the observed phenomena are general features of emergent communication or simply artifacts of the particular environment, and any sort of comparative analysis between varieties of emergent languages is unavailable as well.
+
+We present an initial solution to this problem, namely the Emergent Language Corpus Collection (\theLib{}): a collection of 73 corpora generated from 7 representative emergent communication systems (ECSs).\footnote{%
+Emergent communications systems are more commonly referred to as simply ``environments''; we choose to use the term ``system'' in order to emphasize that what goes into producing an emergent language is more than just an environment including also the architecture of the agents, optimization procedure, datasets, and more.}
+Each corpus is accompanied by metadata describing the environment, summary statistics for the generated corpus, and a ready-to-run codebase for reproducing the corpus.
+% \cmt{edit this} Prior to this work, comparing emergent languages entailed extensive work getting free and open source simulations to run---managing dependencies, manipulating output formats, etc.---before any data could even be generated.
+This collection allows investigators, even those with very limited software engineering knowledge, to analyze a wide range of emergent languages straightforwardly, removing a barrier that has held back comparative emergent language research from its inception.
 \theLib{} is published at \url{https://huggingface.co/datasets/bboldt/elcc} with data and code licensed under the CC BY 4.0 and  MIT licenses, respectively.
 
 We discuss related work in \Cref{elcc:sec:related-work}.
