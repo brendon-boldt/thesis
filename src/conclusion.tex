@@ -1,7 +1,7 @@
 \chapter{Conclusion}
 \unskip\label{ch:conclusion}
 
-This thesis has endeavored to sort through chaos of emergent language research at both the micro and macro level.
+This thesis has endeavored to sort through the chaos of emergent language research at both the micro and macro level.
 The micro level of emergent language research concerns the analysis of particular emergent language environments, discerning what characteristics may or may not be present in the utterances and behaviors of the agents.
 The macro level of emergent language research concerns the broader direction of the field and meta-analysis of contributions across many environments and approaches.
 These levels are interrelated as the difficulty of interpretation at the micro level is reflected in the macro level;
@@ -10,8 +10,8 @@ These levels are interrelated as the difficulty of interpretation at the micro l
 \subsection*{Bringing order to the micro level}
 \href{ch:xferench}{XferBench} and \href{ch:morphemes}{CSAR} present novel analytical algorithms for investigating emergent languages as they are both applicable to a wide variety of environments and grounded in the ultimate goals of emergent language techniques.
 Both algorithms have been designed with large-scale quantitative analysis in mind where many emergent languages can be searched over for interesting structures with minimal human input.
-Such scale is necessary given the vast design of space of emergent languages and the difficulty of finding structure within it.
-Thus, these methods can serve as a first line of analysis to situate the otherwise difficult to interpret output of emergent language simulations.
+Such scale is necessary given the vast design of space of emergent languages and the difficulty of finding structure within them.
+Thus, these methods can serve as a first line of analysis to contextualize the otherwise difficult to interpret output of emergent language simulations.
 
 % What is now possible?
 
@@ -23,7 +23,7 @@ For any given emergent language, it immediately gives a sense of how well it wou
 For simpler emergent languages, this correlates with factors such as the distribution of tokens but could eventually indicate higher levels of structure like syntax for more sophisticated emergent languages.
 The results of XferBench, for example, can then be used to select hyperparameters which encourage realism (as in \cref{ch:hpo}) or filter out emergent languages which fail to even produce realistic distributional patterns.
 
-Looking forward, XferBench has much room to improve through scaling up in terms of model size, data sizer, and downstream tasks.
+Looking forward, XferBench has much room to improve through scaling up in terms of model size, data size, and downstream tasks.
 Such scaling would essentially give the metric a ``higher resolution'' insofar as it would be able to distinguish more nuances in the input data.
 Improvements could also be made to the interpretability of XferBench by adding probes for features such as syntax or morphology which would broaden its applicability to linguistics analyses as well.
 
@@ -32,11 +32,11 @@ Improvements could also be made to the interpretability of XferBench by adding p
 CSAR, on the other hand, is oriented more directly toward the linguistic applications of emergent language research.
 Naturally, taking stock of the morphology of an emergent language factors into the analysis of further linguistic structures like lexical distributions and strategies for conveying meaning.
 But even apart from explicitly linguistic applications, 
-  CSAR's qualitative and quantitative outputs can serve as a sort of preview and statistical summary for an emergent language, far more interpretable compared to the labor-intensive and often ineffectual process of trying to decode an emergent language by hand.
+  CSAR's qualitative and quantitative outputs can serve as a sort of preview and statistical summary of an emergent language, far more interpretable compared to the labor-intensive and often ineffectual process of trying to decode an emergent language by hand.
 
 CSAR itself could be improved through more sophisticated algorithms which are better able to distinguish between compositional and holistic languages as well as work with a broader range of semantics (e.g., embeddings, quantized continuous spaces).
 It could also be extended to function on a syntactic level,
-  where a corpus translated into morphemes can be given to a \emph{structure} induction algorithm modeled after CSAR\@.
+  where a corpus translated into morphemes is then given to a \emph{structure} induction algorithm modeled after CSAR\@.
 These induced patterns can then be tested \emph{in situ} in a similar fashion to the approach of \cref{ch:phrasebook}; these tests, subsequently, yield an even finer grained account of the validity of the induced structural patterns.
 
 
@@ -53,11 +53,11 @@ These induced patterns can then be tested \emph{in situ} in a similar fashion to
 \subsection*{Bringing order to the macro level}
 On the larger scale, this thesis enables the direct comparison of emergent languages from disparate environments, the same way we would expect any two neural architectures to be comparable on a given task.
 Again, due to the unique challenges of emergent language, methodologies that can be taken for granted in other areas of machine learning require particular attention as has been done in this work.
-What the result is, though, is a field of research that is more familiar at the meta level: cumulative, incremental findings which gradually reveal the most effective approaches and occasionally yielding major breakthroughs.
+The result, though, is a field of research that can be more familiar at the meta level: cumulative, incremental findings which gradually reveal the most effective approaches and occasionally yielding major breakthroughs.
 
-Going forward, my intuition is that a more prudent research program is to start with more classical approaches and gradually replacing components with deep neural networks.
+Going forward, my intuition is that a more prudent research program is to start with more classical approaches and gradually replace components with deep neural networks as needed.
 Even with these new tools for cutting through chaos of emergent languages, there is an element of luck required when starting with end-to-end neural networks and hoping to find linguistically relevant patterns (and deep emergent language research does not seem to have been ``lucky'' thus far).
-Furthermore, such intermediate results are harder to ground in the relevant linguistic theories of the evolution of human language whereas starting in the better grounded classical models allows for readier insights along the way.
+Furthermore, such intermediate results are harder to ground in the relevant linguistic theories of the evolution of human language whereas starting in the better grounded classical models allows for a better ``reward signal'' and readier insights along the way.
 
 % \cmt{Emergent language is difficult to interpret, and it if you do not respect this you will either rush through analysis with subpar findings or spend all of your time analyzing a non-representative set of languages.}
 
@@ -65,13 +65,13 @@ Furthermore, such intermediate results are harder to ground in the relevant ling
 Beyond the analysis of individual environments, XferBench demonstrates the potential to compare statistical realism across many different varieties of environments.
 This would direct the field towards environmental innovations which genuinely increase realism while pruning design choices which add complexity without a corresponding benefit.
 XferBench, then, provides an opportunity for hill-climbing towards more useful emergent languages for downstream tasks.
-Furthermore, the fact that XferBench is automated and quantitative encourages larger-scale analysis, that is, looking across hundreds or even thousands of emergent languages in a given study, decreasing statistical noise as well as results that are peculiar to specific hyperparameters.
-These improvements to methodology of emergent language have at least some potential to harness some of the success that has characterized the broader field of deep learning.
+Furthermore, the fact that XferBench is automated and quantitative encourages larger-scale analysis, that is, looking across hundreds or even thousands of emergent languages in a given study, decreasing statistical noise as well as avoiding results that are peculiar to specific hyperparameters.
+These improvements to the methodology of emergent language have at least some potential to harness some of the success that has characterized the broader field of deep learning.
 
 
 \paragraph{CSAR and linguistic applications}
-CSAR makes emergent languages more amenable to the kinds of analysis that we see in classical emergent language which often presuppose access to meaningful units (as opposed to mere meaningful unit \emph{components} in a doubly articulated language).
-This, in turn, can replace the somewhat shaky assumptions like ``one token equals one word'' that linguistic analyses on emergent languages were previously forced to make.
+CSAR makes emergent languages more amenable to the kinds of analysis that we see in classical emergent language which often presuppose access to meaningful units (as opposed to mere meaningful unit \emph{components} in a doubly articulated communication scheme).
+This, in turn, can replace somewhat shaky assumptions like ``one token equals one word'' that linguistic analyses on emergent languages were previously forced to make.
 Establishing the presence of such basic structures in emergent languages is a critical step in better aligning the paradigms of classical and deep learning-based emergent language.
 A better alignment between these approaches would likely grant the next decade of deep learning-based emergent language research a broader impact than the last.
 
@@ -82,13 +82,13 @@ The year is 2026.
 Large language models have even taken over the academic and popular consciousness alike.
 Emergent language has maintained its niche \emph{status quo} since the time described in the Prologue, but it cannot match the optimism of ``GenAI''.
 While Sutton's ``Bitter Lesson'' seems to hold more now than ever, deep reinforcement learning is often now just a method for augmenting LLMs.
-This thesis hardly mentions LLMs let alone contributes to their advancement---how are its pages still relevant, then?
+This thesis hardly mentions LLMs let alone contributes directly to their advancement---how are its pages still relevant, then?
 
 
 These pages are still relevant because the foundational questions of this thesis are still relevant.
 LLMs, while immensely successful, still have their problems.
 The question of how grounded their ``knowledge'' is in a rich, multi-modal world still hangs in the air.
-The concerns of surveillance, privacy, and copyright have increases, not decreased.
+The concerns of surveillance, privacy, and copyright have increased, not decreased.
 Low resource languages are still difficult to work with.
 In fact, LLMs sometimes even create their own emergent languages which need their own interpretation.
 
@@ -96,8 +96,8 @@ But secondly, the questions surrounding the evolution of language are fundamenta
 % These pages are still relevant because the foundational questions of linguistics are \emph{scientific} questions.
 LLMs can certainly assist in answering some of these questions, but a model that hardly mimics how humans acquire language is limited in what it can tell us about the internal and external pressures begetting human language.
 No degree of real-world utility or benchmark topping will provide the understanding that characterizes scientific questions.
-The project of building high-fidelity simulations of \emph{de novo} language evolution, on the other hand, have potential to address the deeper questions of the origins of human language.
-While emergent language certainly lacks the glamour of deep RL in 2018 or LLMs in 2026, so long as there are linguists inquiring into language (and the Lindy effect is on my side, here), the contributions of this thesis will have a home.
+The project of building high-fidelity simulations of \emph{de novo} language evolution, on the other hand, has potential to address the deeper questions of the origins of human language.
+While emergent language certainly lacks the glamour of deep RL in 2018 or LLMs in 2026, so long as there are linguists inquiring into language for its own sake (and the Lindy effect is on my side, here), the contributions of this thesis will have a home.
 
 % \cmt{I think it would be ideal if the theme of order and chaos were picked up again on in the epilogue.}
 
