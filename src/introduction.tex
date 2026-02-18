@@ -4,18 +4,18 @@
 The year is 2018.
 In the last couple years,
   AlphaGo defeated Lee Sedol, reigning Go world champion \citep{bbc-alphago}.
-  OpenAI has been making for itself as a reinforcement learning lab with OpenAI Gym \citep{openaigym} and OpenAI Five \citep{openai2019dota2largescale}.
+  OpenAI has been making a name for itself as a reinforcement learning lab with OpenAI Gym \citep{openaigym} and OpenAI Five \citep{openai2019dota2largescale}.
   New deep algorithms are being introduced left and right:
     Deep Q-Network, Advantage Actor Critic, Deep Deterministic Policy Gradient, Trust Region Policy Optimization, Proximal Policy Optimization
     \citep{li2018rlhistory}.
 And now, AlphaZero \citep{silver2017masteringchessshogiselfplay} has made its predecessor, AlphaGo, obsolete by discarding human-generated training data and doubling down on the power of deep reinforcement learning.
-It is in this milieu that I begin to develop the ideas that would grow into this thesis.
 Richard Sutton's ``Bitter Lesson'' is only a year way from this, all but declaring application-specific human expertise dead and done for at the hands of scaling compute, parameters, and data.
+It is in this milieu that I began to develop the ideas that would grow into this thesis.
 
 Expert-designed systems reigned in games like chess, starting with Deep Blue's 1997 victory over Garry Kasparov \citep{deepblue}, but AlphaZero, replacing domain knowledge with deep learning-driven search, dealt a mighty blow to the paradigm's dominance.
 It is here we can draw an analogy with the subject matter of this thesis:
-The origins of human language and its evolution had for decades been studied through expert-designed simulations based on theoretically-motivated models (i.e., \emph{emergent language}) \citep{kirby2002alife}, but perhaps deep reinforcement learning could revolutionize the study of language evolution like it had many a time before.
-Just as AlphaZero had re-derived many chess strategies based only the rules of the game (as well as found some new ones), maybe similar techniques could rederive the communication strategies which characterize human language.
+The origins of human language and its evolution had for decades been studied through expert-designed simulations based on theoretically-motivated models (i.e., \emph{emergent language}) \citep{kirby2002alife}, but perhaps deep reinforcement learning could revolutionize the study of language evolution like it had other problems many a time before.
+Just as AlphaZero had re-derived many chess strategies based only the rules of the game (as well as finding some new ones), maybe similar techniques could rederive the communication strategies which characterize human language?
 Toward this hope, papers such as \citet{foerster2016learning,lazaridou2016multiagent,havrylov2017emergence}
   took the first steps towards harnessing deep RL for emergent language.
 
@@ -54,7 +54,7 @@ These agents are equipped with a communication channel of discrete tokens with n
 % The communication protocol, then, is the ``emergent language'' since the meaningful system of communication as arisen organically from the environment and task.
 
 Emergent language differs from the more ``traditional'' approach to modeling language that LLMs use in that it does not try to mimic patterns in human language but instead tries to rederive such patterns from functional pressures analogous to those hypothesized to have guided human language's own evolution.
-Since this process language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to contribute to the scientific understanding of human language.
+Since this process of language emerging is far more analogous to how human language develops and is learned, it has a much greater potential to contribute to the scientific understanding of human language.
 Furthermore, certain practical tasks might lie beyond the reach of the mimicry approach LLMs employ due to the often superficial ``understanding'' they have of language; these problems, too, can be addressed by emergent language which models not only the surface features of language but also its semantics and social context.
 Finally, generating language data through emergent communication avoids many of the ethical issues that crop up with LLMs' dependence on human language data from amplifying toxicity from the Web to freely (ab)using copyrighted and personal content \citep{weidinger2021ethicalsocialrisksharm,carlini2021extractingtrainingdatalarge}.
 
@@ -73,7 +73,7 @@ Such tools help to discern order among the often chaotic output of these simulat
 \paragraph{Agent-based models of language evolution}
 The origin of human language has been a perennial question of human inquiry from ancient mythology to contemporary linguistics.
 While much of the history of this question is relevant to this work, I will limit this discussion to the most salient approach: namely that of computer simulations investigating the origin and evolution of human language.
-This intersection between linguistics and computer science gained momentum in the 1990's with the advances in computational power enabling the use of \emph{agent-based modeling} for simulations of communication systems \citep{steels1997synthetic}.
+This intersection between linguistics and computer science gained momentum in the 1990s with the advances in computational power enabling the use of \emph{agent-based modeling} for simulations of communication systems \citep{steels1997synthetic}.
 Agent based models are simulations which model systems at the level of \emph{individuals} and their interactions in an environment;
   such models allow us to see how ``global properties emerge by local interactions'' in order to better understand complex systems like language \citep{steels1997synthetic}.
 
@@ -94,12 +94,12 @@ The work mentioned above I term \emph{classical} emergent language (CEL) insofar
 The learning behaviors employed by the agents are relatively simple and constrained, drawing from classical AI and machine learning techniques (e.g., symbolic methods, Bayesian learning).
 In short, CEL builds computer models to test formal models.
 
-Deep learning-based emergent language (DEL)---the body of literature in which this thesis is most directly situated---it is the rebellious child of CEL and the deep reinforcement learning boom of the late 2010's (cf.\@ \hyperref[ch:prologue]{the Prologue}).
+Deep learning-based emergent language (DEL)---the body of literature in which this thesis is most directly situated---it is the rebellious child of CEL and the deep reinforcement learning boom of the late 2010s (cf.\@ \hyperref[ch:prologue]{the Prologue}).
 It applies the techniques of deep neural networks and multi-agent reinforcement learning to the same questions presented by CEL.\footnote{In theory, DEL is concerned with the same questions, but in practice, the bulk of investigation is limited to the emergence of semantics and syntax, as mentioned above.}
 I say rebellious here because, rather than being a harmonious union of the two,
   (1) DEL diverges from deep reinforcement learning by being more concerned with the byproducts of the learning process (viz.\@ the communication protocols) than with effectively solving the particular tasks (communicative success),
-  and (2) DEL diverges from CEL by a relative absence of grounding in the broader linguistics literature, often starting nearly from scratch in the formulation of hypotheses and experimental approaches.
-    Furthermore, implementing any such formal models from CEL in DEL is made difficult by the complexity of deep learning approaches.
+  and (2) DEL diverges from CEL by a relative absence of grounding in the broader body linguistics scholarship, often starting nearly from scratch in the formulation of hypotheses and experimental approaches.
+    Furthermore, translating any such formal models from CEL into DEL is made difficult by the complexity of deep learning approaches.
 
 Nevertheless, the intention of applying deep learning to emergent language is founded in improving the realism of the agent-based models which are key to the classical approach.
 In fact,
@@ -128,7 +128,7 @@ The agents are equipped with a communication channel consisting of discrete toke
 The resulting behavior, most especially the communication protocol, is typically the object of analysis, addressing question such as:
   Did an effective communication protocol emerge at all?
   What structural features characterize it?
-  Do these features align at all to human language?
+  Do these features align at all with human language?
   What can we infer about language formation more generally from the above?
 
 In practice, much of the literature has focused on the signaling game and the emergence of compositionality in communication
