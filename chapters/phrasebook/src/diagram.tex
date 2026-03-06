@@ -14,7 +14,7 @@
 
 \tikzstyle{blockStyle}=[
   draw=black!50,
-  text width=21mm,
+  text width=31mm,
   minimum width=2cm,
   text centered,
   rounded corners,
@@ -39,7 +39,7 @@
   \node (r-neural2) [blockStyle,right=of s-phrase] {\blocktext{\includegraphicsphrasebook[width=7mm]{assets/nnet.pdf}\\Neural Net\\Receiver}{Answer: \texttt{[3\,2\,1\,2]}}};
   \node (r-eq) at ({r-neural1} |- {$(r-neural1)!0.5!(r-neural2)$}) [] {\textbf{=}};
   \node (phrasebook)
-    [blockStyle,text width=25mm,below=of obs]
+    [blockStyle,text width=31mm,below=of obs]
     {\blocktext{\includegraphicsphrasebook[width=4mm]{assets/book}\\Phrasebook}{%
       \setlength\tabcolsep{1pt}
       \begin{tabular}{ll}
