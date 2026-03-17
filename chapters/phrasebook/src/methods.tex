@@ -77,5 +77,5 @@ The receiver algorithm (\cref{alg:receiver}) follows the same basic idea as the 
 The morphemes are looped over, testing to see if a morpheme's form is a subsequence of the message.
 If it the form is contained in the message, the morpheme's meaning is added to a meaning accumulator proportional to the morpheme's weight and the number of occurrences in the message.
 Unlike the sender, the form is not subtracted from the message, and the algorithm proceeds through the whole phrasebook only one time;
-  thus, a sort of superposition of all mathcing morphemes is considered.
+  thus, a sort of superposition of all matching morphemes is considered.
 After the phrasebook is exhausted, the final meaning is determined by taking the index of the max accumulator value for each attribute.
