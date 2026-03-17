@@ -57,6 +57,23 @@ This indicates a syntactic rule (albeit a simple one) that governs how morphemes
 Finally, the variations on the receiver algorithm did not have large impacts on the phrasebook agent performance (\cref{fig:ag-ab2}).
 % \cmt{Do I want to say something about the fact that repeating morphemes is important when speaking (i.e., when the neural network sis receiving) whereas it's not used to make distinctions from the neural speaker's side?  I think it would be good, but it'd be necessary to double check how the variations are explained so that the connections are clear.}
 
+\subsection{Relationship to Distributed Morphology}
+
+\cmt{revise}
+The sending algorithm (assigning forms to a given meaning) is paralleled by the \emph{spell-out} of Distributed Morphology \citep{halle1993dm}.
+In Distributed Morphology, spell-out is the process of \emph{realizing features}, which in the terminology used in this paper, is roughly analogous to in-forming the meanings of an observation.
+In both spell-out and applying the sending algorithm, the goal is map a collection of abstract meanings to concrete objects which are observable (e.g., phonemes in human language, message components in emergent language).
+Given this parallel, the sending algorithm presented above conspicuously ignores the Elsewhere Principle \citep{Anderson_1992}, which is key to Distributed Morphology, in the process of resolving conflicts between multiples ways of mapping abstract meaning to observables.
+Namely, the Elsewhere Principle (a.k.a. Maximal Subset Condition) states that the morpheme with the greatest number of matching meanings is to be applied first, blocking subsequent application of less specific morphemes (e.g., given the meaning \{solid, red, circle\}, we should give precedence to a morpheme meaning \{solid, red\} over simply \{red\}).
+The sending algorithm, on the other hand, resolves conflicts by selecting the morpheme with the highest weight (viz.\@ mutual information).
+
+This difference in procedure is motivated by a difference in the nature of the morpheme inventories induced by CSAR\@ and those of human language.
+In the case of human languages, the relationship between form and meaning described by a morpheme is construed as binary: either a form--meaning pair is meaningfully related or it is not.
+In contrast, CSAR works from a more statistical paradigm where form--meaning pairs can have degrees of relatedness (cf.\@ NPMI and morpheme bijectivity).
+Thus, in the case of morphemes with variable degrees of ``strength'' in their form--meaning relatedness, this strength is more salient in producing effective utterances than specificity of the morphemes (maximality of their meaning).
+Were we able to induce a properly binary notion of morphemes from emergent language, it could be the case that the Elsewhere Principle would factor into the corresponding sending algorithm.
+
+
 \subsection{Compositionality in emergent language}
 
 Compositionality is one of the most talked about topics in emergent language research, and the \emph{in situ} experiments with phrasebook agents provide a uniquely in-depth investigation of this phenomenon.
