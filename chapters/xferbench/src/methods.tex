@@ -163,7 +163,7 @@ To run the benchmark, all that is required is to install the environment with ei
 The input corpus is simply formatted as a newline-separated list of integer arrays, specifically in the JSON Lines format (see \Cref{sec:input-example} for an example); a Hugging Face dataset (backed by Apache Arrow) can also be used for larger input corpora.
 The script executes all of the steps of the benchmark and yields a single floating point number which is that corpus's score on XferBench (the benchmark also saves the individual score across target languages for further analysis).
 Finer-grained functionalities are available and documented in the codebase.
-The benchmark takes about $5.5$ hours to run on a single NVIDIA GeForce RTX 2080 Ti:
+The benchmark takes about $5.5$ hours to run on a single Nvidia GeForce RTX 2080 Ti:
   $90$ minutes to train the base model and $30$ minutes for tuning and testing on each of the target languages (Design Goal 3d).
 Since the model is tuned independently on each target language, it is easy to parallelize this step and drastically shorten the wall-clock time of XferBench.
 
